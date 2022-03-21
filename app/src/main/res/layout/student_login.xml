@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:text="Student Login"
+                android:textColor="@color/app_color"
+                android:textSize="27sp"
+                android:textStyle="bold" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:src="@drawable/icon_profile" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+
+
+
+
+
+            <EditText
+                android:id="@+id/login_email_id"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:drawableStart="@drawable/icon_email"
+                android:ems="10"
+                android:textColor="@color/black"
+                android:drawablePadding="10dp"
+                android:hint="Email"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/edittext_selector"
+                android:inputType="textEmailAddress"
+                android:textSize="15sp" />
+
+
+            <EditText
+                android:id="@+id/login_password_id"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:drawableStart="@drawable/icon_pwd"
+                android:ems="10"
+                android:textColor="@color/black"
+                android:drawablePadding="10dp"
+                android:hint="Password"
+                android:background="@drawable/edittext_selector"
+                android:inputType="textEmailAddress"
+                android:textSize="15sp" />
+
+
+
+
+
+
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                android:weightSum="1">
+
+                <Button
+                    android:id="@+id/login_loginBtn_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/btn_selector"
+                    android:text="Login"
+                    android:textColor="#fff"
+                    android:textSize="25sp" />
+
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/login_forgetpassword_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="170dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="0dp"
+                android:text="Forget Password?"
+                android:textColor="#FF0000"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/login_registerTextView_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:text="No Account yet??"
+                android:textColor="@color/app_color"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

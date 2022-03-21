@@ -1,0 +1,376 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:background="@color/app_color"
+    tools:context=".StudentHomeFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Schedule and Book"
+        android:textStyle="bold"
+        android:fontFamily="monospace"
+        android:textSize="25sp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="30dp"
+            android:orientation="vertical">
+
+
+
+
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                app:cardCornerRadius="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/white">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:weightSum="6"
+                    android:padding="10dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/app_color"
+                        android:textStyle="bold"
+                        android:textSize="25sp"
+                        android:text="Departure"/>
+
+                  <LinearLayout
+                      android:layout_width="wrap_content"
+                      android:layout_height="0dp"
+                      android:orientation="horizontal"
+                      android:padding="10dp"
+                      android:layout_weight="2">
+                      <EditText
+                          android:id="@+id/et_date"
+                          android:layout_width="match_parent"
+                          android:layout_height="match_parent"
+
+                          android:drawableStart="@drawable/icon_date"
+                          android:ems="10"
+                          android:textColor="@color/black"
+                          android:drawablePadding="10dp"
+                          android:hint="Select date"
+                          android:layout_marginBottom="20dp"
+                          android:background="@drawable/edittext_selector"
+                          android:inputType="text"
+                          android:textSize="15sp" />
+                      <Button
+                          android:id="@+id/pickDateBtn_id"
+                          android:layout_width="match_parent"
+                          android:layout_height="wrap_content"
+                          android:layout_margin="5dp"
+                          android:layout_marginTop="10dp"
+                          android:layout_weight="1"
+                          android:background="@drawable/btn_selector"
+                          android:text="Pick Date"
+                          android:textColor="@color/white"
+                          android:textSize="15sp" />
+
+
+                  </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:orientation="horizontal"
+                        android:padding="10dp"
+                        android:layout_weight="2">
+                        <EditText
+                            android:id="@+id/et_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
+                            android:drawableStart="@drawable/icon_time"
+                            android:ems="10"
+                            android:textColor="@color/black"
+                            android:drawablePadding="10dp"
+                            android:hint="Select time"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/edittext_selector"
+                            android:inputType="text"
+                            android:textSize="15sp" />
+                        <Button
+                            android:id="@+id/pickTimeBtn_id"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_selector"
+                            android:text="Pick Time"
+                            android:textColor="@color/white"
+                            android:textSize="15sp" />
+
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/departureLocation_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:drawableStart="@drawable/icon_location"
+                        android:ems="10"
+                        android:layout_weight="1"
+                        android:textColor="@color/black"
+                        android:drawablePadding="10dp"
+                        android:hint="Location of Departure"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/edittext_selector"
+                        android:inputType="text"
+                        android:textSize="15sp" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                app:cardCornerRadius="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:weightSum="6"
+                    android:padding="10dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/app_color"
+                        android:textStyle="bold"
+                        android:textSize="25sp"
+                        android:text="Arrival"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:orientation="horizontal"
+                        android:padding="10dp"
+                        android:layout_weight="2">
+                        <EditText
+                            android:id="@+id/et_date2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
+                            android:drawableStart="@drawable/icon_date"
+                            android:ems="10"
+                            android:textColor="@color/black"
+                            android:drawablePadding="10dp"
+                            android:hint="Select date"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/edittext_selector"
+                            android:inputType="text"
+                            android:textSize="15sp" />
+                        <Button
+                            android:id="@+id/pickDateBtn_id2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_selector"
+                            android:text="Pick Date"
+                            android:textColor="@color/white"
+                            android:textSize="15sp" />
+
+
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:orientation="horizontal"
+                        android:padding="10dp"
+                        android:layout_weight="2">
+                        <EditText
+                            android:id="@+id/et_time2"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+
+                            android:drawableStart="@drawable/icon_time"
+                            android:ems="10"
+                            android:textColor="@color/black"
+                            android:drawablePadding="10dp"
+                            android:hint="Select time"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/edittext_selector"
+                            android:inputType="text"
+                            android:textSize="15sp" />
+                        <Button
+                            android:id="@+id/pickTimeBtn_id2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_selector"
+                            android:text="Pick Time"
+                            android:textColor="@color/white"
+                            android:textSize="15sp" />
+
+
+                    </LinearLayout>
+
+                    <EditText
+                        android:id="@+id/arrivalLocation_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="60dp"
+                        android:drawableStart="@drawable/icon_location"
+                        android:ems="10"
+                        android:layout_weight="1"
+                        android:textColor="@color/black"
+                        android:drawablePadding="10dp"
+                        android:hint="Location of Arrival"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/edittext_selector"
+                        android:inputType="text"
+                        android:textSize="15sp" />
+
+
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                app:cardCornerRadius="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:weightSum="5"
+                    android:padding="10dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:textColor="@color/app_color"
+                        android:textStyle="bold"
+                        android:textSize="25sp"
+                        android:text="More Information"/>
+
+
+
+                    <Spinner
+                        android:id="@+id/peopleSpinner_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_weight="1"/>
+
+                    <EditText
+                        android:id="@+id/et_weight"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/icon_luggage"
+                        android:ems="10"
+                        android:textColor="@color/black"
+                        android:drawablePadding="10dp"
+                        android:hint="Weight of Luggage in kg"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/edittext_selector"
+                        android:inputType="number"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/et_msg"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:drawableStart="@drawable/icon_email"
+                        android:ems="10"
+                        android:textColor="@color/black"
+                        android:drawablePadding="10dp"
+                        android:hint="Special Message"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/edittext_selector"
+                        android:inputType="text"
+                        android:textSize="15sp" />
+
+
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+
+
+                <Button
+                    android:id="@+id/studentSubmitBtn_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/submitbtn_selector"
+                    android:text="Submit"
+                    android:textColor="@color/app_color"
+                    android:textSize="25sp" />
+
+                <Button
+                    android:id="@+id/yesBtn_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/submitbtn_selector"
+                    android:text="Cancel"
+                    android:textColor="@color/app_color"
+                    android:textSize="25sp" />
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</LinearLayout>
