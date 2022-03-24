@@ -8,12 +8,14 @@ public class StudentForm {
     String DepTime;
     String ArrTime;
     String DepDate;
+    String Weight;
+    String People;
 
 
     public StudentForm() {
     }
 
-    public StudentForm(String arrival, String departure, String msg, String arrDate, String depTime, String arrTime, String depDate) {
+    public StudentForm(String arrival, String departure, String msg, String arrDate, String depTime, String arrTime, String depDate, String weight, String people) {
         Arrival = arrival;
         Departure = departure;
         Msg = msg;
@@ -21,6 +23,8 @@ public class StudentForm {
         DepTime = depTime;
         ArrTime = arrTime;
         DepDate = depDate;
+        Weight = weight;
+        People = people;
     }
 
     public String getDepTime() {
@@ -77,5 +81,21 @@ public class StudentForm {
 
     public void setDeparture(String departure) {
         Departure = departure;
+    }
+
+    public String getPeople() {
+        return People;
+    }
+
+    public void setPeople(String people) {
+        People = people;
+    }
+
+    public String getWeight() {
+        return Weight;
+    }
+
+    public void setWeight(String weight) {
+        Weight = weight;
     }
 }

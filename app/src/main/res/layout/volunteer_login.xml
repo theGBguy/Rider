@@ -117,6 +117,15 @@
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
+
+            <ProgressBar
+                android:visibility="gone"
+                android:id="@+id/pgBar_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"/>
+
+
         </LinearLayout>
 
     </ScrollView>

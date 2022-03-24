@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class LogoutFragment extends Fragment implements View.OnClickListener {
 
     FirebaseAuth fAuth;
+    ProgressDialog dialog;
 
     @Nullable
     @Override
@@ -40,10 +42,11 @@ public class LogoutFragment extends Fragment implements View.OnClickListener {
                 Toast.makeText(getContext(), "Logged Out", Toast.LENGTH_SHORT).show();
                 fAuth.getInstance().signOut();
                 Intent i = new Intent(getActivity(),
-                        LoginActivity.class);
+                        UserOptions.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |
                         Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(i);
+
                 break;
 
             case R.id.noBtn_id:

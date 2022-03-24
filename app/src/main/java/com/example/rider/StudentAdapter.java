@@ -33,30 +33,35 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
     @Override
     public void onBindViewHolder(@NonNull StudentAdapter.StudentViewHolder holder, int position) {
         holder.Departure.setText(studentFormArrayList.get(position).getDeparture());
-        holder.ArrDate.setText(studentFormArrayList.get(position).getDeparture());
+        holder.DepTime.setText(studentFormArrayList.get(position).getDepTime());
+        holder.DepDate.setText(studentFormArrayList.get(position).getDepDate());
         holder.Arrival.setText(studentFormArrayList.get(position).getArrival());
-        holder.Msg.setText(studentFormArrayList.get(position).getArrival());
-        holder.ArrTime.setText(studentFormArrayList.get(position).getDeparture());
-        holder.DepTime.setText(studentFormArrayList.get(position).getArrival());
-        holder.DepDate.setText(studentFormArrayList.get(position).getArrival());
+        holder.ArrDate.setText(studentFormArrayList.get(position).getArrDate());
+        holder.ArrTime.setText(studentFormArrayList.get(position).getArrTime());
+        holder.Msg.setText(studentFormArrayList.get(position).getMsg());
+        holder.Weight.setText(studentFormArrayList.get(position).getWeight());
+        holder.People.setText(studentFormArrayList.get(position).getPeople());
+
 
         holder.Departure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(holder.Arrival.getContext(), DetailsActivity.class);
                 intent.putExtra("Departure", studentFormArrayList.get(position).getDeparture());
-                intent.putExtra("ArrDate", studentFormArrayList.get(position).getDeparture());
+                intent.putExtra("ArrDate", studentFormArrayList.get(position).getArrDate());
                 intent.putExtra("Arrival", studentFormArrayList.get(position).getArrival());
-                intent.putExtra("Msg", studentFormArrayList.get(position).getArrival());
-                intent.putExtra("DepDate", studentFormArrayList.get(position).getDeparture());
-                intent.putExtra("ArrTime", studentFormArrayList.get(position).getArrival());
-                intent.putExtra("DepTime", studentFormArrayList.get(position).getArrival());
+                intent.putExtra("Msg", studentFormArrayList.get(position).getMsg());
+                intent.putExtra("DepDate", studentFormArrayList.get(position).getDepDate());
+                intent.putExtra("ArrTime", studentFormArrayList.get(position).getArrTime());
+                intent.putExtra("DepTime", studentFormArrayList.get(position).getDepTime());
+                intent.putExtra("Weight", studentFormArrayList.get(position).getWeight());
+                intent.putExtra("People", studentFormArrayList.get(position).getPeople());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 holder.Arrival.getContext().startActivity(intent);
 
             }
         });
-//    holder.Arrival.setText(studentForm.Arrival);
+
 
 
     }
@@ -68,7 +73,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
 
     public class StudentViewHolder extends RecyclerView.ViewHolder {
 
-        TextView Arrival, Departure, Msg, ArrDate, DepTime, DepDate, ArrTime;
+        TextView Arrival, Departure, Msg, ArrDate, DepTime, DepDate, ArrTime,Weight, People;
 
 
         public StudentViewHolder(@NonNull View itemView) {
@@ -80,6 +85,12 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
             DepDate = itemView.findViewById(R.id.tv_dep_date);
             ArrTime = itemView.findViewById(R.id.tv_arr_time);
             Msg = itemView.findViewById(R.id.tv_msg);
+            Weight = itemView.findViewById(R.id.tv_weight);
+            People = itemView.findViewById(R.id.tv_people);
+
+
+
+
         }
     }
 }

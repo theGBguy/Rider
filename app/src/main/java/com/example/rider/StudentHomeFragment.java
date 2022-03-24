@@ -186,6 +186,7 @@ DatabaseReference studentDbRef;
                 final  String arrivalTime = etTime2.getText().toString();
                 final  String weight = etweight.getText().toString();
                 final  String msg = etmsg.getText().toString();
+                final  String people = peopleSpinner.getSelectedItem().toString();
 
                 if (TextUtils.isEmpty(departureDate)){
                     etDate.setError("Select Departure Date");
@@ -241,6 +242,7 @@ DatabaseReference studentDbRef;
         items.put("ArrDate",etDate2.getText().toString().trim());
         items.put("Msg",etmsg.getText().toString().trim());
         items.put("Weight",etweight.getText().toString().trim());
+        items.put("People",peopleSpinner.getSelectedItem().toString().trim());
        fstore.collection("students_form").add(items)
                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                    @Override

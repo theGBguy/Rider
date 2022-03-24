@@ -56,7 +56,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText inputFirstName, inputLastName, inputEmail, inputAddress, inputPhoneNumber, inputPassword;
     String emailPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)@"
             + "[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)(\\.[A-Za-z]{2,})$";
-    ProgressDialog progressDialog;
+    ProgressDialog dialog;
 
     RadioGroup radioGroup;
     RadioButton rb_volunteer, rb_student;
@@ -109,6 +109,9 @@ public class RegisterActivity extends AppCompatActivity {
             public void onClick(View view) {
                 performAuth();
                 checkButton();
+                dialog = new ProgressDialog(RegisterActivity.this);
+                dialog.setMessage("Signing in");
+                dialog.show();
             }
         });
 
@@ -208,7 +211,7 @@ public class RegisterActivity extends AppCompatActivity {
                             Log.d(TAG, "onSuccess: user Profile is created" + userID);
                         }
                     });
-//                    startActivity(intent);
+                    dialog.dismiss();
                 }
                 else {
                     Toast.makeText(RegisterActivity.this, "Error !" + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
