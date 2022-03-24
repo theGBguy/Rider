@@ -249,6 +249,12 @@ DatabaseReference studentDbRef;
                    public void onComplete(@NonNull Task<DocumentReference> task) {
                     departureLocation.setText("");
                     arrivalLocation.setText("");
+                    etDate.setText("");
+                    etDate2.setText("");
+                    etTime.setText("");
+                    etTime2.setText("");
+                    etweight.setText("");
+                    etmsg.setText("");
                        Toast.makeText(getContext(), "Data Inserted", Toast.LENGTH_SHORT).show();
                    }
                });
