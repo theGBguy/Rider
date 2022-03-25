@@ -13,6 +13,11 @@
             android:icon="@drawable/icon_profile"
             android:title="Profile" />
 
+        <item
+            android:id="@+id/nav_request"
+            android:icon="@drawable/icon_request"
+            android:title="Accepted Request" />
+
 
         <item
             android:id="@+id/nav_donate"

@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,6 +18,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -35,12 +37,14 @@ import java.util.List;
 import java.util.Map;
 
 public class StudentHomeFragment extends Fragment {
-EditText etDate, etDate2, departureLocation, arrivalLocation, etTime, etTime2, etweight, etmsg;
+EditText etDate, etDate2, departureLocation, arrivalLocation, etTime, etTime2, etweight, etmsg, etname;
 Button btnDate, btnDate2, btnTime,btnTime2, btnStudentSubmit;
 Spinner peopleSpinner;
 DatePickerDialog.OnDateSetListener setListener;
-FirebaseFirestore fstore;
+
 DatabaseReference studentDbRef;
+FirebaseFirestore fstore;
+ProgressDialog dialog;
 
     @Nullable
     @Override
@@ -69,6 +73,7 @@ DatabaseReference studentDbRef;
         peopleSpinner.setAdapter(adapter);
         etDate = (EditText) v.findViewById(R.id.et_date);
         etTime = (EditText) v.findViewById(R.id.et_time);
+        etname = (EditText) v.findViewById(R.id.et_name);
         etmsg = (EditText) v.findViewById(R.id.et_msg);
         etweight = (EditText) v.findViewById(R.id.et_weight);
         etTime2 = (EditText) v.findViewById(R.id.et_time2);
@@ -77,7 +82,6 @@ DatabaseReference studentDbRef;
         fstore = FirebaseFirestore.getInstance();
         departureLocation = (EditText) v.findViewById(R.id.departureLocation_id);
         arrivalLocation = (EditText) v.findViewById(R.id.arrivalLocation_id);
-
         etDate2 = (EditText) v.findViewById(R.id.et_date2);
         btnDate2 = (Button) v.findViewById(R.id.pickDateBtn_id2);
         btnTime2 = (Button) v.findViewById(R.id.pickTimeBtn_id2);
@@ -175,6 +179,7 @@ DatabaseReference studentDbRef;
             }
         });
 
+
         btnStudentSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -186,6 +191,7 @@ DatabaseReference studentDbRef;
                 final  String arrivalTime = etTime2.getText().toString();
                 final  String weight = etweight.getText().toString();
                 final  String msg = etmsg.getText().toString();
+                final  String name= etmsg.getText().toString();
                 final  String people = peopleSpinner.getSelectedItem().toString();
 
                 if (TextUtils.isEmpty(departureDate)){
@@ -224,7 +230,14 @@ DatabaseReference studentDbRef;
                     etweight.setError("Input Luggage Weight");
                     return;
                 }
+                if (TextUtils.isEmpty(name)){
+                    etname.setError("Enter your Fullname");
+                    return;
+                }
                 insertStudentData();
+                dialog = new ProgressDialog(getContext());
+                dialog.setMessage("Sending Request");
+                dialog.show();
 
             }
         });
@@ -242,11 +255,14 @@ DatabaseReference studentDbRef;
         items.put("ArrDate",etDate2.getText().toString().trim());
         items.put("Msg",etmsg.getText().toString().trim());
         items.put("Weight",etweight.getText().toString().trim());
+        items.put("Name",etname.getText().toString().trim());
+
         items.put("People",peopleSpinner.getSelectedItem().toString().trim());
        fstore.collection("students_form").add(items)
                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                    @Override
                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                       dialog.dismiss();
                     departureLocation.setText("");
                     arrivalLocation.setText("");
                     etDate.setText("");
@@ -255,7 +271,8 @@ DatabaseReference studentDbRef;
                     etTime2.setText("");
                     etweight.setText("");
                     etmsg.setText("");
-                       Toast.makeText(getContext(), "Data Inserted", Toast.LENGTH_SHORT).show();
+                    etname.setText("");
+                       Toast.makeText(getContext(), "Request Sent", Toast.LENGTH_SHORT).show();
                    }
                });
 

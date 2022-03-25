@@ -12,8 +12,10 @@
         <entry key="..\:/Rider/app/src/main/res/drawable/icon_pwd.xml" value="0.28615384615384615" />
         <entry key="..\:/Rider/app/src/main/res/drawable/submitbtn_selector.xml" value="0.28615384615384615" />
         <entry key="..\:/Rider/app/src/main/res/layout/activity_about_optionmenu.xml" value="0.14375" />
+        <entry key="..\:/Rider/app/src/main/res/layout/activity_acceptedRequest.xml" value="0.27447916666666666" />
+        <entry key="..\:/Rider/app/src/main/res/layout/activity_accepted_request.xml" value="0.25885416666666666" />
         <entry key="..\:/Rider/app/src/main/res/layout/activity_date_time.xml" value="0.14375" />
-        <entry key="..\:/Rider/app/src/main/res/layout/activity_details.xml" value="0.12258064516129032" />
+        <entry key="..\:/Rider/app/src/main/res/layout/activity_details.xml" value="0.264" />
         <entry key="..\:/Rider/app/src/main/res/layout/activity_donate_fragment.xml" value="0.27025641025641023" />
         <entry key="..\:/Rider/app/src/main/res/layout/activity_history_fragment.xml" value="0.25885416666666666" />
         <entry key="..\:/Rider/app/src/main/res/layout/activity_login.xml" value="0.176" />

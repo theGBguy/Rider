@@ -22,8 +22,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Rider">
         <activity
+            android:name=".AcceptedRequest"
+            android:exported="true" />
+        <activity
             android:name=".UserOptions"
-            android:exported="true" >
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
         </activity>
         <activity
@@ -41,26 +49,18 @@
         <activity
             android:name=".StudentSideNavBar"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar" >
+            android:theme="@style/AppTheme.NoActionBar">
 
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
-
         <activity
             android:name=".VolunteerSideNavBar"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar" >
-
+            android:theme="@style/AppTheme.NoActionBar">
 
         </activity>
         <activity
             android:name=".RegisterActivity"
             android:exported="true" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true" />

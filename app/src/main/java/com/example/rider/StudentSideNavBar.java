@@ -63,12 +63,12 @@ public class StudentSideNavBar extends AppCompatActivity implements NavigationVi
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StudentHomeFragment()).commit();
                 break;
 
-
-
-
-
             case R.id.nav_profile:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
+                break;
+
+            case R.id.nav_request:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RequestFragment()).commit();
                 break;
 
             case R.id.nav_logout:
@@ -78,8 +78,6 @@ public class StudentSideNavBar extends AppCompatActivity implements NavigationVi
             case R.id.nav_donate:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DonateFragment()).commit();
                 break;
-
-
 
         }
         drawer.closeDrawer((GravityCompat.START));

@@ -9,6 +9,7 @@
     tools:context=".StudentHomeFragment">
 
     <TextView
+        android:id="@+id/lastName"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="Schedule and Book"
@@ -309,6 +310,21 @@
                         android:layout_marginBottom="20dp"
                         android:background="@drawable/edittext_selector"
                         android:inputType="number"
+                        android:textSize="15sp" />
+
+                    <EditText
+                        android:id="@+id/et_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:drawableStart="@drawable/icon_luggage"
+                        android:ems="10"
+                        android:textColor="@color/black"
+                        android:drawablePadding="10dp"
+                        android:hint="What would you like to be called?"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/edittext_selector"
+                        android:inputType="text"
                         android:textSize="15sp" />
 
                     <EditText

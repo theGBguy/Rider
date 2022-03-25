@@ -41,7 +41,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         holder.Msg.setText(studentFormArrayList.get(position).getMsg());
         holder.Weight.setText(studentFormArrayList.get(position).getWeight());
         holder.People.setText(studentFormArrayList.get(position).getPeople());
-
+        holder.Name.setText(studentFormArrayList.get(position).getName());
 
         holder.Departure.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +56,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
                 intent.putExtra("DepTime", studentFormArrayList.get(position).getDepTime());
                 intent.putExtra("Weight", studentFormArrayList.get(position).getWeight());
                 intent.putExtra("People", studentFormArrayList.get(position).getPeople());
+                intent.putExtra("Name", studentFormArrayList.get(position).getName());
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 holder.Arrival.getContext().startActivity(intent);
 
@@ -73,7 +74,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
 
     public class StudentViewHolder extends RecyclerView.ViewHolder {
 
-        TextView Arrival, Departure, Msg, ArrDate, DepTime, DepDate, ArrTime,Weight, People;
+        TextView Arrival, Departure, Msg, ArrDate, DepTime, DepDate, ArrTime,Weight, People, Name;
 
 
         public StudentViewHolder(@NonNull View itemView) {
@@ -87,9 +88,7 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
             Msg = itemView.findViewById(R.id.tv_msg);
             Weight = itemView.findViewById(R.id.tv_weight);
             People = itemView.findViewById(R.id.tv_people);
-
-
-
+            Name = itemView.findViewById(R.id.tv_name);
 
         }
     }

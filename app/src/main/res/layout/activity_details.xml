@@ -18,11 +18,47 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:layout_gravity="center"
                 android:src="@drawable/yatra" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:weightSum="2">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Requested by :"
+                    android:textAlignment="center"
+                    android:textColor="@color/app_color"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/nameholder"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:textAlignment="viewStart"
+                    android:text="Username"
+                    android:textColor="@color/app_color"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+
+
+            </LinearLayout>
+
+
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -44,6 +80,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:padding="10dp"
                     android:orientation="vertical">
 
 
@@ -321,7 +358,7 @@
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="1"
-                            android:text="People Count"
+                            android:text="People Count:"
                             android:textColor="@color/white"
                             android:textSize="22sp"
                             android:textStyle="bold" />
@@ -386,7 +423,7 @@
                 android:weightSum="2">
 
                 <Button
-                    android:id="@+id/yesBtn_id"
+                    android:id="@+id/backBtn_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -398,7 +435,7 @@
                     android:textSize="25sp" />
 
                 <Button
-                    android:id="@+id/noBtn_id"
+                    android:id="@+id/acceptBtn_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
