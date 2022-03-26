@@ -22,6 +22,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Rider">
         <activity
+            android:name=".SubmitSuccessActivity"
+            android:exported="true" />
+        <activity
             android:name=".AcceptedRequest"
             android:exported="true" />
         <activity
@@ -32,7 +35,6 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
         <activity
             android:name=".VolunteerLogin"
@@ -49,15 +51,11 @@
         <activity
             android:name=".StudentSideNavBar"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".VolunteerSideNavBar"
             android:exported="true"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".RegisterActivity"
             android:exported="true" />

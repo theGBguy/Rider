@@ -10,6 +10,7 @@
         <entry key="..\:/Rider/app/src/main/res/drawable/icon_camera.xml" value="0.23703703703703705" />
         <entry key="..\:/Rider/app/src/main/res/drawable/icon_email.xml" value="0.23703703703703705" />
         <entry key="..\:/Rider/app/src/main/res/drawable/icon_pwd.xml" value="0.28615384615384615" />
+        <entry key="..\:/Rider/app/src/main/res/drawable/newbtn_selector.xml" value="0.275" />
         <entry key="..\:/Rider/app/src/main/res/drawable/submitbtn_selector.xml" value="0.28615384615384615" />
         <entry key="..\:/Rider/app/src/main/res/layout/activity_about_optionmenu.xml" value="0.14375" />
         <entry key="..\:/Rider/app/src/main/res/layout/activity_acceptedRequest.xml" value="0.27447916666666666" />
@@ -28,8 +29,10 @@
         <entry key="..\:/Rider/app/src/main/res/layout/activity_student_fragment_home.xml" value="0.2" />
         <entry key="..\:/Rider/app/src/main/res/layout/activity_student_login.xml" value="0.27447916666666666" />
         <entry key="..\:/Rider/app/src/main/res/layout/activity_student_side_nav_bar.xml" value="0.14375" />
+        <entry key="..\:/Rider/app/src/main/res/layout/activity_submit_success.xml" value="0.25885416666666666" />
         <entry key="..\:/Rider/app/src/main/res/layout/activity_user_options.xml" value="0.27447916666666666" />
         <entry key="..\:/Rider/app/src/main/res/layout/activity_volunteer_home_fragment.xml" value="0.14375" />
+        <entry key="..\:/Rider/app/src/main/res/layout/activity_volunteer_request_fragment.xml" value="0.25885416666666666" />
         <entry key="..\:/Rider/app/src/main/res/layout/activity_volunteer_side_nav_bar.xml" value="0.27447916666666666" />
         <entry key="..\:/Rider/app/src/main/res/layout/nav_header.xml" value="0.264" />
         <entry key="..\:/Rider/app/src/main/res/layout/student_login.xml" value="0.27447916666666666" />

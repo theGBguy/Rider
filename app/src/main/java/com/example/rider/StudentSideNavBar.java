@@ -68,7 +68,7 @@ public class StudentSideNavBar extends AppCompatActivity implements NavigationVi
                 break;
 
             case R.id.nav_request:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new RequestFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new StudentRequestFragment()).commit();
                 break;
 
             case R.id.nav_logout:

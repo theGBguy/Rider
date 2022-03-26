@@ -266,7 +266,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="280dp"
+                android:layout_height="320dp"
                 app:cardCornerRadius="20dp"
                 android:layout_marginBottom="20dp"
                 android:background="@color/white">
@@ -317,12 +317,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:drawableStart="@drawable/icon_luggage"
+                        android:drawableStart="@drawable/icon_profile"
                         android:ems="10"
                         android:textColor="@color/black"
                         android:drawablePadding="10dp"
                         android:hint="What would you like to be called?"
-                        android:layout_marginBottom="20dp"
+                        android:layout_marginBottom="10dp"
                         android:background="@drawable/edittext_selector"
                         android:inputType="text"
                         android:textSize="15sp" />
@@ -331,16 +331,18 @@
                         android:id="@+id/et_msg"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="2"
+                        android:layout_weight="1"
                         android:drawableStart="@drawable/icon_email"
                         android:ems="10"
                         android:textColor="@color/black"
                         android:drawablePadding="10dp"
-                        android:hint="Special Message"
-                        android:layout_marginBottom="20dp"
+                        android:hint="Special Msg"
+                        android:layout_marginBottom="10dp"
                         android:background="@drawable/edittext_selector"
                         android:inputType="text"
                         android:textSize="15sp" />
+
+
 
 
 

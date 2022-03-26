@@ -62,7 +62,7 @@
                 android:drawablePadding="10dp"
                 android:hint="Password"
                 android:background="@drawable/edittext_selector"
-                android:inputType="textEmailAddress"
+                android:inputType="textPassword"
                 android:textSize="15sp" />
 
 

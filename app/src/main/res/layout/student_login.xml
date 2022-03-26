@@ -58,12 +58,16 @@
                 android:layout_height="60dp"
                 android:drawableStart="@drawable/icon_pwd"
                 android:ems="10"
+                android:filterTouchesWhenObscured="true"
                 android:textColor="@color/black"
                 android:drawablePadding="10dp"
                 android:hint="Password"
                 android:background="@drawable/edittext_selector"
-                android:inputType="textEmailAddress"
+                android:inputType="textPassword"
                 android:textSize="15sp" />
+
+
+
 
 
 
@@ -96,7 +100,7 @@
             </LinearLayout>
 
             <TextView
-                android:id="@+id/login_forgetpassword_id"
+                android:id="@+id/loginS_forgetpassword_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="170dp"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:padding="20dp"
     android:orientation="vertical"
-    tools:context=".RequestFragment">
+    tools:context=".StudentRequestFragment">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="150dp"

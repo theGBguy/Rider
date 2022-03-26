@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -68,6 +70,8 @@ public class StudentLogin extends AppCompatActivity {
         fAuth =  FirebaseAuth.getInstance();
         fUser = fAuth.getCurrentUser();
 
+        forget_pwd = findViewById(R.id.loginS_forgetpassword_id);
+
         login = findViewById(R.id.login_loginBtn_id);
 
         no_account.setOnClickListener(new View.OnClickListener() {
@@ -75,6 +79,35 @@ public class StudentLogin extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(StudentLogin.this, RegisterActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        forget_pwd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final EditText resetMail = new EditText(view.getContext());
+                AlertDialog.Builder passwordResetDialog = new AlertDialog.Builder(view.getContext());
+                passwordResetDialog.setTitle("Reset Password");
+                passwordResetDialog.setMessage("Enter your Mail to receive Reset Link");
+                passwordResetDialog.setView(resetMail);
+
+                passwordResetDialog.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String mail = resetMail.getText().toString();
+                        fAuth.sendPasswordResetEmail(mail).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                Toast.makeText(StudentLogin.this, "Reset Link has been sent in your mail", Toast.LENGTH_SHORT).show();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(StudentLogin.this, "Link is not sent" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                });
             }
         });
         login.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +119,8 @@ public class StudentLogin extends AppCompatActivity {
              dialog.show();
             }
         });
+
+
 
     }
 

@@ -69,6 +69,10 @@ public class VolunteerSideNavBar extends AppCompatActivity implements Navigation
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
                 break;
 
+            case R.id.nav_request:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new VolunteerRequestFragment()).commit();
+                break;
+
             case R.id.nav_logout:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new LogoutFragment()).commit();
                 break;

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -183,6 +184,8 @@ ProgressDialog dialog;
         btnStudentSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 final   String departure = departureLocation.getText().toString();
                 final  String arrival = arrivalLocation.getText().toString();
                 final  String departureDate = etDate.getText().toString();
@@ -238,12 +241,16 @@ ProgressDialog dialog;
                 dialog = new ProgressDialog(getContext());
                 dialog.setMessage("Sending Request");
                 dialog.show();
+                Intent intent = new Intent(getContext(),SubmitSuccessActivity.class);
+                startActivity(intent);
 
             }
         });
 
         return v;
     }
+
+
 
     private void insertStudentData() {
         Map  <String, String> items =  new HashMap<>();
@@ -262,6 +269,8 @@ ProgressDialog dialog;
                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                    @Override
                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                       String id =  studentDbRef.getKey();
+
                        dialog.dismiss();
                     departureLocation.setText("");
                     arrivalLocation.setText("");
