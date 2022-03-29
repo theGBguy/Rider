@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.example.rider.R
 import com.example.rider.databinding.ActivityStudentSideNavBarBinding
+import com.example.rider.ui.nav_fragments.*
 import com.google.android.material.navigation.NavigationView
 
 class StudentSideNavBarActivity : AppCompatActivity(),

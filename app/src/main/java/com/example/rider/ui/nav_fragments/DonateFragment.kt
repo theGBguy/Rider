@@ -1,20 +1,20 @@
-package com.example.rider.ui
+package com.example.rider.ui.nav_fragments
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.rider.databinding.ActivityDonateFragmentBinding
+import com.example.rider.databinding.FragmentDonateBinding
 
 class DonateFragment : Fragment() {
-    private var binding: ActivityDonateFragmentBinding? = null
+    private var binding: FragmentDonateBinding? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = ActivityDonateFragmentBinding.inflate(inflater, container, false)
+        binding = FragmentDonateBinding.inflate(inflater, container, false)
         return binding!!.root
     }
 

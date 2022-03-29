@@ -1,4 +1,4 @@
-package com.example.rider.ui
+package com.example.rider.ui.nav_fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -8,29 +8,28 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.rider.databinding.ActivityVolunteerHomeFragmentBinding
-import com.example.rider.model.StudentForm
-import com.google.firebase.database.DatabaseReference
+import com.example.rider.databinding.FragmentVolunteerHomeBinding
+import com.example.rider.model.YatraRequest
+import com.example.rider.ui.YatraRequestListAdapter
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreException
 import com.google.firebase.firestore.QuerySnapshot
 
 class VolunteerHomeFragment : Fragment() {
-    private var binding: ActivityVolunteerHomeFragmentBinding? = null
+    private var binding: FragmentVolunteerHomeBinding? = null
 
-    var recyclerView: RecyclerView? = null
-    var studentFormAdapter: StudentAdapter? = null
-    var studentFormList: ArrayList<StudentForm?>? = null
-    var database: DatabaseReference? = null
-    var db: FirebaseFirestore? = null
+    private var recyclerView: RecyclerView? = null
+    private var yatraRequestListFormAdapter: YatraRequestListAdapter? = null
+    private var yatraRequestList: ArrayList<YatraRequest?>? = null
+    private var db: FirebaseFirestore? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = ActivityVolunteerHomeFragmentBinding.inflate(inflater, container, false)
+        binding = FragmentVolunteerHomeBinding.inflate(inflater, container, false)
         return binding!!.root
     }
 
@@ -42,10 +41,10 @@ class VolunteerHomeFragment : Fragment() {
         binding?.recyclerView?.setHasFixedSize(true)
         binding?.recyclerView?.layoutManager = LinearLayoutManager(context)
 
-        studentFormList = ArrayList()
-        studentFormAdapter = StudentAdapter(studentFormList)
+        yatraRequestList = ArrayList()
+        yatraRequestListFormAdapter = YatraRequestListAdapter(yatraRequestList)
 
-        recyclerView?.adapter = studentFormAdapter
+        recyclerView?.adapter = yatraRequestListFormAdapter
 
         setupEventChangeListener()
     }
@@ -64,9 +63,9 @@ class VolunteerHomeFragment : Fragment() {
                 }
                 for (dc in value?.documentChanges!!) {
                     if (dc.type == DocumentChange.Type.ADDED) {
-                        studentFormList?.add(dc.document.toObject(StudentForm::class.java))
+                        yatraRequestList?.add(dc.document.toObject(YatraRequest::class.java))
                     }
-                    studentFormAdapter?.notifyDataSetChanged()
+                    yatraRequestListFormAdapter?.notifyDataSetChanged()
                 }
             }
     }

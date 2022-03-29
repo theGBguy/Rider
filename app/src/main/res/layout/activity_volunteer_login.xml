@@ -14,9 +14,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:gravity="center"
-            android:text="Volunteer Login"
+            android:text="Dear volunteer, let's get you signed in."
             android:textColor="?colorPrimary"
-            android:textSize="27sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -60,8 +60,7 @@
             android:id="@+id/login_loginBtn_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:layout_marginBottom="12dp"
+            android:layout_marginTop="48dp"
             android:background="@drawable/btn_selector"
             android:text="Login"
             android:textColor="?colorOnPrimary"
@@ -70,8 +69,9 @@
         <TextView
             android:id="@+id/login_forgetpassword_id"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_marginTop="12dp"
+            android:gravity="center"
             android:text="Forget Password?"
             android:textAlignment="center"
             android:textColor="@android:color/holo_red_light"

@@ -7,21 +7,21 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.util.Patterns
 import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.rider.R
-import com.example.rider.databinding.StudentLoginBinding
+import com.example.rider.databinding.ActivityStudentLoginBinding
 import com.example.rider.utils.showShortToast
 import com.google.android.gms.tasks.Task
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 
+
 class StudentLoginActivity : AppCompatActivity() {
-    private var binding: StudentLoginBinding? = null
+    private var binding: ActivityStudentLoginBinding? = null
 
-    var dialog: ProgressDialog? = null
-
-    var firebaseAuth: FirebaseAuth? = null
+    private var firebaseAuth: FirebaseAuth? = null
 
     override fun onBackPressed() {
         if (firebaseAuth?.currentUser != null) {
@@ -36,13 +36,15 @@ class StudentLoginActivity : AppCompatActivity() {
                 }
                 .setNegativeButton("No") { dialog: DialogInterface, _: Int -> dialog.cancel() }
                 .show()
+        } else {
+            super.onBackPressed()
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = StudentLoginBinding.inflate(layoutInflater)
+        binding = ActivityStudentLoginBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
 
         firebaseAuth = FirebaseAuth.getInstance()
@@ -54,30 +56,39 @@ class StudentLoginActivity : AppCompatActivity() {
         }
 
         binding?.loginSForgetpasswordId?.setOnClickListener {
-            val resetMail = EditText(this@StudentLoginActivity)
+            val linearLayout = LinearLayout(this)
+            val params = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
+            linearLayout.orientation = LinearLayout.VERTICAL
+            linearLayout.layoutParams = params
+            linearLayout.setPadding(24, 12, 12, 24)
 
-            MaterialAlertDialogBuilder(this@StudentLoginActivity)
+            val resetMail = EditText(this)
+            linearLayout.addView(resetMail)
+
+            MaterialAlertDialogBuilder(this)
                 .setTitle("Reset Password")
                 .setMessage("Enter your Mail to receive Reset Link")
-                .setView(resetMail)
+                .setView(linearLayout)
                 .setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
                     val mail = resetMail.text.toString()
-                    firebaseAuth!!.sendPasswordResetEmail(mail)
-                        .addOnSuccessListener {
-                            "Reset Link has been sent in your mail".showShortToast(this@StudentLoginActivity)
-                        }
-                        .addOnFailureListener { e: Exception ->
-                            "Link is not sent : ${e.message}".showShortToast(this@StudentLoginActivity)
-                        }
-                }
+                    if (mail.matches(Patterns.EMAIL_ADDRESS.toRegex())) {
+                        firebaseAuth!!.sendPasswordResetEmail(mail)
+                            .addOnSuccessListener {
+                                "Reset Link has been sent in your mail".showShortToast(this@StudentLoginActivity)
+                            }
+                            .addOnFailureListener { e: Exception ->
+                                "Link is not sent : ${e.message}".showShortToast(this@StudentLoginActivity)
+                            }
+                    } else {
+                        "Please add valid email address".showShortToast(this@StudentLoginActivity)
+                    }
+                }.show()
         }
 
-        binding?.loginLoginBtnId?.setOnClickListener {
-            performLogin()
-            dialog = ProgressDialog(this@StudentLoginActivity)
-            dialog!!.setMessage("Logging in")
-            dialog!!.show()
-        }
+        binding?.loginLoginBtnId?.setOnClickListener { performLogin() }
     }
 
     private fun performLogin() {
@@ -89,7 +100,7 @@ class StudentLoginActivity : AppCompatActivity() {
             return
         }
 
-        if (email.matches(Patterns.EMAIL_ADDRESS.toRegex())) {
+        if (!email.matches(Patterns.EMAIL_ADDRESS.toRegex())) {
             binding?.loginEmailId?.error = "Email is badly formatted"
             return
         }
@@ -99,17 +110,22 @@ class StudentLoginActivity : AppCompatActivity() {
             return
         }
 
-        firebaseAuth!!.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task: Task<AuthResult?> ->
+        val dialog = ProgressDialog(this@StudentLoginActivity)
+        dialog.setMessage("Logging in")
+        dialog.setCanceledOnTouchOutside(false)
+        dialog.show()
+
+        firebaseAuth?.signInWithEmailAndPassword(email, password)
+            ?.addOnCompleteListener { task: Task<AuthResult?> ->
                 if (task.isSuccessful) {
                     "Logged in".showShortToast(this@StudentLoginActivity)
                     Intent(this@StudentLoginActivity, StudentSideNavBarActivity::class.java).also {
                         startActivity(it)
                     }
-                    dialog!!.dismiss()
                 } else {
-                    "Error ! ${task.exception!!.message}".showShortToast(this@StudentLoginActivity)
+                    "Error ! ${task.exception?.message}".showShortToast(this@StudentLoginActivity)
                 }
+                dialog.dismiss()
             }
     }
 }

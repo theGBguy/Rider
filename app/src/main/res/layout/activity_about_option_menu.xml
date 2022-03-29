@@ -1,41 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20dp"
+    android:padding="18dp"
     tools:context=".ui.AboutOptionMenuActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="35sp"
-        android:textStyle="bold"
+        android:text="About Us"
+        android:textAlignment="center"
         android:textColor="?colorPrimary"
-        android:text="About Us"/>
+        android:textSize="24sp"
+        android:textStyle="bold" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:src="@drawable/yatra"
-        android:layout_gravity="center"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/yatra" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="35sp"
-        android:textStyle="bold"
+        android:layout_marginTop="16dp"
+        android:text="Yatra Feature"
         android:textColor="?colorPrimary"
-        android:text="Yatra Feature"/>
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="#000"
-        android:textSize="20sp"
-        android:text="This app has two way authentication (Student and Volunteer). Student can book the volunteer for yatra simply filling a quick form and volunteer can either accept or discard the request."/>
+        android:layout_marginTop="16dp"
+        android:text="This app has two way authentication (Student and Volunteer). Student can book the volunteer for yatra simply filling a quick form and volunteer can either accept or discard the request."
+        android:textColor="?colorOnSurface"
+        android:textSize="18sp" />
 
 </LinearLayout>

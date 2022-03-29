@@ -1,4 +1,4 @@
-package com.example.rider.ui
+package com.example.rider.ui.nav_fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +14,6 @@ class StudentRequestFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.activity_student_request_fragment, container, false)
+        return inflater.inflate(R.layout.fragment_student_request, container, false)
     }
 }

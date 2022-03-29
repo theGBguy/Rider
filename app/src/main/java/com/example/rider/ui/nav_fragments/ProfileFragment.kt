@@ -1,4 +1,4 @@
-package com.example.rider.ui
+package com.example.rider.ui.nav_fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -7,13 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.rider.databinding.ActivityProfileFragmentBinding
+import com.example.rider.databinding.FragmentProfileBinding
+import com.example.rider.ui.RegisterActivity
 import com.example.rider.utils.showShortToast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class ProfileFragment : Fragment() {
-    private var binding: ActivityProfileFragmentBinding? = null
+    private var binding: FragmentProfileBinding? = null
 
     private var fAuth: FirebaseAuth? = null
     private var fStore: FirebaseFirestore? = null
@@ -25,7 +26,7 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = ActivityProfileFragmentBinding.inflate(inflater, container, false)
+        binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding!!.root
     }
 

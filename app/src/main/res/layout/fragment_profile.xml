@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="18dp"
-    tools:context=".ui.ProfileFragment">
+    tools:context=".ui.nav_fragments.ProfileFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

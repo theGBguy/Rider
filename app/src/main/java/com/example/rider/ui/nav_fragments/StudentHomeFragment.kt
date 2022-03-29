@@ -1,4 +1,4 @@
-package com.example.rider.ui
+package com.example.rider.ui.nav_fragments
 
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
@@ -12,7 +12,8 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TimePicker
 import androidx.fragment.app.Fragment
-import com.example.rider.databinding.ActivityStudentFragmentHomeBinding
+import com.example.rider.databinding.FragmentStudentHomeBinding
+import com.example.rider.ui.SubmitSuccessActivity
 import com.example.rider.utils.showShortToast
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
@@ -20,19 +21,19 @@ import com.google.firebase.firestore.FirebaseFirestore
 import java.util.*
 
 class StudentHomeFragment : Fragment() {
-    private var binding: ActivityStudentFragmentHomeBinding? = null
+    private var binding: FragmentStudentHomeBinding? = null
 
-    var studentDbRef: DatabaseReference? = null
-    var firestore: FirebaseFirestore? = null
+    private var studentDbRef: DatabaseReference? = null
+    private var firestore: FirebaseFirestore? = null
 
-    var dialog: ProgressDialog? = null
+    private var dialog: ProgressDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = ActivityStudentFragmentHomeBinding.inflate(inflater, container, false)
+        binding = FragmentStudentHomeBinding.inflate(inflater, container, false)
         return binding!!.root
     }
 
@@ -186,7 +187,7 @@ class StudentHomeFragment : Fragment() {
             .addOnCompleteListener {
                 dialog!!.dismiss()
 
-                val id = studentDbRef!!.key
+                val id = studentDbRef?.key
                 binding?.departureLocationId?.setText("")
                 binding?.arrivalLocationId?.setText("")
                 binding?.etDate?.setText("")
