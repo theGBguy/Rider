@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".AboutOptionmenu">
+    tools:context=".ui.AboutOptionMenuActivity">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="35sp"
         android:textStyle="bold"
-        android:textColor="@color/app_color"
+        android:textColor="?colorPrimary"
         android:text="About Us"/>
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:textSize="35sp"
         android:textStyle="bold"
-        android:textColor="@color/app_color"
+        android:textColor="?colorPrimary"
         android:text="Yatra Feature"/>
     <TextView
         android:layout_width="match_parent"

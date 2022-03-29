@@ -1,134 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp">
+    android:padding="24dp">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:text="Volunteer Login"
+            android:textColor="?colorPrimary"
+            android:textSize="27sp"
+            android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:gravity="center"
-                android:text="Volunteer Login"
-                android:textColor="@color/app_color"
-                android:textSize="27sp"
-                android:textStyle="bold" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:src="@drawable/icon_profile" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:src="@drawable/icon_profile" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="30dp" />
-
-
-
-
-
-            <EditText
-                android:id="@+id/login_email_id"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:drawableStart="@drawable/icon_email"
-                android:ems="10"
-                android:textColor="@color/black"
-                android:drawablePadding="10dp"
-                android:hint="Email"
-                android:layout_marginBottom="20dp"
-                android:background="@drawable/edittext_selector"
-                android:inputType="textEmailAddress"
-                android:textSize="15sp" />
+        <EditText
+            android:id="@+id/login_email_id"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/edittext_selector"
+            android:drawableStart="@drawable/icon_email"
+            android:drawablePadding="8dp"
+            android:ems="10"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            android:padding="8dp"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
 
 
-            <EditText
-                android:id="@+id/login_password_id"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:drawableStart="@drawable/icon_pwd"
-                android:ems="10"
-                android:textColor="@color/black"
-                android:drawablePadding="10dp"
-                android:hint="Password"
-                android:background="@drawable/edittext_selector"
-                android:inputType="textPassword"
-                android:textSize="15sp" />
+        <EditText
+            android:id="@+id/login_password_id"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/edittext_selector"
+            android:drawableStart="@drawable/icon_pwd"
+            android:drawablePadding="8dp"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:padding="8dp"
+            android:textColor="@android:color/black"
+            android:textSize="15sp" />
 
 
+        <Button
+            android:id="@+id/login_loginBtn_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:background="@drawable/btn_selector"
+            android:text="Login"
+            android:textColor="?colorOnPrimary"
+            android:textSize="25sp" />
+
+        <TextView
+            android:id="@+id/login_forgetpassword_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Forget Password?"
+            android:textAlignment="center"
+            android:textColor="@android:color/holo_red_light"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/login_registerTextView_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:gravity="center"
+            android:text="No Account yet??"
+            android:textColor="?colorPrimary"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
 
-
-
-
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:orientation="horizontal"
-                android:weightSum="1">
-
-                <Button
-                    android:id="@+id/login_loginBtn_id"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_marginTop="30dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/btn_selector"
-                    android:text="Login"
-                    android:textColor="#fff"
-                    android:textSize="25sp" />
-
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/login_forgetpassword_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="170dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="0dp"
-                android:text="Forget Password?"
-                android:textColor="#FF0000"
-                android:textSize="16sp" />
-
-            <TextView
-                android:id="@+id/login_registerTextView_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:gravity="center"
-                android:text="No Account yet??"
-                android:textColor="@color/app_color"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-
-            <ProgressBar
-                android:visibility="gone"
-                android:id="@+id/pgBar_id"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"/>
-
-
-        </LinearLayout>
-
-    </ScrollView>
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ProgressBar
+            android:id="@+id/pgBar_id"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+    </LinearLayout>
+</ScrollView>

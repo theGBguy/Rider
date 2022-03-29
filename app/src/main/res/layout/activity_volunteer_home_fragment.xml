@@ -5,19 +5,20 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent"
-    tools:context=".VolunteerHomeFragment">
+    tools:context=".ui.VolunteerHomeFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="25sp"
         android:text="PicK up Task"
-        android:textColor="@color/app_color"
+        android:textColor="?colorPrimary"
         android:gravity="center"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="12dp"/>
 
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="12dp"
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

@@ -3,115 +3,115 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
-    android:background="@color/app_color"
-    tools:context=".StudentHomeFragment">
+    android:background="?colorPrimary"
+    android:orientation="vertical"
+    tools:context=".ui.StudentHomeFragment">
 
     <TextView
         android:id="@+id/lastName"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="Schedule and Book"
-        android:textStyle="bold"
         android:fontFamily="monospace"
-        android:textSize="25sp"
-        android:textColor="@color/white"
         android:gravity="center"
-        />
+        android:text="Schedule and Book"
+        android:textColor="?colorOnPrimary"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="30dp"
-            android:orientation="vertical">
-
-
-
-
-
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="30dp">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="280dp"
-                app:cardCornerRadius="20dp"
                 android:layout_marginBottom="20dp"
-                android:background="@color/white">
+                android:background="?colorOnPrimary"
+                app:cardCornerRadius="20dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:weightSum="6"
+                    android:orientation="vertical"
                     android:padding="10dp"
-                    android:orientation="vertical">
+                    android:weightSum="6">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:layout_weight="2"
                         android:layout_gravity="center"
+                        android:layout_weight="2"
                         android:gravity="center"
-                        android:textColor="@color/app_color"
-                        android:textStyle="bold"
+                        android:text="Departure"
+                        android:textColor="?colorPrimary"
                         android:textSize="25sp"
-                        android:text="Departure"/>
-
-                  <LinearLayout
-                      android:layout_width="wrap_content"
-                      android:layout_height="0dp"
-                      android:orientation="horizontal"
-                      android:padding="10dp"
-                      android:layout_weight="2">
-                      <EditText
-                          android:id="@+id/et_date"
-                          android:layout_width="match_parent"
-                          android:layout_height="match_parent"
-
-                          android:drawableStart="@drawable/icon_date"
-                          android:ems="10"
-                          android:textColor="@color/black"
-                          android:drawablePadding="10dp"
-                          android:hint="Select date"
-                          android:layout_marginBottom="20dp"
-                          android:background="@drawable/edittext_selector"
-                          android:inputType="text"
-                          android:textSize="15sp" />
-                      <Button
-                          android:id="@+id/pickDateBtn_id"
-                          android:layout_width="match_parent"
-                          android:layout_height="wrap_content"
-                          android:layout_margin="5dp"
-                          android:layout_marginTop="10dp"
-                          android:layout_weight="1"
-                          android:background="@drawable/btn_selector"
-                          android:text="Pick Date"
-                          android:textColor="@color/white"
-                          android:textSize="15sp" />
-
-
-                  </LinearLayout>
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
+                        android:layout_weight="2"
                         android:orientation="horizontal"
-                        android:padding="10dp"
-                        android:layout_weight="2">
+                        android:padding="10dp">
+
+                        <EditText
+                            android:id="@+id/et_date"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_marginBottom="20dp"
+                            android:background="@drawable/edittext_selector"
+                            android:drawableStart="@drawable/icon_date"
+                            android:drawablePadding="10dp"
+                            android:ems="10"
+                            android:hint="Select date"
+                            android:inputType="text"
+                            android:textColor="@android:color/black"
+                            android:textSize="15sp" />
+
+                        <Button
+                            android:id="@+id/pickDateBtn_id"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="5dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/btn_selector"
+                            android:text="Pick Date"
+                            android:textColor="?colorOnPrimary"
+                            android:textSize="15sp" />
+
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="0dp"
+                        android:layout_weight="2"
+                        android:orientation="horizontal"
+                        android:padding="10dp">
+
                         <EditText
                             android:id="@+id/et_time"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
 
-                            android:drawableStart="@drawable/icon_time"
-                            android:ems="10"
-                            android:textColor="@color/black"
-                            android:drawablePadding="10dp"
-                            android:hint="Select time"
                             android:layout_marginBottom="20dp"
                             android:background="@drawable/edittext_selector"
+                            android:drawableStart="@drawable/icon_time"
+                            android:drawablePadding="10dp"
+                            android:ems="10"
+                            android:hint="Select time"
                             android:inputType="text"
+                            android:textColor="@android:color/black"
                             android:textSize="15sp" />
+
                         <Button
                             android:id="@+id/pickTimeBtn_id"
                             android:layout_width="match_parent"
@@ -121,7 +121,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/btn_selector"
                             android:text="Pick Time"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="15sp" />
 
 
@@ -131,15 +131,15 @@
                         android:id="@+id/departureLocation_id"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:drawableStart="@drawable/icon_location"
-                        android:ems="10"
-                        android:layout_weight="1"
-                        android:textColor="@color/black"
-                        android:drawablePadding="10dp"
-                        android:hint="Location of Departure"
                         android:layout_marginBottom="20dp"
+                        android:layout_weight="1"
                         android:background="@drawable/edittext_selector"
+                        android:drawableStart="@drawable/icon_location"
+                        android:drawablePadding="10dp"
+                        android:ems="10"
+                        android:hint="Location of Departure"
                         android:inputType="text"
+                        android:textColor="@android:color/black"
                         android:textSize="15sp" />
 
 
@@ -147,52 +147,53 @@
             </androidx.cardview.widget.CardView>
 
 
-
-
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="280dp"
-                app:cardCornerRadius="20dp"
                 android:layout_marginBottom="20dp"
-                android:background="@color/white">
+                android:background="?colorOnPrimary"
+                app:cardCornerRadius="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:weightSum="6"
+                    android:orientation="vertical"
                     android:padding="10dp"
-                    android:orientation="vertical">
+                    android:weightSum="6">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:layout_weight="2"
                         android:layout_gravity="center"
+                        android:layout_weight="2"
                         android:gravity="center"
-                        android:textColor="@color/app_color"
-                        android:textStyle="bold"
+                        android:text="Arrival"
+                        android:textColor="?colorPrimary"
                         android:textSize="25sp"
-                        android:text="Arrival"/>
+                        android:textStyle="bold" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
+                        android:layout_weight="2"
                         android:orientation="horizontal"
-                        android:padding="10dp"
-                        android:layout_weight="2">
+                        android:padding="10dp">
+
                         <EditText
                             android:id="@+id/et_date2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
 
-                            android:drawableStart="@drawable/icon_date"
-                            android:ems="10"
-                            android:textColor="@color/black"
-                            android:drawablePadding="10dp"
-                            android:hint="Select date"
                             android:layout_marginBottom="20dp"
                             android:background="@drawable/edittext_selector"
+                            android:drawableStart="@drawable/icon_date"
+                            android:drawablePadding="10dp"
+                            android:ems="10"
+                            android:hint="Select date"
                             android:inputType="text"
+                            android:textColor="@android:color/black"
                             android:textSize="15sp" />
+
                         <Button
                             android:id="@+id/pickDateBtn_id2"
                             android:layout_width="match_parent"
@@ -202,31 +203,34 @@
                             android:layout_weight="1"
                             android:background="@drawable/btn_selector"
                             android:text="Pick Date"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="15sp" />
 
 
                     </LinearLayout>
+
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
+                        android:layout_weight="2"
                         android:orientation="horizontal"
-                        android:padding="10dp"
-                        android:layout_weight="2">
+                        android:padding="10dp">
+
                         <EditText
                             android:id="@+id/et_time2"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
 
-                            android:drawableStart="@drawable/icon_time"
-                            android:ems="10"
-                            android:textColor="@color/black"
-                            android:drawablePadding="10dp"
-                            android:hint="Select time"
                             android:layout_marginBottom="20dp"
                             android:background="@drawable/edittext_selector"
+                            android:drawableStart="@drawable/icon_time"
+                            android:drawablePadding="10dp"
+                            android:ems="10"
+                            android:hint="Select time"
                             android:inputType="text"
+                            android:textColor="@android:color/black"
                             android:textSize="15sp" />
+
                         <Button
                             android:id="@+id/pickTimeBtn_id2"
                             android:layout_width="match_parent"
@@ -236,7 +240,7 @@
                             android:layout_weight="1"
                             android:background="@drawable/btn_selector"
                             android:text="Pick Time"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="15sp" />
 
 
@@ -246,18 +250,16 @@
                         android:id="@+id/arrivalLocation_id"
                         android:layout_width="match_parent"
                         android:layout_height="60dp"
-                        android:drawableStart="@drawable/icon_location"
-                        android:ems="10"
-                        android:layout_weight="1"
-                        android:textColor="@color/black"
-                        android:drawablePadding="10dp"
-                        android:hint="Location of Arrival"
                         android:layout_marginBottom="20dp"
+                        android:layout_weight="1"
                         android:background="@drawable/edittext_selector"
+                        android:drawableStart="@drawable/icon_location"
+                        android:drawablePadding="10dp"
+                        android:ems="10"
+                        android:hint="Location of Arrival"
                         android:inputType="text"
+                        android:textColor="@android:color/black"
                         android:textSize="15sp" />
-
-
 
 
                 </LinearLayout>
@@ -267,27 +269,27 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="320dp"
-                app:cardCornerRadius="20dp"
                 android:layout_marginBottom="20dp"
-                android:background="@color/white">
+                android:background="?colorOnPrimary"
+                app:cardCornerRadius="20dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:weightSum="5"
+                    android:orientation="vertical"
                     android:padding="10dp"
-                    android:orientation="vertical">
+                    android:weightSum="5">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
                         android:layout_gravity="center"
+                        android:layout_weight="1"
                         android:gravity="center"
-                        android:textColor="@color/app_color"
-                        android:textStyle="bold"
+                        android:text="More Information"
+                        android:textColor="?colorPrimary"
                         android:textSize="25sp"
-                        android:text="More Information"/>
-
+                        android:textStyle="bold" />
 
 
                     <Spinner
@@ -295,55 +297,52 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_marginBottom="10dp"
-                        android:layout_weight="1"/>
+                        android:layout_weight="1" />
 
                     <EditText
                         android:id="@+id/et_weight"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:drawableStart="@drawable/icon_luggage"
-                        android:ems="10"
-                        android:textColor="@color/black"
-                        android:drawablePadding="10dp"
-                        android:hint="Weight of Luggage in kg"
                         android:layout_marginBottom="20dp"
+                        android:layout_weight="1"
                         android:background="@drawable/edittext_selector"
+                        android:drawableStart="@drawable/icon_luggage"
+                        android:drawablePadding="10dp"
+                        android:ems="10"
+                        android:hint="Weight of Luggage in kg"
                         android:inputType="number"
+                        android:textColor="@android:color/black"
                         android:textSize="15sp" />
 
                     <EditText
                         android:id="@+id/et_name"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:drawableStart="@drawable/icon_profile"
-                        android:ems="10"
-                        android:textColor="@color/black"
-                        android:drawablePadding="10dp"
-                        android:hint="What would you like to be called?"
                         android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
                         android:background="@drawable/edittext_selector"
+                        android:drawableStart="@drawable/icon_profile"
+                        android:drawablePadding="10dp"
+                        android:ems="10"
+                        android:hint="What would you like to be called?"
                         android:inputType="text"
+                        android:textColor="@android:color/black"
                         android:textSize="15sp" />
 
                     <EditText
                         android:id="@+id/et_msg"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:drawableStart="@drawable/icon_email"
-                        android:ems="10"
-                        android:textColor="@color/black"
-                        android:drawablePadding="10dp"
-                        android:hint="Special Msg"
                         android:layout_marginBottom="10dp"
+                        android:layout_weight="1"
                         android:background="@drawable/edittext_selector"
+                        android:drawableStart="@drawable/icon_email"
+                        android:drawablePadding="10dp"
+                        android:ems="10"
+                        android:hint="Special Msg"
                         android:inputType="text"
+                        android:textColor="@android:color/black"
                         android:textSize="15sp" />
-
-
-
 
 
                 </LinearLayout>
@@ -358,7 +357,6 @@
                 android:weightSum="2">
 
 
-
                 <Button
                     android:id="@+id/studentSubmitBtn_id"
                     android:layout_width="match_parent"
@@ -368,7 +366,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/submitbtn_selector"
                     android:text="Submit"
-                    android:textColor="@color/app_color"
+                    android:textColor="?colorPrimary"
                     android:textSize="25sp" />
 
                 <Button
@@ -380,7 +378,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/submitbtn_selector"
                     android:text="Cancel"
-                    android:textColor="@color/app_color"
+                    android:textColor="?colorPrimary"
                     android:textSize="25sp" />
 
 

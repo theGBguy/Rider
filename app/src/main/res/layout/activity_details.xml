@@ -7,7 +7,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="20dp"
-    tools:context=".DetailsActivity">
+    tools:context=".ui.DetailsActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -15,9 +15,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
-
 
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -39,7 +38,7 @@
                     android:layout_weight="1"
                     android:text="Requested by :"
                     android:textAlignment="center"
-                    android:textColor="@color/app_color"
+                    android:textColor="?colorPrimary"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
@@ -48,16 +47,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textAlignment="viewStart"
                     android:text="Username"
-                    android:textColor="@color/app_color"
+                    android:textAlignment="viewStart"
+                    android:textColor="?colorPrimary"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
 
             </LinearLayout>
-
-
 
 
             <TextView
@@ -66,7 +63,7 @@
                 android:layout_marginTop="30dp"
                 android:gravity="center"
                 android:text="Arrival"
-                android:textColor="@color/app_color"
+                android:textColor="?colorPrimary"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
@@ -74,14 +71,14 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/app_color"
+                android:backgroundTint="?colorPrimary"
                 app:cardCornerRadius="10dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="10dp">
 
 
                     <LinearLayout
@@ -95,7 +92,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="Place :"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -106,11 +103,9 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="Yatra Login"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="22sp"
                             android:textStyle="bold" />
-
-
                     </LinearLayout>
 
                     <LinearLayout
@@ -124,7 +119,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="Time :"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -135,7 +130,7 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="Yatra Time"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -153,7 +148,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="Date :"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -164,7 +159,7 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="Yatra Date"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -172,26 +167,25 @@
                     </LinearLayout>
 
 
-
-
                 </LinearLayout>
 
 
             </androidx.cardview.widget.CardView>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:gravity="center"
                 android:text="Departure"
-                android:textColor="@color/app_color"
+                android:textColor="?colorPrimary"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/app_color"
+                android:backgroundTint="?colorPrimary"
                 app:cardCornerRadius="10dp">
 
                 <LinearLayout
@@ -211,7 +205,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="Place :"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -222,7 +216,7 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="Yatra Login"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -240,7 +234,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="Time :"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -251,7 +245,7 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="Yatra Time"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -269,7 +263,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="Date :"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -280,14 +274,12 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="Yatra Date"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
 
                     </LinearLayout>
-
-
 
 
                 </LinearLayout>
@@ -296,21 +288,20 @@
             </androidx.cardview.widget.CardView>
 
 
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:gravity="center"
                 android:text="Information"
-                android:textColor="@color/app_color"
+                android:textColor="?colorPrimary"
                 android:textSize="22sp"
                 android:textStyle="bold" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/app_color"
+                android:backgroundTint="?colorPrimary"
                 app:cardCornerRadius="10dp">
 
                 <LinearLayout
@@ -330,7 +321,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="LuggageWeight :"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -341,7 +332,7 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="Yatra Weight"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -359,7 +350,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="People Count:"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -370,7 +361,7 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="Yatra People"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -388,7 +379,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:text="Special Msg :"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
@@ -399,14 +390,12 @@
                             android:layout_weight="1"
                             android:gravity="center"
                             android:text="Yatra Msg"
-                            android:textColor="@color/white"
+                            android:textColor="?colorOnPrimary"
                             android:textSize="22sp"
                             android:textStyle="bold" />
 
 
                     </LinearLayout>
-
-
 
 
                 </LinearLayout>
@@ -448,7 +437,6 @@
 
 
             </LinearLayout>
-
 
 
         </LinearLayout>

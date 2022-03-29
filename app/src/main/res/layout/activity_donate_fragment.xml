@@ -6,16 +6,16 @@
     android:layout_height="match_parent"
     android:padding="20dp"
     android:orientation="vertical"
-    tools:context=".DonateFragment">
+    tools:context=".ui.DonateFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Cooming Soon"
         android:gravity="center"
-        android:textStyle="bold"
+        android:text="Coming Soon!"
+        android:textColor="?colorPrimary"
         android:textSize="38sp"
-        android:textColor="@color/app_color"/>
+        android:textStyle="bold" />
 
 
 
