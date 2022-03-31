@@ -13,18 +13,16 @@ import android.widget.ArrayAdapter
 import android.widget.TimePicker
 import androidx.fragment.app.Fragment
 import com.example.rider.databinding.FragmentStudentHomeBinding
+import com.example.rider.model.YatraRequest
 import com.example.rider.ui.SubmitSuccessActivity
 import com.example.rider.utils.showShortToast
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.util.*
 
 class StudentHomeFragment : Fragment() {
     private var binding: FragmentStudentHomeBinding? = null
-
-    private var studentDbRef: DatabaseReference? = null
-    private var firestore: FirebaseFirestore? = null
 
     private var dialog: ProgressDialog? = null
 
@@ -40,102 +38,106 @@ class StudentHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val people = mutableListOf(
-            "Number of People",
+            "Select Number of People", "0",
             "1", "2", "3", "4",
             "5", "6", "7", "8",
             "9", "10"
         )
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, people)
-        binding?.peopleSpinnerId?.adapter = adapter
+        binding?.spnrPeopleCount?.adapter = adapter
 
-        firestore = FirebaseFirestore.getInstance()
-        studentDbRef = FirebaseDatabase.getInstance().reference.child("StudentForm")
+        binding?.btnPickDepartureTime
 
-        binding?.pickDateBtnId?.setOnClickListener { _ ->
+        binding?.btnPickDepartureDate?.setOnClickListener { _ ->
             with(Calendar.getInstance()) {
                 DatePickerDialog(
                     requireActivity(),
                     { _, year: Int, month: Int, day: Int ->
                         val date = "$day/${month + 1}/$year"
-                        binding?.etDate?.setText(date)
+                        binding?.etDepatureDate?.setText(date)
                     },
                     this[Calendar.YEAR], this[Calendar.MONTH], this[Calendar.DAY_OF_MONTH]
                 ).show()
             }
         }
 
-        binding?.pickDateBtnId2?.setOnClickListener { _ ->
+        binding?.btnPickArrivalDate?.setOnClickListener { _ ->
             with(Calendar.getInstance()) {
                 DatePickerDialog(
                     requireActivity(),
                     { _, year: Int, month: Int, day: Int ->
                         val date = "$day/${month + 1}/$year"
-                        binding?.etDate2?.setText(date)
+                        binding?.etArrivalDate?.setText(date)
                     },
                     this[Calendar.YEAR], this[Calendar.MONTH], this[Calendar.DAY_OF_MONTH]
                 ).show()
             }
         }
 
-        binding?.pickTimeBtnId?.setOnClickListener { _ ->
+        binding?.btnPickDepartureTime?.setOnClickListener { _ ->
             TimePickerDialog(
                 context,
                 { _: TimePicker?, hourOfDay: Int, minute: Int ->
                     val calendar = Calendar.getInstance()
                     calendar[0, 0, 0, hourOfDay] = minute
                     val time = "$hourOfDay-$minute"
-                    binding?.etTime?.setText(time)
+                    binding?.etDepatureTime?.setText(time)
                 }, 12, 0, false
             ).show()
         }
 
-        binding?.pickTimeBtnId2?.setOnClickListener { _ ->
+        binding?.btnPickArrivalTime?.setOnClickListener { _ ->
             TimePickerDialog(
                 context,
                 { _: TimePicker?, hourOfDay: Int, minute: Int ->
                     val calendar = Calendar.getInstance()
                     calendar[0, 0, 0, hourOfDay] = minute
                     val time = "$hourOfDay-$minute"
-                    binding?.etTime2?.setText(time)
+                    binding?.etArrivalTime?.setText(time)
                 }, 12, 0, false
             ).show()
         }
 
         binding?.studentSubmitBtnId?.setOnClickListener { _ ->
-            val departure = binding?.departureLocationId?.text.toString()
-            val arrival = binding?.arrivalLocationId?.text.toString()
-            val departureDate = binding?.etDate?.text.toString()
-            val arrivalDate = binding?.etDate2?.text.toString()
-            val departureTime = binding?.etTime?.text.toString()
-            val arrivalTime = binding?.etTime2?.text.toString()
-            val weight = binding?.etWeight?.text.toString()
-            val msg = binding?.etMsg?.text.toString()
-            val name = binding?.etName?.text.toString()
+            val departureLocation = binding?.etDepartureLocation?.text.toString().trim()
+            val arrivalLocation = binding?.etArrivalLocation?.text.toString().trim()
+            val departureDate = binding?.etDepatureDate?.text.toString()
+            val arrivalDate = binding?.etArrivalDate?.text.toString()
+            val departureTime = binding?.etDepatureTime?.text.toString()
+            val arrivalTime = binding?.etArrivalTime?.text.toString()
+            val weight = binding?.etWeight?.text.toString().trim()
+            val msg = binding?.etMsg?.text.toString().trim()
+            val name = binding?.etName?.text.toString().trim()
+            var peopleCount: Int = -1
+            try {
+                peopleCount = binding?.spnrPeopleCount?.selectedItem.toString().toInt()
+            } catch (e: Exception) {
+                "Please select number of people".showShortToast(requireContext())
+            }
 
-            val people1 = binding?.peopleSpinnerId?.selectedItem.toString()
 
             if (TextUtils.isEmpty(departureDate)) {
-                binding?.etDate?.error = "Select Departure Date"
+                binding?.etDepatureDate?.error = "Select Departure Date"
                 return@setOnClickListener
             }
             if (TextUtils.isEmpty(departureTime)) {
-                binding?.etTime?.error = "Select Departure Time"
+                binding?.etDepatureTime?.error = "Select Departure Time"
                 return@setOnClickListener
             }
-            if (TextUtils.isEmpty(departure)) {
-                binding?.departureLocationId?.error = "It cannot be left empty"
+            if (TextUtils.isEmpty(departureLocation)) {
+                binding?.etDepartureLocation?.error = "It cannot be left empty"
                 return@setOnClickListener
             }
-            if (TextUtils.isEmpty(arrival)) {
-                binding?.arrivalLocationId?.error = "It cannot be left empty"
+            if (TextUtils.isEmpty(arrivalLocation)) {
+                binding?.etArrivalLocation?.error = "It cannot be left empty"
                 return@setOnClickListener
             }
             if (TextUtils.isEmpty(arrivalDate)) {
-                binding?.etDate2?.error = "Select Arrival Date"
+                binding?.etArrivalDate?.error = "Select Arrival Date"
                 return@setOnClickListener
             }
             if (TextUtils.isEmpty(arrivalTime)) {
-                binding?.etTime?.error = "Select Arrival Time"
+                binding?.etDepatureTime?.error = "Select Arrival Time"
                 return@setOnClickListener
             }
             if (TextUtils.isEmpty(msg)) {
@@ -151,15 +153,25 @@ class StudentHomeFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            insertStudentData()
-
             dialog = ProgressDialog(context)
             dialog!!.setMessage("Sending Request")
             dialog!!.show()
 
-            Intent(context, SubmitSuccessActivity::class.java).also {
-                startActivity(it)
-            }
+            makeYatraRequest(
+                YatraRequest(
+                    initiatorId = Firebase.auth.currentUser?.uid,
+                    arrivalLocation = arrivalLocation,
+                    arrivalDate = arrivalDate,
+                    arrivalTime = arrivalTime,
+                    departureLocation = departureLocation,
+                    departureDate = departureDate,
+                    departureTime = departureTime,
+                    peopleCount = peopleCount,
+                    weight = weight.toInt(),
+                    name = name,
+                    msg = msg
+                )
+            )
         }
     }
 
@@ -168,37 +180,30 @@ class StudentHomeFragment : Fragment() {
         super.onDestroyView()
     }
 
-    private fun insertStudentData() {
-        val items: MutableMap<String, String> = HashMap()
+    private fun makeYatraRequest(yatraRequest: YatraRequest) {
+        Firebase.firestore.collection("yatra_requests")
+            .add(yatraRequest)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    "Request Sent".showShortToast(requireContext())
+                    Intent(context, SubmitSuccessActivity::class.java).also { intent ->
+                        startActivity(intent)
+                    }
+                } else {
+                    "Error occurred : ${task.exception?.message}".showShortToast(requireContext())
+                }
 
-        items["Departure"] = binding?.departureLocationId?.text.toString().trim()
-        items["Arrival"] = binding?.arrivalLocationId?.text.toString().trim()
-        items["DepTime"] = binding?.etTime?.text.toString().trim()
-        items["ArrTime"] = binding?.etTime2?.text.toString().trim()
-        items["DepDate"] = binding?.etDate?.text.toString().trim()
-        items["ArrDate"] = binding?.etDate2?.text.toString().trim()
-        items["Msg"] = binding?.etMsg?.text.toString().trim()
-        items["Weight"] = binding?.etWeight?.text.toString().trim()
-        items["Name"] = binding?.etName?.text.toString().trim()
-        items["People"] = binding?.peopleSpinnerId?.selectedItem.toString().trim()
-
-        firestore!!.collection("students_form")
-            .add(items)
-            .addOnCompleteListener {
-                dialog!!.dismiss()
-
-                val id = studentDbRef?.key
-                binding?.departureLocationId?.setText("")
-                binding?.arrivalLocationId?.setText("")
-                binding?.etDate?.setText("")
-                binding?.etDate2?.setText("")
-                binding?.etTime?.setText("")
-                binding?.etTime2?.setText("")
+                dialog?.dismiss()
+                // clearing data in the views
+                binding?.etDepartureLocation?.setText("")
+                binding?.etArrivalLocation?.setText("")
+                binding?.etDepatureDate?.setText("")
+                binding?.etArrivalDate?.setText("")
+                binding?.etDepatureTime?.setText("")
+                binding?.etArrivalTime?.setText("")
                 binding?.etWeight?.setText("")
                 binding?.etMsg?.setText("")
                 binding?.etName?.setText("")
-
-                "Request Sent".showShortToast(requireContext())
             }
     }
 }

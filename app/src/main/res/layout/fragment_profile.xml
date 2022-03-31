@@ -17,16 +17,14 @@
             android:layout_height="150dp"
             android:src="@drawable/icon_profile" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/profile_changeImage"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="Change Profile"
-            android:textColor="?colorPrimary"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:text="Change your profile details"
+            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium" />
 
         <EditText
             android:id="@+id/profile_firstname_id"
@@ -34,13 +32,12 @@
             android:layout_height="60dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/edittext_selector"
-            android:drawableStart="@drawable/icon_profile"
+            android:drawableStart="@drawable/icon_username"
             android:drawablePadding="10dp"
             android:ems="10"
             android:hint="First Name"
             android:inputType="textEmailAddress"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:padding="8dp" />
 
         <EditText
             android:id="@+id/profile_lastname_id"
@@ -48,13 +45,12 @@
             android:layout_height="60dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/edittext_selector"
-            android:drawableStart="@drawable/icon_profile"
+            android:drawableStart="@drawable/icon_username"
             android:drawablePadding="10dp"
             android:ems="10"
             android:hint="Last Name"
             android:inputType="textEmailAddress"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:padding="8dp" />
 
         <EditText
             android:id="@+id/profile_email_id"
@@ -67,8 +63,7 @@
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:padding="8dp" />
 
 
         <EditText
@@ -81,9 +76,8 @@
             android:drawablePadding="10dp"
             android:ems="10"
             android:hint="Phone"
-            android:inputType="number"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:inputType="phone"
+            android:padding="8dp" />
 
         <EditText
             android:id="@+id/profile_address_id"
@@ -96,8 +90,7 @@
             android:ems="10"
             android:hint="Address"
             android:inputType="text"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:padding="8dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -113,10 +106,8 @@
                 android:layout_margin="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_selector"
-                android:text="Cancel"
-                android:textColor="#fff"
-                android:textSize="25sp" />
+                android:padding="16dp"
+                android:text="Cancel" />
 
             <Button
                 android:id="@+id/updateBtn_id"
@@ -125,10 +116,8 @@
                 android:layout_margin="5dp"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
-                android:background="@drawable/btn_selector"
-                android:text="Update"
-                android:textColor="#fff"
-                android:textSize="25sp" />
+                android:padding="16dp"
+                android:text="Update" />
 
         </LinearLayout>
 

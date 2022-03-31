@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="20dp"
     android:orientation="vertical"
+    android:padding="20dp"
     tools:context=".ui.nav_fragments.StudentRequestFragment">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -17,10 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="You have accepted these request"
-        android:textColor="?colorPrimary"
         android:gravity="center"
-        android:textSize="20sp"/>
-
-
+        android:text="You have accepted these requests."
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium" />
 </LinearLayout>

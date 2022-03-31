@@ -115,7 +115,7 @@ class VolunteerLoginActivity : AppCompatActivity() {
                 if (task?.isSuccessful == true) {
                     "Logged in".showShortToast(this@VolunteerLoginActivity)
 
-                    Intent(this@VolunteerLoginActivity, VolunteerSideNavBar::class.java).also {
+                    Intent(this@VolunteerLoginActivity, VolunteerSideNavBarActivity::class.java).also {
                         startActivity(it)
                     }
                 } else {

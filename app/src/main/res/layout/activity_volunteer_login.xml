@@ -1,99 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:padding="24dp">
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_margin="16dp"
+        android:orientation="vertical"
+        android:padding="16dp">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:gravity="center"
             android:text="Dear volunteer, let's get you signed in."
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
             android:textColor="?colorPrimary"
-            android:textSize="24sp"
             android:textStyle="bold" />
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:src="@drawable/icon_profile" />
+            android:src="@drawable/icon_username" />
 
         <EditText
             android:id="@+id/login_email_id"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:background="@drawable/edittext_selector"
             android:drawableStart="@drawable/icon_email"
             android:drawablePadding="8dp"
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
-            android:padding="8dp"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:padding="8dp" />
 
 
         <EditText
             android:id="@+id/login_password_id"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="4dp"
             android:background="@drawable/edittext_selector"
             android:drawableStart="@drawable/icon_pwd"
             android:drawablePadding="8dp"
             android:ems="10"
+            android:filterTouchesWhenObscured="true"
             android:hint="Password"
             android:inputType="textPassword"
-            android:padding="8dp"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:padding="8dp" />
 
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/login_loginBtn_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
-            android:background="@drawable/btn_selector"
             android:text="Login"
-            android:textColor="?colorOnPrimary"
-            android:textSize="25sp" />
+            android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/login_forgetpassword_id"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginTop="12dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="Forget Password?"
+            android:text="Forget password?"
             android:textAlignment="center"
-            android:textColor="@android:color/holo_red_light"
-            android:textSize="16sp" />
+            android:textColor="?colorError" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:id="@+id/login_registerTextView_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:gravity="center"
-            android:text="No Account yet??"
-            android:textColor="?colorPrimary"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:text="No account yet?"
+            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium" />
 
-
-        <ProgressBar
-            android:id="@+id/pgBar_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone" />
     </LinearLayout>
 </ScrollView>

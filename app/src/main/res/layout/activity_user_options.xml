@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?colorPrimary"
     android:orientation="vertical"
-    android:padding="20dp"
+    android:padding="16dp"
     tools:context=".ui.UserOptionsActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -19,42 +17,34 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
-        android:fontFamily="monospace"
         android:gravity="center"
         android:text="Who are you?"
-        android:textColor="?colorOnPrimary"
-        android:textSize="30sp"
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
         android:textStyle="bold" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cv_student"
-        android:layout_width="300dp"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_student"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="20dp">
+        android:gravity="center"
+        android:text="Student"
+        android:textSize="55sp" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Student"
-            android:textSize="55sp" />
-    </com.google.android.material.card.MaterialCardView>
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="OR"
+        android:textStyle="italic"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"/>
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cv_volunteer"
-        android:layout_width="300dp"
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_volunteer"
+        style="@style/Widget.Material3.Button.TextButton"
+        android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        app:cardCornerRadius="20dp">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="Volunteer"
-            android:textSize="55sp" />
-    </com.google.android.material.card.MaterialCardView>
+        android:gravity="center"
+        android:text="Volunteer"
+        android:textSize="55sp" />
 </LinearLayout>

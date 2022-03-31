@@ -1,15 +1,14 @@
 package com.example.rider.model
 
-import com.google.type.LatLng
-
 data class User(
-    private val id: String = "-1",
-    private val firstName: String,
-    private val lastName: String,
-    private val email: String,
-    private val password: String,
-    private val address: LatLng,
-    private val type: Int
+    val id: String = "",
+    val firstName: String = "",
+    val lastName: String = "",
+    val email: String = "",
+    val password: String = "",
+    val phoneNumber: String = "",
+    val address: String = "",
+    val type: Int = -1
 ) {
     companion object {
         const val TYPE_STUDENT = 1

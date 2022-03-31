@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ui.VolunteerSideNavBar"
+    tools:context=".ui.VolunteerSideNavBarActivity"
     tools:openDrawer="start">
 
     <LinearLayout
@@ -36,7 +36,7 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/volunteer_draw_menu" />
+        app:menu="@menu/menu_drawer" />
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

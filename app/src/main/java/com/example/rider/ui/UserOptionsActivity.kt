@@ -15,11 +15,11 @@ class UserOptionsActivity : AppCompatActivity() {
         val binding = ActivityUserOptionsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.cvStudent.setOnClickListener {
+        binding.btnStudent.setOnClickListener {
             val intent = Intent(this@UserOptionsActivity, StudentLoginActivity::class.java)
             startActivity(intent)
         }
-        binding.cvVolunteer.setOnClickListener {
+        binding.btnVolunteer.setOnClickListener {
             val intent = Intent(this@UserOptionsActivity, VolunteerLoginActivity::class.java)
             startActivity(intent)
         }

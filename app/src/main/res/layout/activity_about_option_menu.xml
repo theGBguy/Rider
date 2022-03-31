@@ -12,8 +12,7 @@
         android:layout_height="wrap_content"
         android:text="About Us"
         android:textAlignment="center"
-        android:textColor="?colorPrimary"
-        android:textSize="24sp"
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
         android:textStyle="bold" />
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -28,16 +27,13 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Yatra Feature"
-        android:textColor="?colorPrimary"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="This app has two way authentication (Student and Volunteer). Student can book the volunteer for yatra simply filling a quick form and volunteer can either accept or discard the request."
-        android:textColor="?colorOnSurface"
-        android:textSize="18sp" />
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
 </LinearLayout>

@@ -12,7 +12,7 @@ import com.example.rider.databinding.ActivityVolunteerSideNavBarBinding
 import com.example.rider.ui.nav_fragments.*
 import com.google.android.material.navigation.NavigationView
 
-class VolunteerSideNavBar : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class VolunteerSideNavBarActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private var binding: ActivityVolunteerSideNavBarBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,7 +41,7 @@ class VolunteerSideNavBar : AppCompatActivity(), NavigationView.OnNavigationItem
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.option_menu, menu)
+        menuInflater.inflate(R.menu.menu_options, menu)
         return super.onCreateOptionsMenu(menu)
     }
 

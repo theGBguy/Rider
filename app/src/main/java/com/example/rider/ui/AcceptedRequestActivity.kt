@@ -38,7 +38,7 @@ class AcceptedRequestActivity : AppCompatActivity() {
             binding!!.successUsernameId.text = documentSnapshot!!.getString("firstName")
         }
         binding!!.homeBtnId.setOnClickListener { view: View? ->
-            val intent = Intent(this@AcceptedRequestActivity, VolunteerSideNavBar::class.java)
+            val intent = Intent(this@AcceptedRequestActivity, VolunteerSideNavBarActivity::class.java)
             startActivity(intent)
         }
     }

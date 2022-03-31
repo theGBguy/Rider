@@ -4,28 +4,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
+    android:padding="16dp"
     tools:context=".ui.nav_fragments.LogoutFragment">
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
         android:gravity="center"
         android:text="YATRA"
         android:textSize="50sp"
         android:textStyle="bold" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_marginTop="32dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="8dp"
-        android:text="We are sad to see you go. Do you really want to Logout?"
-        android:textColor="?colorPrimary"
-        android:textSize="30sp"
-        android:textStyle="bold" />
+        android:gravity="center"
+        android:text="We are sad to see you go.\nDo you really want to\nLOG OUT?"
+        android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -40,10 +39,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:background="@drawable/nobtn_selector"
-            android:text="No"
-            android:textColor="?colorOnPrimary"
-            android:textSize="24sp" />
+            android:padding="16dp"
+            android:text="No" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/yesBtn_id"
@@ -51,20 +48,9 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:background="@drawable/yesbtn_selector"
-            android:text="YES"
-            android:textColor="?colorOnPrimary"
-            android:textSize="24sp" />
+            android:padding="16dp"
+            android:text="Yes" />
 
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
-        android:layout_marginBottom="30dp"
-        android:gravity="center"
-        android:text="Stay Connected"
-        android:textColor="?colorOnSurface"
-        android:textSize="25sp" />
 </LinearLayout>

@@ -14,10 +14,17 @@ import androidx.core.content.FileProvider
 import coil.load
 import com.example.rider.R
 import com.example.rider.databinding.ActivityRegisterBinding
+import com.example.rider.model.User
 import com.example.rider.utils.showShortToast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
+import com.google.firebase.storage.ktx.storageMetadata
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -26,10 +33,8 @@ import java.util.*
 class RegisterActivity : AppCompatActivity() {
     private var binding: ActivityRegisterBinding? = null
 
-    private var firebaseAuth: FirebaseAuth? = null
-    private var firestore: FirebaseFirestore? = null
-
     private var userID: String? = null
+    private var userType: Int = User.TYPE_STUDENT
 
     private lateinit var currentPhotoPath: String
 
@@ -39,22 +44,25 @@ class RegisterActivity : AppCompatActivity() {
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        firebaseAuth = FirebaseAuth.getInstance()
-        firestore = FirebaseFirestore.getInstance()
-
         binding?.registerCancelBtnId?.setOnClickListener { finish() }
         binding?.registerRegisterBtnId?.setOnClickListener { performAuth() }
         binding?.registerSelectProfileId?.setOnClickListener { selectImage() }
+        binding?.radioGroupId?.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.rb_student_id -> userType = User.TYPE_STUDENT
+                R.id.rb_volunteer_id -> userType = User.TYPE_VOLUNTEER
+            }
+        }
     }
 
     private fun moveToLoginActivity() {
-        when (binding?.radioGroupId?.checkedRadioButtonId) {
-            R.id.rb_student_id -> {
+        when (userType) {
+            User.TYPE_STUDENT -> {
                 Intent(this, StudentLoginActivity::class.java).also {
                     startActivity(it)
                 }
             }
-            R.id.rb_volunteer_id -> {
+            else -> {
                 Intent(this, VolunteerLoginActivity::class.java).also {
                     startActivity(it)
                 }
@@ -109,31 +117,45 @@ class RegisterActivity : AppCompatActivity() {
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()
 
-        firebaseAuth!!.createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    "User Created".showShortToast(this@RegisterActivity)
+        val user = User(
+            firstName = firstName,
+            lastName = lastName,
+            email = email,
+            password = password,
+            phoneNumber = phoneNumber,
+            address = address,
+            type = userType
+        )
 
-                    userID = firebaseAuth?.currentUser?.uid
-                    val documentReference = firestore?.collection("users")
-                        ?.document(userID!!)
+        val imageUri = Uri.fromFile(File(currentPhotoPath))
 
-                    val user: MutableMap<String, Any> = HashMap()
-                    user["firstName"] = firstName
-                    user["lastName"] = lastName
-                    user["email"] = email
-                    user["phoneNumber"] = phoneNumber
-                    user["address"] = address
+        val createUserTask = Firebase.auth.createUserWithEmailAndPassword(email, password)
+        val storeUserDetailsTask = Firebase.firestore.collection("users")
+            .document(userID!!)
+            .set(user)
+        val storeUserImageTask = Firebase.storage
+            .reference
+            .child("images/${userID}/${imageUri.lastPathSegment}")
+            .putFile(imageUri, storageMetadata { contentType = "image/jpeg" })
 
-                    documentReference?.set(user)?.addOnSuccessListener {
-                        Log.d(TAG, "onSuccess: User Profile is created$userID")
-                    }
-                    moveToLoginActivity()
-                } else {
-                    "Error ! ${task.exception?.message}".showShortToast(this@RegisterActivity)
-                }
-                dialog.dismiss()
+        createUserTask.continueWithTask {
+            if(it.isSuccessful){
+                userID = Firebase.auth.currentUser?.uid
             }
+            storeUserDetailsTask
+        }.continueWithTask {
+            storeUserImageTask
+        }.addOnCompleteListener{ task ->
+            if(task.isSuccessful) {
+                "User Created".showShortToast(this@RegisterActivity)
+                // sign out as creating account will sign in automatically
+                Firebase.auth.signOut()
+                moveToLoginActivity()
+            }else{
+                "Error ! ${task.exception?.message}".showShortToast(this@RegisterActivity)
+            }
+            dialog.dismiss()
+        }
     }
 
     private fun selectImage() {

@@ -11,17 +11,20 @@ import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.rider.R
 import com.example.rider.databinding.ActivityStudentLoginBinding
+import com.example.rider.model.User
 import com.example.rider.utils.showShortToast
 import com.google.android.gms.tasks.Task
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class StudentLoginActivity : AppCompatActivity() {
     private var binding: ActivityStudentLoginBinding? = null
 
     private var firebaseAuth: FirebaseAuth? = null
+    private var firestore: FirebaseFirestore? = null
 
     override fun onBackPressed() {
         if (firebaseAuth?.currentUser != null) {
@@ -48,6 +51,7 @@ class StudentLoginActivity : AppCompatActivity() {
         setContentView(binding!!.root)
 
         firebaseAuth = FirebaseAuth.getInstance()
+        firestore = FirebaseFirestore.getInstance()
 
         binding?.loginRegisterTextViewId?.setOnClickListener {
             Intent(this@StudentLoginActivity, RegisterActivity::class.java).also {
@@ -115,17 +119,33 @@ class StudentLoginActivity : AppCompatActivity() {
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()
 
-        firebaseAuth?.signInWithEmailAndPassword(email, password)
-            ?.addOnCompleteListener { task: Task<AuthResult?> ->
-                if (task.isSuccessful) {
+        var uid = firebaseAuth?.currentUser?.uid
+
+        // sign in and verify the current account as student
+        val signInTask = firebaseAuth?.signInWithEmailAndPassword(email, password)
+        val verifyAsStudentTask = firestore?.collection("users")
+            ?.document(uid!!)?.get()
+
+        signInTask?.continueWithTask {
+            if (it.isSuccessful) {
+                uid = firebaseAuth?.currentUser?.uid
+            }
+            verifyAsStudentTask
+        }?.addOnCompleteListener { task: Task<DocumentSnapshot> ->
+            if (task.isSuccessful) {
+                val user = task.result.toObject(User::class.java) as User
+                if (user.type == User.TYPE_STUDENT) {
                     "Logged in".showShortToast(this@StudentLoginActivity)
                     Intent(this@StudentLoginActivity, StudentSideNavBarActivity::class.java).also {
                         startActivity(it)
                     }
-                } else {
-                    "Error ! ${task.exception?.message}".showShortToast(this@StudentLoginActivity)
+                }else{
+                    "This is not an student account".showShortToast(this@StudentLoginActivity)
                 }
-                dialog.dismiss()
+            } else {
+                "Error ! ${task.exception?.message}".showShortToast(this@StudentLoginActivity)
             }
+            dialog.dismiss()
+        }
     }
 }

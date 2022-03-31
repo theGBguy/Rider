@@ -34,27 +34,27 @@ class YatraRequestViewHolder(
 ) : RecyclerView.ViewHolder(binding?.root!!) {
 
     fun bind(yatraRequest: YatraRequest) {
-        binding?.tvDeparture?.text = yatraRequest.departure
-        binding?.tvDepTime?.text = yatraRequest.departureTime
-        binding?.tvDepDate?.text = yatraRequest.departureDate
-        binding?.tvArrival?.text = yatraRequest.arrival
-        binding?.tvArrTime?.text = yatraRequest.arrivalTime
-        binding?.tvMsg?.text = yatraRequest.msg
-        binding?.tvWeight?.text = yatraRequest.weight
-        binding?.tvPeople?.text = yatraRequest.peopleCount.toString()
+        binding?.tvDeparture?.text = yatraRequest.departureLocation
+//        binding?.?.text = yatraRequest.departureTime
+//        binding?.tvDepDate?.text = yatraRequest.departureDate
+        binding?.tvArrival?.text = yatraRequest.arrivalLocation
+//        binding?.tvArrTime?.text = yatraRequest.arrivalTime
+//        binding?.tvMsg?.text = yatraRequest.msg
+//        binding?.tvWeight?.text = yatraRequest.weight.toString()
+//        binding?.tvPeople?.text = yatraRequest.peopleCount.toString()
         binding?.tvName?.text = yatraRequest.name
 
         binding?.tvDeparture?.setOnClickListener {
             val intent = Intent(it.context, DetailsActivity::class.java)
-            intent.putExtra("Departure", yatraRequest.departure)
-            intent.putExtra("ArrDate", yatraRequest.arrivalDate)
-            intent.putExtra("Arrival", yatraRequest.arrival)
+            intent.putExtra("Departure", yatraRequest.departureLocation)
+//            intent.putExtra("ArrDate", yatraRequest.arrivalDate)
+            intent.putExtra("Arrival", yatraRequest.arrivalLocation)
             intent.putExtra("Msg", yatraRequest.msg)
-            intent.putExtra("DepDate", yatraRequest.departureDate)
-            intent.putExtra("ArrTime", yatraRequest.arrivalTime)
-            intent.putExtra("DepTime", yatraRequest.departureTime)
-            intent.putExtra("Weight", yatraRequest.weight)
-            intent.putExtra("People", yatraRequest.peopleCount)
+//            intent.putExtra("DepDate", yatraRequest.departureDate)
+//            intent.putExtra("ArrTime", yatraRequest.arrivalTime)
+//            intent.putExtra("DepTime", yatraRequest.departureTime)
+//            intent.putExtra("Weight", yatraRequest.weight)
+//            intent.putExtra("People", yatraRequest.peopleCount)
             intent.putExtra("Name", yatraRequest.name)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             it.context.startActivity(intent)
