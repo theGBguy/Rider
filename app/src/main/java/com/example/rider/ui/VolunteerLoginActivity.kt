@@ -9,44 +9,24 @@ import android.util.Patterns
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.example.rider.R
 import com.example.rider.databinding.ActivityVolunteerLoginBinding
+import com.example.rider.model.User
 import com.example.rider.utils.showShortToast
 import com.google.android.gms.tasks.Task
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class VolunteerLoginActivity : AppCompatActivity() {
     private var binding: ActivityVolunteerLoginBinding? = null
-
-    private var firebaseAuth: FirebaseAuth? = null
-
-    override fun onBackPressed() {
-        if (firebaseAuth?.currentUser != null) {
-            MaterialAlertDialogBuilder(this@VolunteerLoginActivity)
-                .setTitle(R.string.app_name)
-                .setIcon(R.mipmap.ic_launcher)
-                .setMessage("Do you want to Log Out?")
-                .setCancelable(false)
-                .setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
-                    firebaseAuth?.signOut()
-                    finish()
-                }
-                .setNegativeButton("No") { dialog: DialogInterface?, _: Int -> dialog?.cancel() }
-                .show()
-        } else {
-            super.onBackPressed()
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityVolunteerLoginBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
-
-        firebaseAuth = FirebaseAuth.getInstance()
 
         binding?.loginRegisterTextViewId?.setOnClickListener { _ ->
             Intent(this@VolunteerLoginActivity, RegisterActivity::class.java).also {
@@ -74,7 +54,7 @@ class VolunteerLoginActivity : AppCompatActivity() {
                 .setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
                     val mail = resetMail.text.toString()
                     if (mail.isNotBlank()) {
-                        firebaseAuth!!.sendPasswordResetEmail(mail)
+                        Firebase.auth.sendPasswordResetEmail(mail)
                             .addOnSuccessListener {
                                 "Reset Link has been sent in your mail".showShortToast(this@VolunteerLoginActivity)
                             }
@@ -110,18 +90,39 @@ class VolunteerLoginActivity : AppCompatActivity() {
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()
 
-        firebaseAuth?.signInWithEmailAndPassword(email, password)
-            ?.addOnCompleteListener { task: Task<AuthResult?>? ->
-                if (task?.isSuccessful == true) {
-                    "Logged in".showShortToast(this@VolunteerLoginActivity)
+        // sign in and verify the current account as student
+        val signInTask = Firebase.auth.signInWithEmailAndPassword(email, password)
 
-                    Intent(this@VolunteerLoginActivity, VolunteerSideNavBarActivity::class.java).also {
+        signInTask.continueWithTask {
+            if (it.isSuccessful) {
+                Firebase.auth.currentUser?.uid?.let { uid ->
+                    Firebase.firestore.collection("users")
+                        .document(uid).get()
+                }
+            } else {
+                "Error ! ${it.exception?.message}".showShortToast(this@VolunteerLoginActivity)
+                null
+            }
+        }.addOnCompleteListener(this) { task: Task<DocumentSnapshot> ->
+            if (task.isSuccessful) {
+                val user = task.result.toObject(User::class.java) as User
+                if (user.type == User.TYPE_VOLUNTEER) {
+                    "Logged in".showShortToast(this@VolunteerLoginActivity)
+                    Intent(
+                        this@VolunteerLoginActivity,
+                        VolunteerSideNavBarActivity::class.java
+                    ).also {
                         startActivity(it)
                     }
                 } else {
-                    "Error ! ${task?.exception?.message}".showShortToast(this@VolunteerLoginActivity)
+                    "This is not an volunteer account".showShortToast(this@VolunteerLoginActivity)
                 }
-                dialog.dismiss()
+            } else {
+                if (task.exception?.message?.lowercase()?.contains("continuation") != true) {
+                    "Error ! ${task.exception?.message}".showShortToast(this@VolunteerLoginActivity)
+                }
             }
+            dialog.dismiss()
+        }
     }
 }

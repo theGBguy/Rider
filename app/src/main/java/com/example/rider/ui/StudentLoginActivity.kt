@@ -9,49 +9,25 @@ import android.util.Patterns
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.example.rider.R
 import com.example.rider.databinding.ActivityStudentLoginBinding
 import com.example.rider.model.User
 import com.example.rider.utils.showShortToast
 import com.google.android.gms.tasks.Task
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 
 class StudentLoginActivity : AppCompatActivity() {
     private var binding: ActivityStudentLoginBinding? = null
-
-    private var firebaseAuth: FirebaseAuth? = null
-    private var firestore: FirebaseFirestore? = null
-
-    override fun onBackPressed() {
-        if (firebaseAuth?.currentUser != null) {
-            MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.app_name)
-                .setIcon(R.mipmap.ic_launcher)
-                .setMessage("Do you want to Log Out?")
-                .setCancelable(false)
-                .setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
-                    firebaseAuth!!.signOut()
-                    finish()
-                }
-                .setNegativeButton("No") { dialog: DialogInterface, _: Int -> dialog.cancel() }
-                .show()
-        } else {
-            super.onBackPressed()
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityStudentLoginBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
-
-        firebaseAuth = FirebaseAuth.getInstance()
-        firestore = FirebaseFirestore.getInstance()
 
         binding?.loginRegisterTextViewId?.setOnClickListener {
             Intent(this@StudentLoginActivity, RegisterActivity::class.java).also {
@@ -79,7 +55,7 @@ class StudentLoginActivity : AppCompatActivity() {
                 .setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
                     val mail = resetMail.text.toString()
                     if (mail.matches(Patterns.EMAIL_ADDRESS.toRegex())) {
-                        firebaseAuth!!.sendPasswordResetEmail(mail)
+                        Firebase.auth.sendPasswordResetEmail(mail)
                             .addOnSuccessListener {
                                 "Reset Link has been sent in your mail".showShortToast(this@StudentLoginActivity)
                             }
@@ -119,19 +95,20 @@ class StudentLoginActivity : AppCompatActivity() {
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()
 
-        var uid = firebaseAuth?.currentUser?.uid
-
         // sign in and verify the current account as student
-        val signInTask = firebaseAuth?.signInWithEmailAndPassword(email, password)
-        val verifyAsStudentTask = firestore?.collection("users")
-            ?.document(uid!!)?.get()
+        val signInTask = Firebase.auth.signInWithEmailAndPassword(email, password)
 
-        signInTask?.continueWithTask {
+        signInTask.continueWithTask {
             if (it.isSuccessful) {
-                uid = firebaseAuth?.currentUser?.uid
+                Firebase.auth.currentUser?.uid?.let { uid ->
+                    Firebase.firestore.collection("users")
+                        .document(uid).get()
+                }
+            } else {
+                "Error ! ${it.exception?.message}".showShortToast(this@StudentLoginActivity)
+                null
             }
-            verifyAsStudentTask
-        }?.addOnCompleteListener { task: Task<DocumentSnapshot> ->
+        }.addOnCompleteListener(this) { task: Task<DocumentSnapshot> ->
             if (task.isSuccessful) {
                 val user = task.result.toObject(User::class.java) as User
                 if (user.type == User.TYPE_STUDENT) {
@@ -139,11 +116,13 @@ class StudentLoginActivity : AppCompatActivity() {
                     Intent(this@StudentLoginActivity, StudentSideNavBarActivity::class.java).also {
                         startActivity(it)
                     }
-                }else{
+                } else {
                     "This is not an student account".showShortToast(this@StudentLoginActivity)
                 }
             } else {
-                "Error ! ${task.exception?.message}".showShortToast(this@StudentLoginActivity)
+                if (task.exception?.message?.lowercase()?.contains("continuation") != true) {
+                    "Error ! ${task.exception?.message}".showShortToast(this@StudentLoginActivity)
+                }
             }
             dialog.dismiss()
         }

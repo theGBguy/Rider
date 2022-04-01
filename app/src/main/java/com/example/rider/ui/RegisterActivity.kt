@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.TextUtils
-import android.util.Log
 import android.util.Patterns
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
@@ -17,12 +16,9 @@ import com.example.rider.databinding.ActivityRegisterBinding
 import com.example.rider.model.User
 import com.example.rider.utils.showShortToast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.ktx.storage
 import com.google.firebase.storage.ktx.storageMetadata
 import java.io.File
@@ -36,7 +32,7 @@ class RegisterActivity : AppCompatActivity() {
     private var userID: String? = null
     private var userType: Int = User.TYPE_STUDENT
 
-    private lateinit var currentPhotoPath: String
+    private lateinit var currentPhotoUri: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,7 +109,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         val dialog = ProgressDialog(this)
-        dialog.setMessage("Signing in")
+        dialog.setMessage("Registering your details...")
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()
 
@@ -127,32 +123,58 @@ class RegisterActivity : AppCompatActivity() {
             type = userType
         )
 
-        val imageUri = Uri.fromFile(File(currentPhotoPath))
-
         val createUserTask = Firebase.auth.createUserWithEmailAndPassword(email, password)
-        val storeUserDetailsTask = Firebase.firestore.collection("users")
-            .document(userID!!)
-            .set(user)
-        val storeUserImageTask = Firebase.storage
-            .reference
-            .child("images/${userID}/${imageUri.lastPathSegment}")
-            .putFile(imageUri, storageMetadata { contentType = "image/jpeg" })
+//        val storeUserDetailsTask = Firebase.firestore.collection("users")
+//            .document(userID!!)
+//            .set(user)
+//        val storeUserImageTask = Firebase.storage
+//            .reference
+//            .child("images/${userID}/${currentPhotoUri.lastPathSegment}")
+//            .putFile(currentPhotoUri, storageMetadata { contentType = "image/jpeg" })
+
+        // register -> upload image -> get image url -> push user details
 
         createUserTask.continueWithTask {
-            if(it.isSuccessful){
-                userID = Firebase.auth.currentUser?.uid
+            if (it.isSuccessful) {
+                Firebase.auth.currentUser?.uid?.let { userID ->
+                    Firebase.storage
+                        .reference
+                        .child("images/${userID}/${user.firstName}-profile")
+                        .putFile(currentPhotoUri, storageMetadata { contentType = "image/jpeg" })
+                }
+            } else {
+                "Error ! ${it.exception?.message}".showShortToast(this@RegisterActivity)
+                null
             }
-            storeUserDetailsTask
         }.continueWithTask {
-            storeUserImageTask
-        }.addOnCompleteListener{ task ->
-            if(task.isSuccessful) {
+            Firebase.auth.currentUser?.uid?.let { userID ->
+                Firebase.storage
+                    .reference
+                    .child("images/${userID}/${user.firstName}-profile")
+                    .downloadUrl
+            }
+        }.continueWithTask {
+            if (it.isSuccessful) {
+                user.imageLocation = it.result.toString()
+                Firebase.auth.uid?.let { userID ->
+                    Firebase.firestore.collection("users")
+                        .document(userID)
+                        .set(user)
+                }
+            } else {
+                "Error ! ${it.exception?.message}".showShortToast(this@RegisterActivity)
+                null
+            }
+        }.addOnCompleteListener(this) { task ->
+            if (task.isSuccessful) {
                 "User Created".showShortToast(this@RegisterActivity)
                 // sign out as creating account will sign in automatically
                 Firebase.auth.signOut()
                 moveToLoginActivity()
-            }else{
-                "Error ! ${task.exception?.message}".showShortToast(this@RegisterActivity)
+            } else {
+                if (task.exception?.message?.lowercase()?.contains("continuation") != true) {
+                    "Error ! ${task.exception?.message}".showShortToast(this@RegisterActivity)
+                }
             }
             dialog.dismiss()
         }
@@ -187,9 +209,13 @@ class RegisterActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
             if (requestCode == IMAGE_CAPTURE_CODE) {
-                binding?.registerimageSelectId?.load(currentPhotoPath)
+                binding?.registerimageSelectId?.load(currentPhotoUri)
             } else if (requestCode == IMAGE_PICK_CODE) {
-                binding?.registerimageSelectId?.load(data?.data)
+                binding?.registerimageSelectId?.load(data?.data.also {
+                    if (it != null) {
+                        currentPhotoUri = it
+                    }
+                })
             }
         }
     }
@@ -219,7 +245,7 @@ class RegisterActivity : AppCompatActivity() {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile("JPEG_${timeStamp}_", ".jpg", storageDir).apply {
-            currentPhotoPath = absolutePath
+            currentPhotoUri = Uri.fromFile(File(absolutePath))
         }
     }
 

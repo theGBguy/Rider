@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import com.example.rider.databinding.FragmentStudentHomeBinding
 import com.example.rider.model.YatraRequest
 import com.example.rider.ui.SubmitSuccessActivity
+import com.example.rider.utils.setOnConsistentClickListener
 import com.example.rider.utils.showShortToast
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -46,9 +47,7 @@ class StudentHomeFragment : Fragment() {
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_list_item_1, people)
         binding?.spnrPeopleCount?.adapter = adapter
 
-        binding?.btnPickDepartureTime
-
-        binding?.btnPickDepartureDate?.setOnClickListener { _ ->
+        binding?.etDepatureDate?.setOnConsistentClickListener {
             with(Calendar.getInstance()) {
                 DatePickerDialog(
                     requireActivity(),
@@ -61,7 +60,7 @@ class StudentHomeFragment : Fragment() {
             }
         }
 
-        binding?.btnPickArrivalDate?.setOnClickListener { _ ->
+        binding?.etArrivalDate?.setOnConsistentClickListener {
             with(Calendar.getInstance()) {
                 DatePickerDialog(
                     requireActivity(),
@@ -74,28 +73,28 @@ class StudentHomeFragment : Fragment() {
             }
         }
 
-        binding?.btnPickDepartureTime?.setOnClickListener { _ ->
-            TimePickerDialog(
-                context,
-                { _: TimePicker?, hourOfDay: Int, minute: Int ->
-                    val calendar = Calendar.getInstance()
-                    calendar[0, 0, 0, hourOfDay] = minute
-                    val time = "$hourOfDay-$minute"
-                    binding?.etDepatureTime?.setText(time)
-                }, 12, 0, false
-            ).show()
+        binding?.etDepatureTime?.setOnConsistentClickListener {
+            with(Calendar.getInstance()) {
+                TimePickerDialog(
+                    context,
+                    { _: TimePicker?, hourOfDay: Int, minute: Int ->
+                        val time = "$hourOfDay:$minute"
+                        binding?.etDepatureTime?.setText(time)
+                    }, this[Calendar.HOUR_OF_DAY], this[Calendar.MINUTE], false
+                ).show()
+            }
         }
 
-        binding?.btnPickArrivalTime?.setOnClickListener { _ ->
-            TimePickerDialog(
-                context,
-                { _: TimePicker?, hourOfDay: Int, minute: Int ->
-                    val calendar = Calendar.getInstance()
-                    calendar[0, 0, 0, hourOfDay] = minute
-                    val time = "$hourOfDay-$minute"
-                    binding?.etArrivalTime?.setText(time)
-                }, 12, 0, false
-            ).show()
+        binding?.etArrivalTime?.setOnConsistentClickListener {
+            with(Calendar.getInstance()) {
+                TimePickerDialog(
+                    context,
+                    { _: TimePicker?, hourOfDay: Int, minute: Int ->
+                        val time = "$hourOfDay:$minute"
+                        binding?.etArrivalTime?.setText(time)
+                    }, this[Calendar.HOUR_OF_DAY], this[Calendar.MINUTE], false
+                ).show()
+            }
         }
 
         binding?.studentSubmitBtnId?.setOnClickListener { _ ->

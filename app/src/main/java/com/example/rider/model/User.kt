@@ -8,6 +8,7 @@ data class User(
     val password: String = "",
     val phoneNumber: String = "",
     val address: String = "",
+    var imageLocation: String = "",
     val type: Int = -1
 ) {
     companion object {

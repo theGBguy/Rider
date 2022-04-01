@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="8dp"
     tools:context=".ui.nav_fragments.StudentHomeFragment">
 
     <TextView
@@ -24,13 +24,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="8dp">
 
             <LinearLayout
                 style="@style/ThemeOverlay.AppTheme.CardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginTop="8dp"
@@ -38,106 +37,59 @@
                 android:layout_marginRight="4dp"
                 android:layout_marginBottom="8dp"
                 android:orientation="vertical"
-                android:padding="8dp"
-                android:weightSum="6">
+                android:padding="8dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="2"
                     android:gravity="center"
                     android:text="Departure"
                     android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
                     android:textColor="?colorPrimary" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="2"
-                    android:orientation="horizontal"
-                    android:padding="4dp">
+                <EditText
+                    android:id="@+id/et_depature_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/edittext_selector"
+                    android:drawableStart="@drawable/icon_date"
+                    android:drawablePadding="8dp"
+                    android:ems="10"
+                    android:hint="Select date"
+                    android:inputType="text"
+                    android:padding="4dp" />
 
-                    <EditText
-                        android:id="@+id/et_depature_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/edittext_selector"
-                        android:drawableStart="@drawable/icon_date"
-                        android:drawablePadding="8dp"
-                        android:ems="10"
-                        android:hint="Select date"
-                        android:inputType="text"
-                        android:padding="4dp" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_pick_departure_date"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_weight="1"
-                        android:text="Pick"
-                        android:textColor="?colorOnPrimary"
-                        android:textSize="15sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="2"
-                    android:orientation="horizontal"
-                    android:padding="4dp">
-
-                    <EditText
-                        android:id="@+id/et_depature_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/edittext_selector"
-                        android:drawableStart="@drawable/icon_time"
-                        android:drawablePadding="8dp"
-                        android:ems="10"
-                        android:hint="Select time"
-                        android:inputType="text"
-                        android:padding="4dp" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_pick_departure_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_weight="1"
-                        android:text="Pick"
-                        android:textColor="?colorOnPrimary"
-                        android:textSize="15sp" />
-
-
-                </LinearLayout>
+                <EditText
+                    android:id="@+id/et_depature_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/edittext_selector"
+                    android:drawableStart="@drawable/icon_time"
+                    android:drawablePadding="8dp"
+                    android:ems="10"
+                    android:hint="Select time"
+                    android:inputType="text"
+                    android:padding="4dp" />
 
                 <EditText
                     android:id="@+id/et_departure_location"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
                     android:layout_marginBottom="8dp"
-                    android:layout_weight="1"
                     android:background="@drawable/edittext_selector"
                     android:drawableStart="@drawable/icon_location"
                     android:drawablePadding="8dp"
                     android:ems="10"
                     android:hint="Location of Departure"
                     android:inputType="text"
-                    android:padding="8dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="15sp" />
+                    android:padding="8dp" />
             </LinearLayout>
 
             <LinearLayout
                 style="@style/ThemeOverlay.AppTheme.CardView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginTop="8dp"
@@ -145,73 +97,40 @@
                 android:layout_marginRight="4dp"
                 android:layout_marginBottom="8dp"
                 android:orientation="vertical"
-                android:padding="8dp"
-                android:weightSum="6">
+                android:padding="8dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="2"
                     android:gravity="center"
                     android:text="Arrival"
                     android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
                     android:textColor="?colorPrimary" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="2"
-                    android:orientation="horizontal"
-                    android:padding="4dp">
+                <EditText
+                    android:id="@+id/et_arrival_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/edittext_selector"
+                    android:drawableStart="@drawable/icon_date"
+                    android:drawablePadding="8dp"
+                    android:ems="10"
+                    android:hint="Select date"
+                    android:inputType="text"
+                    android:padding="4dp" />
 
-                    <EditText
-                        android:id="@+id/et_arrival_date"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/edittext_selector"
-                        android:drawableStart="@drawable/icon_date"
-                        android:drawablePadding="8dp"
-                        android:ems="10"
-                        android:hint="Select date"
-                        android:inputType="text"
-                        android:padding="4dp" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_pick_arrival_date"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Pick" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="2"
-                    android:orientation="horizontal"
-                    android:padding="4dp">
-
-                    <EditText
-                        android:id="@+id/et_arrival_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/edittext_selector"
-                        android:drawableStart="@drawable/icon_time"
-                        android:drawablePadding="8dp"
-                        android:ems="10"
-                        android:hint="Select time"
-                        android:inputType="text"
-                        android:padding="4dp" />
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btn_pick_arrival_time"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Pick"
-                        android:textSize="15sp" />
-                </LinearLayout>
+                <EditText
+                    android:id="@+id/et_arrival_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:background="@drawable/edittext_selector"
+                    android:drawableStart="@drawable/icon_time"
+                    android:drawablePadding="8dp"
+                    android:ems="10"
+                    android:hint="Select time"
+                    android:inputType="text"
+                    android:padding="4dp" />
 
                 <EditText
                     android:id="@+id/et_arrival_location"
@@ -232,7 +151,6 @@
                 style="@style/ThemeOverlay.AppTheme.CardView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="4dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginLeft="4dp"
                 android:layout_marginTop="8dp"
@@ -240,14 +158,12 @@
                 android:layout_marginRight="4dp"
                 android:layout_marginBottom="8dp"
                 android:orientation="vertical"
-                android:padding="8dp"
-                android:weightSum="5">
+                android:padding="8dp">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
                     android:gravity="center"
                     android:text="More Information"
                     android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
@@ -256,48 +172,42 @@
                 <Spinner
                     android:id="@+id/spnr_people_count"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="1" />
+                    android:layout_height="60dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp" />
 
                 <EditText
                     android:id="@+id/et_weight"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_weight="1"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="8dp"
                     android:background="@drawable/edittext_selector"
                     android:drawableStart="@drawable/icon_luggage"
                     android:drawablePadding="8dp"
                     android:ems="10"
                     android:hint="Weight of Luggage in kg"
                     android:inputType="number"
-                    android:padding="8dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="15sp" />
+                    android:padding="8dp" />
 
                 <EditText
                     android:id="@+id/et_name"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="1"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="8dp"
                     android:background="@drawable/edittext_selector"
                     android:drawableStart="@drawable/icon_username"
                     android:drawablePadding="8dp"
                     android:ems="10"
                     android:hint="What would you like to be called?"
                     android:inputType="text"
-                    android:padding="8dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="15sp" />
+                    android:padding="8dp" />
 
                 <EditText
                     android:id="@+id/et_msg"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_weight="1"
+                    android:layout_height="60dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
                     android:background="@drawable/edittext_selector"
                     android:drawableStart="@drawable/icon_email"
                     android:drawablePadding="8dp"

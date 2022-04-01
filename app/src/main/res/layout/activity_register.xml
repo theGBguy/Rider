@@ -62,9 +62,7 @@
             android:ems="10"
             android:hint="Last Name"
             android:inputType="textEmailAddress"
-            android:padding="8dp"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:padding="8dp" />
 
         <EditText
             android:id="@+id/register_email_id"
@@ -77,9 +75,7 @@
             android:ems="10"
             android:hint="Email"
             android:inputType="textEmailAddress"
-            android:padding="8dp"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:padding="8dp" />
 
         <EditText
             android:id="@+id/register_password_id"
@@ -92,9 +88,7 @@
             android:ems="10"
             android:hint="Password"
             android:inputType="textPassword"
-            android:padding="8dp"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:padding="8dp" />
 
 
         <EditText
@@ -108,9 +102,7 @@
             android:ems="10"
             android:hint="Phone"
             android:inputType="phone"
-            android:padding="8dp"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:padding="8dp" />
 
         <EditText
             android:id="@+id/register_address_id"
@@ -123,9 +115,7 @@
             android:ems="10"
             android:hint="Address"
             android:inputType="text"
-            android:padding="8dp"
-            android:textColor="@android:color/black"
-            android:textSize="15sp" />
+            android:padding="8dp" />
 
 
         <RadioGroup
@@ -144,9 +134,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
                 android:checked="true"
-                android:text="Student"
-                android:textColor="?colorPrimary"
-                android:textSize="15sp" />
+                android:text="Student" />
 
             <RadioButton
                 android:id="@+id/rb_volunteer_id"
@@ -155,9 +143,7 @@
                 android:layout_margin="5dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
-                android:text="Volunteer"
-                android:textColor="?colorPrimary"
-                android:textSize="15sp" />
+                android:text="Volunteer" />
         </RadioGroup>
 
         <LinearLayout
@@ -174,6 +160,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
+                android:padding="16dp"
                 android:text="Cancel"
                 android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
@@ -183,6 +170,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:layout_weight="1"
+                android:padding="16dp"
                 android:text="Register"
                 android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 

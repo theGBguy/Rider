@@ -30,6 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="16dp"
+            android:autofillHints="emailAddress"
             android:background="@drawable/edittext_selector"
             android:drawableStart="@drawable/icon_email"
             android:drawablePadding="8dp"
@@ -44,6 +45,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_marginTop="4dp"
+            android:autofillHints="password"
             android:background="@drawable/edittext_selector"
             android:drawableStart="@drawable/icon_pwd"
             android:drawablePadding="8dp"
@@ -58,6 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="48dp"
+            android:padding="16dp"
             android:text="Login"
             android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
