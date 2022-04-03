@@ -18,4 +18,9 @@ class VolunteerRequestFragment : Fragment() {
         binding = FragmentVolunteerRequestBinding.inflate(inflater, container, false)
         return binding!!.root
     }
+
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
+    }
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,11 +8,14 @@
     android:padding="16dp"
     tools:context=".ui.UserOptionsActivity">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="180dp"
+        android:layout_height="180dp"
         android:layout_gravity="center"
-        android:src="@drawable/yatra" />
+        android:layout_marginTop="32dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/yatra"
+        app:shapeAppearanceOverlay="@style/CircularComponentStyle" />
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
@@ -27,24 +31,26 @@
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:layout_margin="8dp"
         android:gravity="center"
         android:text="Student"
-        android:textSize="55sp" />
+        android:textSize="48sp" />
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="OR"
-        android:textStyle="italic"
         android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"/>
+        android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+        android:textStyle="italic" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_volunteer"
         style="@style/Widget.Material3.Button.TextButton"
         android:layout_width="match_parent"
         android:layout_height="150dp"
+        android:layout_margin="8dp"
         android:gravity="center"
         android:text="Volunteer"
-        android:textSize="55sp" />
+        android:textSize="48sp" />
 </LinearLayout>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -11,7 +12,7 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -20,12 +21,19 @@
             android:textAppearance="@style/TextAppearance.Material3.HeadlineLarge"
             android:textColor="?colorPrimary" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/registerimageSelect_id"
-            android:layout_width="match_parent"
+            android:layout_width="150dp"
             android:layout_height="150dp"
+            android:layout_gravity="center"
             android:layout_marginTop="32dp"
-            android:src="@drawable/icon_profile" />
+            android:padding="4dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_profile"
+            app:contentPadding="8dp"
+            app:shapeAppearanceOverlay="@style/CircularComponentStyle"
+            app:strokeColor="?colorPrimary"
+            app:strokeWidth="4dp" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/register_selectProfile_id"
@@ -34,9 +42,26 @@
             android:layout_height="match_parent"
             android:layout_marginTop="12dp"
             android:text="Select your profile image"
-            android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
-            android:textColor="?colorPrimary" />
+            android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/iv_legal_id"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="32dp"
+            android:padding="4dp"
+            android:src="@drawable/icon_profile"
+            app:contentPadding="8dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_select_legal_id"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="12dp"
+            android:text="Select your ID documents image"
+            android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
         <EditText
             android:id="@+id/register_firstname_id"

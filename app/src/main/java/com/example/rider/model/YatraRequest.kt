@@ -1,5 +1,8 @@
 package com.example.rider.model
 
+import android.os.Parcelable
+
+@kotlinx.parcelize.Parcelize
 data class YatraRequest(
     val requestId: String? = "",
     val initiatorId: String? = "",
@@ -15,4 +18,4 @@ data class YatraRequest(
     val name: String? = "",
     val msg: String? = "",
     val isAccepted: Boolean? = false
-)
+) : Parcelable

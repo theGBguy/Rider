@@ -5,20 +5,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import coil.load
+import coil.transform.CircleCropTransformation
+import com.example.rider.R
 import com.example.rider.databinding.FragmentProfileBinding
 import com.example.rider.ui.RegisterActivity
 import com.example.rider.utils.showShortToast
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+
 
 class ProfileFragment : Fragment() {
     private var binding: FragmentProfileBinding? = null
-
-    private var fAuth: FirebaseAuth? = null
-    private var fStore: FirebaseFirestore? = null
-    private var userID: String? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,51 +33,42 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fAuth = FirebaseAuth.getInstance()
-        fStore = FirebaseFirestore.getInstance()
-        userID = fAuth!!.currentUser!!.uid
-        val user = FirebaseAuth.getInstance().currentUser
-        if (user != null) {
+        val currentUser = Firebase.auth.currentUser
+        if (currentUser != null) {
             Log.d(RegisterActivity.TAG, "onCreate: \"+user.getDisplayName()")
         }
-        val documentReference = fStore!!.collection("users").document(
-            userID!!
-        )
-        documentReference.addSnapshotListener { documentSnapshot, e ->
-            binding?.profileAddressId?.setText(documentSnapshot?.getString("address"))
-            binding?.profileEmailId?.setText(documentSnapshot?.getString("email"))
-            binding?.profilePhoneId?.setText(documentSnapshot?.getString("phoneNumber"))
-            binding?.profileFirstnameId?.setText(documentSnapshot?.getString("firstName"))
-            binding?.profileLastnameId?.setText(documentSnapshot?.getString("lastName"))
+        currentUser?.uid?.let { uid ->
+            Firebase.firestore.collection("users")
+                .document(uid)
+                .addSnapshotListener { documentSnapshot, e ->
+                    binding?.profileImage?.load(documentSnapshot?.getString("profileImageLocation"))
+                    {
+                        crossfade(true)
+                        placeholder(R.drawable.placeholder)
+                        fallback(R.drawable.icon_username)
+                        transformations(CircleCropTransformation())
+                    }
+                    binding?.legalImage?.load(documentSnapshot?.getString("idImageLocation")) {
+                        crossfade(true)
+                        placeholder(R.drawable.placeholder)
+                        fallback(R.drawable.icon_profile)
+                    }
+                    binding?.profileAddressId?.setText(documentSnapshot?.getString("address"))
+                    binding?.profileEmailId?.setText(documentSnapshot?.getString("email"))
+                    binding?.profilePhoneId?.setText(documentSnapshot?.getString("phoneNumber"))
+                    binding?.profileFirstnameId?.setText(documentSnapshot?.getString("firstName"))
+                    binding?.profileLastnameId?.setText(documentSnapshot?.getString("lastName"))
+                }
+        }
+        binding?.cancelBtnId?.setOnClickListener {
+            parentFragmentManager.popBackStack()
         }
         binding?.updateBtnId?.setOnClickListener { updateProfile() }
     }
 
-    override fun onStart() {
-        super.onStart()
-        userID = fAuth!!.currentUser!!.uid
-        val documentReference = fStore!!.collection("users").document(
-            userID!!
-        )
-        documentReference.get()
-            .addOnCompleteListener { task ->
-                if (task.result.exists()) {
-                    val firstNameResult = task.result.getString("firstName")
-                    val lastNameResult = task.result.getString("lastName")
-                    val emailResult = task.result.getString("email")
-                    val addressResult = task.result.getString("address")
-                    val phoneResult = task.result.getString("phoneNumber")
-
-                    binding?.profileFirstnameId?.setText(firstNameResult)
-                    binding?.profileLastnameId?.setText(lastNameResult)
-                    binding?.profileEmailId?.setText(emailResult)
-                    binding?.profilePhoneId?.setText(phoneResult)
-                    binding?.profileAddressId?.setText(addressResult)
-
-                } else {
-                    "No profile".showShortToast(requireContext())
-                }
-            }
+    override fun onDestroyView() {
+        binding = null
+        super.onDestroyView()
     }
 
     private fun updateProfile() {
@@ -87,17 +78,22 @@ class ProfileFragment : Fragment() {
         val email = binding?.profileEmailId?.text.toString()
         val phoneNumber = binding?.profilePhoneId?.text.toString()
 
-        val sDoc = fStore!!.collection("users").document(
-            userID!!
-        )
-        fStore!!.runTransaction<Void> { transaction ->
-            transaction.update(sDoc, "firstName", firstName)
-            transaction.update(sDoc, "lastName", lastName)
-            transaction.update(sDoc, "email", email)
-            transaction.update(sDoc, "phoneNumber", phoneNumber)
-            transaction.update(sDoc, "address", address)
-            null
-        }.addOnSuccessListener { Toast.makeText(context, "successs", Toast.LENGTH_SHORT).show() }
-            .addOnFailureListener { Toast.makeText(context, "failed", Toast.LENGTH_SHORT).show() }
+        Firebase.auth.currentUser?.uid?.let { uid ->
+            val userDocRef = Firebase.firestore.collection("users").document(uid)
+            Firebase.firestore.runTransaction<Void> { transaction ->
+                transaction.update(userDocRef, "firstName", firstName)
+                transaction.update(userDocRef, "lastName", lastName)
+                transaction.update(userDocRef, "email", email)
+                transaction.update(userDocRef, "phoneNumber", phoneNumber)
+                transaction.update(userDocRef, "address", address)
+                null
+            }.addOnCompleteListener {
+                if (it.isSuccessful) {
+                    "Updated the profile successfully".showShortToast(requireContext())
+                } else {
+                    "Profile update failed".showShortToast(requireContext())
+                }
+            }
+        }
     }
 }

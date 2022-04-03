@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.Toast
 import androidx.core.view.GestureDetectorCompat
+import java.util.*
 
 fun String.showShortToast(context: Context) {
     Toast.makeText(context, this, Toast.LENGTH_SHORT).show()
@@ -22,4 +23,8 @@ fun EditText.setOnConsistentClickListener(doOnClick: (View) -> Unit) {
         })
 
     this.setOnTouchListener { _, motionEvent -> gestureDetector.onTouchEvent(motionEvent) }
+}
+
+fun getRandomUID(): String {
+    return UUID.randomUUID().toString().replace(Regex.fromLiteral("-"), "")
 }

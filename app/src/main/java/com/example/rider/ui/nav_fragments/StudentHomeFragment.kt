@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import com.example.rider.databinding.FragmentStudentHomeBinding
 import com.example.rider.model.YatraRequest
 import com.example.rider.ui.SubmitSuccessActivity
+import com.example.rider.utils.getRandomUID
 import com.example.rider.utils.setOnConsistentClickListener
 import com.example.rider.utils.showShortToast
 import com.google.firebase.auth.ktx.auth
@@ -26,6 +27,35 @@ class StudentHomeFragment : Fragment() {
     private var binding: FragmentStudentHomeBinding? = null
 
     private var dialog: ProgressDialog? = null
+
+    private lateinit var departureLocation: String
+    private var departureLatitude: Double = 0.0
+    private var departureLongitude: Double = 0.0
+
+    private lateinit var arrivalLocation: String
+    private var arrivalLatitude: Double = 0.0
+    private var arrivalLongitude: Double = 0.0
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        childFragmentManager.setFragmentResultListener(
+            "departure", this
+        ) { _, result ->
+            departureLocation = result.getString("departure_location")!!
+            departureLatitude = result.getDouble("departure_lat")
+            departureLongitude = result.getDouble("departure_long")
+            binding?.etDepartureLocation?.setText(departureLocation)
+        }
+        childFragmentManager.setFragmentResultListener(
+            "arrival", this
+        ) { _, result ->
+            arrivalLocation = result.getString("arrival_location")!!
+            arrivalLatitude = result.getDouble("arrival_lat")
+            arrivalLongitude = result.getDouble("arrival_long")
+            binding?.etArrivalLocation?.setText(arrivalLocation)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,7 +69,7 @@ class StudentHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val people = mutableListOf(
-            "Select Number of People", "0",
+            "Select Number of People",
             "1", "2", "3", "4",
             "5", "6", "7", "8",
             "9", "10"
@@ -97,23 +127,36 @@ class StudentHomeFragment : Fragment() {
             }
         }
 
+        binding?.etDepartureLocation?.setOnConsistentClickListener {
+            SelectLocationFragment.newInstance(true).show(childFragmentManager, "location")
+        }
+
+        binding?.etArrivalLocation?.setOnConsistentClickListener {
+            SelectLocationFragment.newInstance(false).show(childFragmentManager, "location")
+        }
+
         binding?.studentSubmitBtnId?.setOnClickListener { _ ->
-            val departureLocation = binding?.etDepartureLocation?.text.toString().trim()
-            val arrivalLocation = binding?.etArrivalLocation?.text.toString().trim()
+            val departureLocation = arrayOf(
+                departureLocation, departureLatitude, departureLongitude
+            ).joinToString()
+
+            val arrivalLocation = arrayOf(
+                arrivalLocation, arrivalLatitude, arrivalLongitude
+            ).joinToString()
+
             val departureDate = binding?.etDepatureDate?.text.toString()
             val arrivalDate = binding?.etArrivalDate?.text.toString()
             val departureTime = binding?.etDepatureTime?.text.toString()
             val arrivalTime = binding?.etArrivalTime?.text.toString()
             val weight = binding?.etWeight?.text.toString().trim()
             val msg = binding?.etMsg?.text.toString().trim()
-            val name = binding?.etName?.text.toString().trim()
+
             var peopleCount: Int = -1
             try {
                 peopleCount = binding?.spnrPeopleCount?.selectedItem.toString().toInt()
             } catch (e: Exception) {
                 "Please select number of people".showShortToast(requireContext())
             }
-
 
             if (TextUtils.isEmpty(departureDate)) {
                 binding?.etDepatureDate?.error = "Select Departure Date"
@@ -147,10 +190,6 @@ class StudentHomeFragment : Fragment() {
                 binding?.etWeight?.error = "Input Luggage Weight"
                 return@setOnClickListener
             }
-            if (TextUtils.isEmpty(name)) {
-                binding?.etName?.error = "Enter your Full Name"
-                return@setOnClickListener
-            }
 
             dialog = ProgressDialog(context)
             dialog!!.setMessage("Sending Request")
@@ -158,6 +197,7 @@ class StudentHomeFragment : Fragment() {
 
             makeYatraRequest(
                 YatraRequest(
+                    requestId = getRandomUID(),
                     initiatorId = Firebase.auth.currentUser?.uid,
                     arrivalLocation = arrivalLocation,
                     arrivalDate = arrivalDate,
@@ -167,7 +207,6 @@ class StudentHomeFragment : Fragment() {
                     departureTime = departureTime,
                     peopleCount = peopleCount,
                     weight = weight.toInt(),
-                    name = name,
                     msg = msg
                 )
             )
@@ -181,7 +220,8 @@ class StudentHomeFragment : Fragment() {
 
     private fun makeYatraRequest(yatraRequest: YatraRequest) {
         Firebase.firestore.collection("yatra_requests")
-            .add(yatraRequest)
+            .document(yatraRequest.requestId!!)
+            .set(yatraRequest)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     "Request Sent".showShortToast(requireContext())
@@ -202,7 +242,6 @@ class StudentHomeFragment : Fragment() {
                 binding?.etArrivalTime?.setText("")
                 binding?.etWeight?.setText("")
                 binding?.etMsg?.setText("")
-                binding?.etName?.setText("")
             }
     }
 }

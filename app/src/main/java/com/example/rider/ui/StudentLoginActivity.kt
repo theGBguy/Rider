@@ -91,7 +91,7 @@ class StudentLoginActivity : AppCompatActivity() {
         }
 
         val dialog = ProgressDialog(this@StudentLoginActivity)
-        dialog.setMessage("Logging in")
+        dialog.setMessage("Logging in...")
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()
 
@@ -102,7 +102,8 @@ class StudentLoginActivity : AppCompatActivity() {
             if (it.isSuccessful) {
                 Firebase.auth.currentUser?.uid?.let { uid ->
                     Firebase.firestore.collection("users")
-                        .document(uid).get()
+                        .document(uid)
+                        .get()
                 }
             } else {
                 "Error ! ${it.exception?.message}".showShortToast(this@StudentLoginActivity)
@@ -114,6 +115,9 @@ class StudentLoginActivity : AppCompatActivity() {
                 if (user.type == User.TYPE_STUDENT) {
                     "Logged in".showShortToast(this@StudentLoginActivity)
                     Intent(this@StudentLoginActivity, StudentSideNavBarActivity::class.java).also {
+                        it.putExtra("key_args", Bundle().apply {
+                            putParcelable("key_user", user)
+                        })
                         startActivity(it)
                     }
                 } else {

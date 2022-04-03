@@ -29,10 +29,11 @@ import java.util.*
 class RegisterActivity : AppCompatActivity() {
     private var binding: ActivityRegisterBinding? = null
 
-    private var userID: String? = null
     private var userType: Int = User.TYPE_STUDENT
 
-    private lateinit var currentPhotoUri: Uri
+    private lateinit var currentProfilePhotoUri: Uri
+    private lateinit var currentLegalPhotoUri: Uri
+    private var isProfile: Boolean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,29 +43,21 @@ class RegisterActivity : AppCompatActivity() {
 
         binding?.registerCancelBtnId?.setOnClickListener { finish() }
         binding?.registerRegisterBtnId?.setOnClickListener { performAuth() }
-        binding?.registerSelectProfileId?.setOnClickListener { selectImage() }
+        binding?.registerSelectProfileId?.setOnClickListener {
+            isProfile = true
+            selectImage()
+        }
+        binding?.btnSelectLegalId?.setOnClickListener {
+            isProfile = false
+            selectImage()
+        }
         binding?.radioGroupId?.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
                 R.id.rb_student_id -> userType = User.TYPE_STUDENT
                 R.id.rb_volunteer_id -> userType = User.TYPE_VOLUNTEER
             }
         }
-    }
 
-    private fun moveToLoginActivity() {
-        when (userType) {
-            User.TYPE_STUDENT -> {
-                Intent(this, StudentLoginActivity::class.java).also {
-                    startActivity(it)
-                }
-            }
-            else -> {
-                Intent(this, VolunteerLoginActivity::class.java).also {
-                    startActivity(it)
-                }
-            }
-        }
-        finish()
     }
 
     private fun performAuth() {
@@ -74,6 +67,13 @@ class RegisterActivity : AppCompatActivity() {
         val lastName = binding?.registerLastnameId?.text.toString().trim()
         val address = binding?.registerAddressId?.text.toString().trim()
         val phoneNumber = binding?.registerPhoneId?.text.toString().trim()
+
+        if (!this::currentProfilePhotoUri.isInitialized) {
+            "Please select a profile picture".showShortToast(this)
+        }
+        if (!this::currentLegalPhotoUri.isInitialized) {
+            "Please select a picture of national id".showShortToast(this)
+        }
 
         if (TextUtils.isEmpty(firstName)) {
             binding?.registerFirstnameId?.error = "FirstName is required"
@@ -109,7 +109,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         val dialog = ProgressDialog(this)
-        dialog.setMessage("Registering your details...")
+        dialog.setMessage("Registering your details, please wait...")
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()
 
@@ -124,39 +124,71 @@ class RegisterActivity : AppCompatActivity() {
         )
 
         val createUserTask = Firebase.auth.createUserWithEmailAndPassword(email, password)
-//        val storeUserDetailsTask = Firebase.firestore.collection("users")
-//            .document(userID!!)
-//            .set(user)
-//        val storeUserImageTask = Firebase.storage
-//            .reference
-//            .child("images/${userID}/${currentPhotoUri.lastPathSegment}")
-//            .putFile(currentPhotoUri, storageMetadata { contentType = "image/jpeg" })
 
-        // register -> upload image -> get image url -> push user details
+        // register -> upload images -> get image urls -> push user details
 
+        dialog.setMessage("Creating user account...")
         createUserTask.continueWithTask {
             if (it.isSuccessful) {
+                dialog.setMessage("Uploading profile image...")
                 Firebase.auth.currentUser?.uid?.let { userID ->
                     Firebase.storage
                         .reference
                         .child("images/${userID}/${user.firstName}-profile")
-                        .putFile(currentPhotoUri, storageMetadata { contentType = "image/jpeg" })
+                        .putFile(
+                            currentProfilePhotoUri,
+                            storageMetadata { contentType = "image/jpeg" })
                 }
             } else {
                 "Error ! ${it.exception?.message}".showShortToast(this@RegisterActivity)
                 null
             }
         }.continueWithTask {
-            Firebase.auth.currentUser?.uid?.let { userID ->
-                Firebase.storage
-                    .reference
-                    .child("images/${userID}/${user.firstName}-profile")
-                    .downloadUrl
+            if (it.isSuccessful) {
+                Firebase.auth.currentUser?.uid?.let { userID ->
+                    Firebase.storage
+                        .reference
+                        .child("images/${userID}/${user.firstName}-profile")
+                        .downloadUrl
+                }
+            } else {
+                "Error ! ${it.exception?.message}".showShortToast(this@RegisterActivity)
+                null
             }
         }.continueWithTask {
             if (it.isSuccessful) {
-                user.imageLocation = it.result.toString()
+                user.profileImageLocation = it.result.toString()
+                dialog.setMessage("Uploading ID documents...")
+                Firebase.auth.currentUser?.uid?.let { userID ->
+                    Firebase.storage
+                        .reference
+                        .child("images/${userID}/${user.firstName}-id")
+                        .putFile(
+                            currentLegalPhotoUri,
+                            storageMetadata { contentType = "image/jpeg" })
+                }
+            } else {
+                "Error ! ${it.exception?.message}".showShortToast(this@RegisterActivity)
+                null
+            }
+        }.continueWithTask {
+            if (it.isSuccessful) {
+                Firebase.auth.currentUser?.uid?.let { userID ->
+                    Firebase.storage
+                        .reference
+                        .child("images/${userID}/${user.firstName}-id")
+                        .downloadUrl
+                }
+            } else {
+                "Error ! ${it.exception?.message}".showShortToast(this@RegisterActivity)
+                null
+            }
+        }.continueWithTask {
+            if (it.isSuccessful) {
+                user.idImageLocation = it.result.toString()
+                dialog.setMessage("Uploading user details...")
                 Firebase.auth.uid?.let { userID ->
+                    user.id = userID
                     Firebase.firestore.collection("users")
                         .document(userID)
                         .set(user)
@@ -170,7 +202,7 @@ class RegisterActivity : AppCompatActivity() {
                 "User Created".showShortToast(this@RegisterActivity)
                 // sign out as creating account will sign in automatically
                 Firebase.auth.signOut()
-                moveToLoginActivity()
+                finish()
             } else {
                 if (task.exception?.message?.lowercase()?.contains("continuation") != true) {
                     "Error ! ${task.exception?.message}".showShortToast(this@RegisterActivity)
@@ -182,7 +214,6 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun selectImage() {
         val options = arrayOf("Take Photo", "Choose from Gallery", "Cancel")
-
         MaterialAlertDialogBuilder(this)
             .setTitle("Add Photo!")
             .setItems(options) { dialogInterface, i ->
@@ -208,14 +239,26 @@ class RegisterActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == RESULT_OK) {
-            if (requestCode == IMAGE_CAPTURE_CODE) {
-                binding?.registerimageSelectId?.load(currentPhotoUri)
-            } else if (requestCode == IMAGE_PICK_CODE) {
-                binding?.registerimageSelectId?.load(data?.data.also {
-                    if (it != null) {
-                        currentPhotoUri = it
-                    }
-                })
+            if (isProfile == true) {
+                if (requestCode == IMAGE_CAPTURE_CODE) {
+                    binding?.registerimageSelectId?.load(currentProfilePhotoUri)
+                } else if (requestCode == IMAGE_PICK_CODE) {
+                    binding?.registerimageSelectId?.load(data?.data.also {
+                        if (it != null) {
+                            currentProfilePhotoUri = it
+                        }
+                    })
+                }
+            } else {
+                if (requestCode == IMAGE_CAPTURE_CODE) {
+                    binding?.ivLegalId?.load(currentLegalPhotoUri)
+                } else if (requestCode == IMAGE_PICK_CODE) {
+                    binding?.ivLegalId?.load(data?.data.also {
+                        if (it != null) {
+                            currentLegalPhotoUri = it
+                        }
+                    })
+                }
             }
         }
     }
@@ -244,8 +287,16 @@ class RegisterActivity : AppCompatActivity() {
     private fun createImageFile(): File {
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-        return File.createTempFile("JPEG_${timeStamp}_", ".jpg", storageDir).apply {
-            currentPhotoUri = Uri.fromFile(File(absolutePath))
+        return File.createTempFile(
+            "${if (isProfile == true) "PROFILE" else "ID"}_JPEG_${timeStamp}_",
+            ".jpg",
+            storageDir
+        ).apply {
+            if (isProfile == true) {
+                currentProfilePhotoUri = Uri.fromFile(File(absolutePath))
+            } else {
+                currentLegalPhotoUri = Uri.fromFile(File(absolutePath))
+            }
         }
     }
 

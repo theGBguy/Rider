@@ -1,31 +1,37 @@
 package com.example.rider.ui
 
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rider.databinding.YatraRequestRowBinding
 import com.example.rider.model.YatraRequest
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
 
 class YatraRequestListAdapter(
-    private var yatraRequestList: ArrayList<YatraRequest?>?
-) : RecyclerView.Adapter<YatraRequestViewHolder>() {
+    options: FirestoreRecyclerOptions<YatraRequest>
+) : FirestoreRecyclerAdapter<YatraRequest, YatraRequestViewHolder>(options) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): YatraRequestViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        position: Int
+    ): YatraRequestViewHolder {
         return YatraRequestViewHolder.create(parent)
     }
 
-    override fun onBindViewHolder(holder: YatraRequestViewHolder, position: Int) {
-        yatraRequestList?.get(position)?.let { holder.bind(it) }
+    override fun onBindViewHolder(
+        holder: YatraRequestViewHolder,
+        position: Int,
+        model: YatraRequest
+    ) {
+        holder.bind(model)
     }
 
     override fun onViewDetachedFromWindow(holder: YatraRequestViewHolder) {
         super.onViewDetachedFromWindow(holder)
         holder.unbind()
-    }
-
-    override fun getItemCount(): Int {
-        return yatraRequestList!!.size
     }
 }
 
@@ -34,28 +40,20 @@ class YatraRequestViewHolder(
 ) : RecyclerView.ViewHolder(binding?.root!!) {
 
     fun bind(yatraRequest: YatraRequest) {
-        binding?.tvDeparture?.text = yatraRequest.departureLocation
-//        binding?.?.text = yatraRequest.departureTime
-//        binding?.tvDepDate?.text = yatraRequest.departureDate
-        binding?.tvArrival?.text = yatraRequest.arrivalLocation
-//        binding?.tvArrTime?.text = yatraRequest.arrivalTime
-//        binding?.tvMsg?.text = yatraRequest.msg
-//        binding?.tvWeight?.text = yatraRequest.weight.toString()
-//        binding?.tvPeople?.text = yatraRequest.peopleCount.toString()
-        binding?.tvName?.text = yatraRequest.name
+        binding?.tvDeparture?.text =
+            "Departure : ${yatraRequest.departureLocation?.split(",")?.get(0)}"
+        binding?.tvArrival?.text =
+            "Arrival : ${yatraRequest.arrivalLocation?.split(",")?.get(0)}"
+        binding?.tvName?.text =
+            if (yatraRequest.name?.isBlank() == true) "Name : Not available" else "Name : ${yatraRequest.name}"
+        binding?.tvStatus?.apply {
+            text = if (yatraRequest.acceptorId?.isBlank() == true) "Not accepted" else "Accepted"
+            setBackgroundColor(if (yatraRequest.acceptorId?.isBlank() == true) Color.RED else Color.GREEN)
+        }
 
-        binding?.tvDeparture?.setOnClickListener {
+        binding?.root?.setOnClickListener {
             val intent = Intent(it.context, DetailsActivity::class.java)
-            intent.putExtra("Departure", yatraRequest.departureLocation)
-//            intent.putExtra("ArrDate", yatraRequest.arrivalDate)
-            intent.putExtra("Arrival", yatraRequest.arrivalLocation)
-            intent.putExtra("Msg", yatraRequest.msg)
-//            intent.putExtra("DepDate", yatraRequest.departureDate)
-//            intent.putExtra("ArrTime", yatraRequest.arrivalTime)
-//            intent.putExtra("DepTime", yatraRequest.departureTime)
-//            intent.putExtra("Weight", yatraRequest.weight)
-//            intent.putExtra("People", yatraRequest.peopleCount)
-            intent.putExtra("Name", yatraRequest.name)
+            intent.putExtra("key_data", yatraRequest)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             it.context.startActivity(intent)
         }

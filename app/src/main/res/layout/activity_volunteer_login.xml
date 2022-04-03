@@ -20,7 +20,7 @@
             android:textColor="?colorPrimary"
             android:textStyle="bold" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:src="@drawable/icon_username" />
@@ -44,7 +44,7 @@
             android:id="@+id/login_password_id"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="16dp"
             android:autofillHints="password"
             android:background="@drawable/edittext_selector"
             android:drawableStart="@drawable/icon_pwd"

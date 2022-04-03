@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.2234375" />
         <entry key="..\:/Rider/app/src/main/res/drawable-v24/btn_selector.xml" value="0.28615384615384615" />
         <entry key="..\:/Rider/app/src/main/res/drawable-v24/edittext_selector.xml" value="0.15989583333333332" />
         <entry key="..\:/Rider/app/src/main/res/drawable-v24/nobtn_selector.xml" value="0.28615384615384615" />
@@ -54,6 +55,7 @@
         <entry key="app/src/main/res/drawable/icon_email.xml" value="0.1055" />
         <entry key="app/src/main/res/drawable/icon_history.xml" value="0.1055" />
         <entry key="app/src/main/res/drawable/icon_home.xml" value="0.1055" />
+        <entry key="app/src/main/res/drawable/icon_image_id.xml" value="0.145" />
         <entry key="app/src/main/res/drawable/icon_location.xml" value="0.1055" />
         <entry key="app/src/main/res/drawable/icon_logout.xml" value="0.1055" />
         <entry key="app/src/main/res/drawable/icon_luggage.xml" value="0.1055" />
@@ -67,6 +69,7 @@
         <entry key="app/src/main/res/drawable/icon_time.xml" value="0.1055" />
         <entry key="app/src/main/res/drawable/icon_username.xml" value="0.1055" />
         <entry key="app/src/main/res/drawable/newbtn_selector.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/placeholder.xml" value="0.145" />
         <entry key="app/src/main/res/drawable/submitbtn_selector.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_about_option_menu.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_about_optionmenu.xml" value="0.25" />
@@ -90,6 +93,7 @@
         <entry key="app/src/main/res/layout/fragment_donate.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/layout/fragment_logout.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.19479166666666667" />
+        <entry key="app/src/main/res/layout/fragment_select_location.xml" value="0.2" />
         <entry key="app/src/main/res/layout/fragment_student_home.xml" value="0.2982456140350877" />
         <entry key="app/src/main/res/layout/fragment_student_request.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/layout/fragment_volunteer_home.xml" value="0.19479166666666667" />
@@ -99,12 +103,13 @@
         <entry key="app/src/main/res/layout/studentfrom_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/test.xml" value="0.25" />
         <entry key="app/src/main/res/layout/volunteer_login.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/yatra_request_row.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/yatra_request_row.xml" value="0.25" />
         <entry key="app/src/main/res/menu/menu_drawer.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/menu/menu_options.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/menu/menu_student_drawer.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/menu/menu_volunteer_drawer.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/menu/student_draw_menu.xml" value="0.19479166666666667" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.145" />
       </map>
     </option>
   </component>

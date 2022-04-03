@@ -86,7 +86,7 @@ class VolunteerLoginActivity : AppCompatActivity() {
         }
 
         val dialog = ProgressDialog(this@VolunteerLoginActivity)
-        dialog.setMessage("Logging in")
+        dialog.setMessage("Logging in...")
         dialog.setCanceledOnTouchOutside(false)
         dialog.show()
 

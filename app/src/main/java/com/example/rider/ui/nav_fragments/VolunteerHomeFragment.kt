@@ -1,28 +1,21 @@
 package com.example.rider.ui.nav_fragments
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.rider.databinding.FragmentVolunteerHomeBinding
 import com.example.rider.model.YatraRequest
 import com.example.rider.ui.YatraRequestListAdapter
-import com.google.firebase.firestore.DocumentChange
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.FirebaseFirestoreException
-import com.google.firebase.firestore.QuerySnapshot
+import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class VolunteerHomeFragment : Fragment() {
     private var binding: FragmentVolunteerHomeBinding? = null
-
-    private var recyclerView: RecyclerView? = null
-    private var yatraRequestListFormAdapter: YatraRequestListAdapter? = null
-    private var yatraRequestList: ArrayList<YatraRequest?>? = null
-    private var db: FirebaseFirestore? = null
+    private lateinit var adapter: YatraRequestListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,37 +29,25 @@ class VolunteerHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        db = FirebaseFirestore.getInstance()
+        val query = Firebase.firestore
+            .collection("yatra_requests")
+            .orderBy("departureDate")
+
+        val options = FirestoreRecyclerOptions.Builder<YatraRequest>()
+            .setQuery(query, YatraRequest::class.java)
+            .setLifecycleOwner(viewLifecycleOwner)
+            .build()
+
+        adapter = YatraRequestListAdapter(options)
 
         binding?.recyclerView?.setHasFixedSize(true)
         binding?.recyclerView?.layoutManager = LinearLayoutManager(context)
-
-        yatraRequestList = ArrayList()
-        yatraRequestListFormAdapter = YatraRequestListAdapter(yatraRequestList)
-
-        recyclerView?.adapter = yatraRequestListFormAdapter
-
-        setupEventChangeListener()
+        binding?.recyclerView?.adapter = adapter
     }
 
     override fun onDestroyView() {
+        adapter.stopListening()
         binding = null
         super.onDestroyView()
-    }
-
-    private fun setupEventChangeListener() {
-        db?.collection("students_form")
-            ?.addSnapshotListener { value: QuerySnapshot?, error: FirebaseFirestoreException? ->
-                if (error != null) {
-                    error.message?.let { Log.e("arrival error", it) }
-                    return@addSnapshotListener
-                }
-                for (dc in value?.documentChanges!!) {
-                    if (dc.type == DocumentChange.Type.ADDED) {
-                        yatraRequestList?.add(dc.document.toObject(YatraRequest::class.java))
-                    }
-                    yatraRequestListFormAdapter?.notifyDataSetChanged()
-                }
-            }
     }
 }

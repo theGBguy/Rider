@@ -10,10 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import com.example.rider.R
 import com.example.rider.databinding.ActivityVolunteerSideNavBarBinding
-import com.example.rider.ui.nav_fragments.DonateFragment
-import com.example.rider.ui.nav_fragments.ProfileFragment
-import com.example.rider.ui.nav_fragments.VolunteerHomeFragment
-import com.example.rider.ui.nav_fragments.VolunteerRequestFragment
+import com.example.rider.ui.nav_fragments.*
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.ktx.auth
@@ -24,10 +21,14 @@ class VolunteerSideNavBarActivity : AppCompatActivity(),
     private var binding: ActivityVolunteerSideNavBarBinding? = null
 
     override fun onBackPressed() {
-        if (Firebase.auth.currentUser != null) {
-            showLogoutDialog()
+        if (supportFragmentManager.backStackEntryCount <= 1) {
+            if (Firebase.auth.currentUser != null) {
+                showLogoutDialog()
+            } else {
+                super.onBackPressed()
+            }
         } else {
-            super.onBackPressed()
+            supportFragmentManager.popBackStack()
         }
     }
 
@@ -37,6 +38,23 @@ class VolunteerSideNavBarActivity : AppCompatActivity(),
         binding = ActivityVolunteerSideNavBarBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
         setSupportActionBar(binding?.toolbar)
+
+        supportFragmentManager.addOnBackStackChangedListener {
+            when (supportFragmentManager.findFragmentByTag("visible")) {
+                is StudentHomeFragment -> {
+                    binding?.navView?.setCheckedItem(R.id.nav_home)
+                }
+                is StudentRequestFragment -> {
+                    binding?.navView?.setCheckedItem(R.id.nav_request)
+                }
+                is ProfileFragment -> {
+                    binding?.navView?.setCheckedItem(R.id.nav_profile)
+                }
+                is DonateFragment -> {
+                    binding?.navView?.setCheckedItem(R.id.nav_donate)
+                }
+            }
+        }
 
         binding?.navView?.setNavigationItemSelectedListener(this)
         val toggle = ActionBarDrawerToggle(
@@ -51,8 +69,9 @@ class VolunteerSideNavBarActivity : AppCompatActivity(),
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, VolunteerHomeFragment()).commit()
-            binding?.navView?.setCheckedItem(R.id.nav_home)
+                .replace(R.id.fragment_container, VolunteerHomeFragment(), "visible")
+                .addToBackStack(null)
+                .commit()
         }
     }
 
@@ -77,27 +96,25 @@ class VolunteerSideNavBarActivity : AppCompatActivity(),
                 .replace(R.id.fragment_container, ProfileFragment()).commit()
             R.id.nav_request -> supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, VolunteerRequestFragment()).commit()
-            R.id.nav_logout -> showLogoutDialog()
             R.id.nav_donate -> supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, DonateFragment()).commit()
+            R.id.nav_logout -> if (Firebase.auth.currentUser != null) showLogoutDialog()
         }
         binding?.drawerLayout?.closeDrawer(GravityCompat.START)
         return true
     }
 
-    fun showLogoutDialog() {
-        if (Firebase.auth.currentUser != null) {
-            MaterialAlertDialogBuilder(this)
-                .setTitle(R.string.app_name)
-                .setIcon(R.mipmap.ic_launcher)
-                .setMessage("Do you want to Log Out?")
-                .setCancelable(false)
-                .setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
-                    Firebase.auth.signOut()
-                    finish()
-                }
-                .setNegativeButton("No") { dialog: DialogInterface, _: Int -> dialog.cancel() }
-                .show()
-        }
+    private fun showLogoutDialog() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle(R.string.app_name)
+            .setIcon(R.mipmap.ic_launcher)
+            .setMessage("Do you want to log out?")
+            .setCancelable(false)
+            .setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
+                Firebase.auth.signOut()
+                finish()
+            }
+            .setNegativeButton("No") { dialog: DialogInterface, _: Int -> dialog.cancel() }
+            .show()
     }
 }
