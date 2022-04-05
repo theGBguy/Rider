@@ -10,12 +10,16 @@ import com.example.rider.databinding.FragmentVolunteerHomeBinding
 import com.example.rider.model.YatraRequest
 import com.example.rider.ui.YatraRequestListAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class VolunteerHomeFragment : Fragment() {
     private var binding: FragmentVolunteerHomeBinding? = null
+
     private lateinit var adapter: YatraRequestListAdapter
+    private lateinit var query: Query
+    private lateinit var options: FirestoreRecyclerOptions<YatraRequest>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,24 +33,28 @@ class VolunteerHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val query = Firebase.firestore
+        query = Firebase.firestore
             .collection("yatra_requests")
             .orderBy("departureDate")
 
-        val options = FirestoreRecyclerOptions.Builder<YatraRequest>()
+        options = FirestoreRecyclerOptions.Builder<YatraRequest>()
             .setQuery(query, YatraRequest::class.java)
             .setLifecycleOwner(viewLifecycleOwner)
             .build()
 
-        adapter = YatraRequestListAdapter(options)
-
         binding?.recyclerView?.setHasFixedSize(true)
         binding?.recyclerView?.layoutManager = LinearLayoutManager(context)
-        binding?.recyclerView?.adapter = adapter
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (this::options.isInitialized) {
+            adapter = YatraRequestListAdapter(options)
+            binding?.recyclerView?.adapter = adapter
+        }
     }
 
     override fun onDestroyView() {
-        adapter.stopListening()
         binding = null
         super.onDestroyView()
     }

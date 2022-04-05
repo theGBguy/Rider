@@ -119,6 +119,7 @@ class StudentLoginActivity : AppCompatActivity() {
                             putParcelable("key_user", user)
                         })
                         startActivity(it)
+                        finish()
                     }
                 } else {
                     "This is not an student account".showShortToast(this@StudentLoginActivity)

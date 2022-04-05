@@ -41,8 +41,7 @@ class ProfileFragment : Fragment() {
             Firebase.firestore.collection("users")
                 .document(uid)
                 .addSnapshotListener { documentSnapshot, e ->
-                    binding?.profileImage?.load(documentSnapshot?.getString("profileImageLocation"))
-                    {
+                    binding?.profileImage?.load(documentSnapshot?.getString("profileImageLocation")) {
                         crossfade(true)
                         placeholder(R.drawable.placeholder)
                         fallback(R.drawable.icon_username)

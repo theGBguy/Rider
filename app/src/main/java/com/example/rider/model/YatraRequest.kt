@@ -17,5 +17,4 @@ data class YatraRequest(
     val weight: Int? = -1,
     val name: String? = "",
     val msg: String? = "",
-    val isAccepted: Boolean? = false
 ) : Parcelable

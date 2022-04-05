@@ -11,6 +11,7 @@ import com.example.rider.model.YatraRequest
 import com.example.rider.ui.YatraRequestListAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
@@ -18,6 +19,8 @@ class StudentRequestFragment : Fragment() {
     private var binding: FragmentStudentRequestBinding? = null
 
     private lateinit var adapter: YatraRequestListAdapter
+    private lateinit var query: Query
+    private lateinit var options: FirestoreRecyclerOptions<YatraRequest>
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,20 +34,24 @@ class StudentRequestFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val query = Firebase.firestore
+        query = Firebase.firestore
             .collection("yatra_requests")
             .whereEqualTo("initiatorId", Firebase.auth.currentUser?.uid)
-
-        val options = FirestoreRecyclerOptions.Builder<YatraRequest>()
+        options = FirestoreRecyclerOptions.Builder<YatraRequest>()
             .setQuery(query, YatraRequest::class.java)
             .setLifecycleOwner(viewLifecycleOwner)
             .build()
 
-        adapter = YatraRequestListAdapter(options)
-
         binding?.rvYatraRequests?.setHasFixedSize(true)
         binding?.rvYatraRequests?.layoutManager = LinearLayoutManager(context)
-        binding?.rvYatraRequests?.adapter = adapter
+    }
+
+    override fun onStart() {
+        super.onStart()
+        if (this::options.isInitialized) {
+            adapter = YatraRequestListAdapter(options)
+            binding?.rvYatraRequests?.adapter = adapter
+        }
     }
 
     override fun onDestroyView() {

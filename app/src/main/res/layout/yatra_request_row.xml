@@ -15,7 +15,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.0"
+        app:shapeAppearanceOverlay="@style/CircularComponentStyle" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_name"
@@ -26,6 +27,7 @@
         android:layout_marginEnd="8dp"
         android:text="Name : Hari Bahadur"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@id/iv_yatra"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -38,6 +40,7 @@
         android:layout_marginEnd="8dp"
         android:text="Departure Location : Kathmandu"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/iv_yatra"
         app:layout_constraintTop_toBottomOf="@id/tv_name" />
 
@@ -50,6 +53,7 @@
         android:layout_marginEnd="8dp"
         android:text="Arrival Location : Tanahun"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/iv_yatra"
         app:layout_constraintTop_toBottomOf="@id/tv_departure" />
 
@@ -59,11 +63,11 @@
         android:layout_height="wrap_content"
         android:background="@android:color/holo_green_dark"
         android:padding="8dp"
+        android:alpha=".7"
         android:textColor="?colorOnPrimary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/iv_yatra"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/iv_yatra"
         tools:text="Accepted" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

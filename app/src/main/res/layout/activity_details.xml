@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,7 +16,9 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
-            android:src="@drawable/yatra" />
+            android:scaleType="centerCrop"
+            android:src="@drawable/yatra"
+            app:shapeAppearanceOverlay="@style/CircularComponentStyle" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/nameholder"
@@ -26,116 +29,154 @@
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:gravity="center"
-            android:text="Arrival"
-            android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall" />
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             style="@style/ThemeOverlay.AppTheme.CardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="32dp"
             android:orientation="vertical"
             android:padding="8dp">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/arrivalholder"
+                android:id="@+id/tv_yatra_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="Place : Kathmandu" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/arrivaltimeholder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Time : 8:00 am" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/arrdateholder"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Date : 2022/11/11" />
-        </LinearLayout>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:gravity="center"
-            android:text="Departure"
-            android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall" />
-
-        <LinearLayout
-            style="@style/ThemeOverlay.AppTheme.CardView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="vertical">
+                android:text="Yatra information"
+                android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+                android:textColor="?colorPrimary"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/departureholder"
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Place : Sindhuligadhi" />
+                android:layout_marginTop="8dp"
+                android:drawablePadding="4dp"
+                android:gravity="start|center_vertical"
+                android:text="Kathmandu"
+                app:drawableStartCompat="@drawable/icon_location"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_yatra_info" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/deptimeholder"
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Time : 12:00 pm" />
+                android:layout_marginTop="8dp"
+                android:drawablePadding="4dp"
+                android:gravity="start|center_vertical"
+                android:text="8:00 am"
+                app:drawableStartCompat="@drawable/icon_time"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/arrivalholder" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/depdateholder"
-                android:layout_width="match_parent"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Date : 2022/11/11" />
-        </LinearLayout>
+                android:layout_marginTop="8dp"
+                android:drawablePadding="4dp"
+                android:gravity="start|center_vertical"
+                android:text="2022/11/11"
+                app:drawableStartCompat="@drawable/icon_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/arrivaltimeholder" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:gravity="center"
-            android:text="Information"
-            android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall" />
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="@+id/deptimeholder"
+                app:layout_constraintEnd_toStartOf="@id/arrivaltimeholder"
+                app:layout_constraintStart_toEndOf="@id/deptimeholder"
+                app:layout_constraintTop_toTopOf="@id/deptimeholder"
+                app:srcCompat="@drawable/icon_request" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/arrivalholder"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:drawablePadding="4dp"
+                android:gravity="start|center_vertical"
+                android:text="Sindhuligadhi"
+                app:drawableStartCompat="@drawable/icon_location"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_yatra_info" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/arrivaltimeholder"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:drawablePadding="4dp"
+                android:gravity="start|center_vertical"
+                android:text="12:00 pm"
+                app:drawableStartCompat="@drawable/icon_time"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/departureholder" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/arrivaldateholder"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:drawablePadding="4dp"
+                android:gravity="start|center_vertical"
+                android:text="2022/11/11"
+                app:drawableStartCompat="@drawable/icon_date"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/deptimeholder" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout
             style="@style/ThemeOverlay.AppTheme.CardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="32dp"
             android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/weightholder"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:gravity="center"
-                android:text="Luggage Weight : 60 kg" />
+                android:text="Other Information"
+                android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/weightholder"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:drawablePadding="4dp"
+                android:text="Luggage Weight : 60 kg"
+                app:drawableStartCompat="@drawable/icon_luggage" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/peopleholder"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="People count : 10" />
+                android:layout_marginTop="8dp"
+                android:drawablePadding="4dp"
+                android:text="Count : 10"
+                app:drawableStartCompat="@drawable/icon_people" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/msgholder"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Message : Luggage is prone to damage on fall." />
+                android:layout_marginTop="8dp"
+                android:drawablePadding="4dp"
+                android:text="Luggage is prone to damage on fall."
+                app:drawableStartCompat="@drawable/icon_email" />
         </LinearLayout>
 
         <LinearLayout
@@ -147,6 +188,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/backBtn_id"
+                style="@style/Widget.Material3.Button.OutlinedButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"

@@ -8,7 +8,7 @@
     android:padding="18dp"
     tools:context=".ui.AboutOptionMenuActivity">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="About Us"
@@ -25,14 +25,14 @@
         android:src="@drawable/yatra"
         app:shapeAppearanceOverlay="@style/CircularComponentStyle" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="Yatra Feature"
         android:textAppearance="@style/TextAppearance.Material3.HeadlineSmall" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"

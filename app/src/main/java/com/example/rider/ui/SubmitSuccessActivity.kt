@@ -1,6 +1,5 @@
 package com.example.rider.ui
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.rider.databinding.ActivitySubmitSuccessBinding
@@ -15,9 +14,10 @@ class SubmitSuccessActivity : AppCompatActivity() {
         setContentView(binding!!.root)
 
         binding?.submitHomeBtnId?.setOnClickListener { _ ->
-            Intent(this@SubmitSuccessActivity, StudentSideNavBarActivity::class.java).also {
-                startActivity(it)
-            }
+//            Intent(this@SubmitSuccessActivity, StudentSideNavBarActivity::class.java).also {
+//                startActivity(it)
+//            }
+            finish()
         }
     }
 }

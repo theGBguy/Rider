@@ -2,7 +2,6 @@ package com.example.rider.ui
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.rider.databinding.ActivityAcceptedRequestBinding
 import com.google.firebase.auth.ktx.auth
@@ -20,20 +19,16 @@ class AcceptedRequestActivity : AppCompatActivity() {
         binding = ActivityAcceptedRequestBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
 
-        if (Firebase.auth.currentUser != null) {
-            Log.d(RegisterActivity.TAG, "onCreate: \"+user.getDisplayName()")
-        }
-
         Firebase.auth.currentUser?.uid?.let {
             Firebase.firestore
                 .collection("users")
                 .document(it)
-                .addSnapshotListener { documentSnapshot: DocumentSnapshot?, e: FirebaseFirestoreException? ->
-                    binding!!.successUsernameId.text = documentSnapshot!!.getString("firstName")
+                .addSnapshotListener { documentSnapshot: DocumentSnapshot?, _: FirebaseFirestoreException? ->
+                    binding?.tvSuccessMsg?.text = documentSnapshot?.getString("firstName")
                 }
         }
 
-        binding?.homeBtnId?.setOnClickListener {
+        binding?.btnBack?.setOnClickListener {
             Intent(this@AcceptedRequestActivity, VolunteerSideNavBarActivity::class.java).also {
                 startActivity(it)
                 finish()

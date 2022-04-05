@@ -37,7 +37,7 @@
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/legal_image"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="200dp"
             android:layout_margin="4dp"
             android:padding="4dp"
             android:src="@drawable/placeholder"
@@ -126,9 +126,10 @@
             android:orientation="horizontal"
             android:weightSum="2">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/cancelBtn_id"
-                android:layout_width="match_parent"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginTop="10dp"
@@ -136,9 +137,9 @@
                 android:padding="16dp"
                 android:text="Cancel" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/updateBtn_id"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:layout_marginTop="20dp"

@@ -113,6 +113,7 @@ class VolunteerLoginActivity : AppCompatActivity() {
                         VolunteerSideNavBarActivity::class.java
                     ).also {
                         startActivity(it)
+                        finish()
                     }
                 } else {
                     "This is not an volunteer account".showShortToast(this@VolunteerLoginActivity)

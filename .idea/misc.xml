@@ -61,6 +61,7 @@
         <entry key="app/src/main/res/drawable/icon_luggage.xml" value="0.1055" />
         <entry key="app/src/main/res/drawable/icon_people.xml" value="0.1055" />
         <entry key="app/src/main/res/drawable/icon_phone.xml" value="0.1055" />
+        <entry key="app/src/main/res/drawable/icon_place.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/icon_profile.xml" value="0.1055" />
         <entry key="app/src/main/res/drawable/icon_pwd.xml" value="0.1055" />
         <entry key="app/src/main/res/drawable/icon_request.xml" value="0.1055" />
@@ -74,7 +75,7 @@
         <entry key="app/src/main/res/layout/activity_about_option_menu.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_about_optionmenu.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_accepted_request.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/activity_details.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_details.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_donate_fragment.xml" value="0.146875" />
         <entry key="app/src/main/res/layout/activity_logout_fragment.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.11203703703703703" />
@@ -90,6 +91,7 @@
         <entry key="app/src/main/res/layout/activity_volunteer_login.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/layout/activity_volunteer_request_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_volunteer_side_nav_bar.xml" value="0.11203703703703703" />
+        <entry key="app/src/main/res/layout/dialog_user_profile.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_donate.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/layout/fragment_logout.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.19479166666666667" />
@@ -103,7 +105,7 @@
         <entry key="app/src/main/res/layout/studentfrom_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/test.xml" value="0.25" />
         <entry key="app/src/main/res/layout/volunteer_login.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/yatra_request_row.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/yatra_request_row.xml" value="0.67" />
         <entry key="app/src/main/res/menu/menu_drawer.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/menu/menu_options.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/menu/menu_student_drawer.xml" value="0.19479166666666667" />
