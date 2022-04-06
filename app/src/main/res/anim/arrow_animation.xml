@@ -7,11 +7,11 @@
 
     <translate
         android:duration="1000"
-        android:fromXDelta="-5%p"
+        android:fromXDelta="-10%p"
         android:toXDelta="0%p" />
 
     <alpha
         android:duration="1000"
-        android:fromAlpha=".5"
+        android:fromAlpha=".3"
         android:toAlpha="1" />
 </set>

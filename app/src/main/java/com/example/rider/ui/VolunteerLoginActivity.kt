@@ -27,6 +27,8 @@ class VolunteerLoginActivity : AppCompatActivity() {
 
         binding = ActivityVolunteerLoginBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.title = "Log in"
 
         binding?.loginRegisterTextViewId?.setOnClickListener { _ ->
             Intent(this@VolunteerLoginActivity, RegisterActivity::class.java).also {

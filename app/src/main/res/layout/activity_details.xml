@@ -16,6 +16,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
+            android:layout_marginTop="16dp"
             android:scaleType="centerCrop"
             android:src="@drawable/yatra"
             app:shapeAppearanceOverlay="@style/CircularComponentStyle" />
@@ -24,17 +25,36 @@
             android:id="@+id/nameholder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Requested by : %s"
+            android:layout_marginTop="16dp"
             android:textAlignment="center"
-            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium" />
+            android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium"
+            tools:text="Requested by\nHari Bahadur" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_see_live_location"
+            style="@style/Widget.Material3.Button.TextButton.Icon"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="See live location"
+            app:icon="@drawable/icon_success"
+            app:iconGravity="textEnd"
+            app:iconTint="?colorPrimary" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_mark_complete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:text="Mark as completed"
+            app:icon="@drawable/icon_success"
+            app:iconGravity="textEnd"
+            app:iconTint="?colorOnPrimary" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             style="@style/ThemeOverlay.AppTheme.CardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
             android:orientation="vertical"
             android:padding="8dp">
 
@@ -92,10 +112,10 @@
                 android:id="@+id/iv_arrow"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@+id/deptimeholder"
-                app:layout_constraintEnd_toStartOf="@id/arrivaltimeholder"
-                app:layout_constraintStart_toEndOf="@id/deptimeholder"
-                app:layout_constraintTop_toTopOf="@id/deptimeholder"
+                app:layout_constraintBottom_toBottomOf="@+id/departureholder"
+                app:layout_constraintEnd_toStartOf="@id/arrivalholder"
+                app:layout_constraintStart_toEndOf="@id/departureholder"
+                app:layout_constraintTop_toTopOf="@id/departureholder"
                 app:srcCompat="@drawable/icon_request" />
 
             <com.google.android.material.textview.MaterialTextView
@@ -182,7 +202,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:orientation="horizontal"
             android:weightSum="2">
 

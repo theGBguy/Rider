@@ -10,6 +10,7 @@ import com.example.rider.databinding.FragmentVolunteerHomeBinding
 import com.example.rider.model.YatraRequest
 import com.example.rider.ui.YatraRequestListAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -33,9 +34,11 @@ class VolunteerHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // only shows request which are not yet accepted or
+        // are accepted by this volunteer account
         query = Firebase.firestore
             .collection("yatra_requests")
-            .orderBy("departureDate")
+            .whereIn("acceptorId", mutableListOf("", Firebase.auth.currentUser?.uid))
 
         options = FirestoreRecyclerOptions.Builder<YatraRequest>()
             .setQuery(query, YatraRequest::class.java)

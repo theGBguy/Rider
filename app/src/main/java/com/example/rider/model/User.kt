@@ -12,6 +12,8 @@ data class User(
     val password: String = "",
     val phoneNumber: String = "",
     val address: String = "",
+    val latitude: Double = 0.0,
+    val longitude: Double = 0.0,
     var profileImageLocation: String = "",
     var idImageLocation: String = "",
     val type: Int = -1

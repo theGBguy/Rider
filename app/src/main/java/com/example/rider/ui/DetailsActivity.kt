@@ -1,7 +1,11 @@
 package com.example.rider.ui
 
+import android.animation.ArgbEvaluator
+import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.content.DialogInterface
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.SpannableString
@@ -23,6 +27,7 @@ import com.example.rider.databinding.ActivityDetailsBinding
 import com.example.rider.databinding.DialogUserProfileBinding
 import com.example.rider.model.User
 import com.example.rider.model.YatraRequest
+import com.example.rider.ui.nav_fragments.LiveLocationFragment
 import com.example.rider.utils.showShortToast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.ktx.auth
@@ -31,29 +36,39 @@ import com.google.firebase.ktx.Firebase
 
 
 class DetailsActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityDetailsBinding
+    private var isStudent: Boolean? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityDetailsBinding.inflate(layoutInflater)
+        binding = ActivityDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.title = "Yatra Request Details"
 
         val yatraRequest = intent.getParcelableExtra("key_data") as YatraRequest?
 
-        binding.arrivalholder.text = yatraRequest?.arrivalLocation?.split(",")?.get(0)
-
-        binding.departureholder.text = yatraRequest?.departureLocation?.split(",")?.get(0)
-
+        binding.arrivalholder.text = yatraRequest?.arrivalLocation
+        binding.departureholder.text = yatraRequest?.departureLocation
         binding.msgholder.text = yatraRequest?.msg
         binding.arrivaltimeholder.text = yatraRequest?.arrivalTime
         binding.arrivaldateholder.text = yatraRequest?.arrivalDate
         binding.deptimeholder.text = yatraRequest?.departureTime
         binding.depdateholder.text = yatraRequest?.departureDate
-        binding.weightholder.text = "Luggage Weight : ${yatraRequest?.weight.toString()}"
-        binding.peopleholder.text = "People count : ${yatraRequest?.peopleCount.toString()}"
+        binding.weightholder.text = "${yatraRequest?.weight.toString()}(Luggage Weight in kg)"
+        binding.peopleholder.text = "${yatraRequest?.peopleCount.toString()}(Passenger count)"
 
-        if (yatraRequest?.acceptorId != null) {
+        if (yatraRequest?.acceptorId?.isBlank() == true) {
+            binding.btnSeeLiveLocation.visibility = View.GONE
+            binding.btnMarkComplete.visibility = View.GONE
+        } else {
             binding.backBtnId.visibility = View.GONE
             binding.acceptBtnId.visibility = View.GONE
+        }
+        if (yatraRequest?.completed == true) {
+            binding.btnSeeLiveLocation.visibility = View.GONE
+            binding.btnMarkComplete.visibility = View.GONE
         }
 
         AnimationUtils.loadAnimation(this, R.anim.arrow_animation).also {
@@ -70,6 +85,51 @@ class DetailsActivity : AppCompatActivity() {
                 }
 
             })
+        }
+
+        startBlinkEffect()
+
+        binding.btnSeeLiveLocation.setOnClickListener {
+            isStudent?.let { isStud ->
+                LiveLocationFragment.newInstance(
+                    isStud,
+                    yatraRequest?.arrivalLatitude!!,
+                    yatraRequest?.arrivalLongitude!!,
+                    yatraRequest?.departureLatitude!!,
+                    yatraRequest?.departureLongitude!!,
+                ).show(supportFragmentManager, "live_location")
+            }
+//            LiveLocationFragment().show(supportFragmentManager, "live_location")
+        }
+
+        binding.btnMarkComplete.setOnClickListener {
+            MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.app_name)
+                .setIcon(R.mipmap.ic_launcher)
+                .setMessage("Do you want to mark this Yatra Request as completed?")
+                .setCancelable(false)
+                .setPositiveButton("Yes") { _: DialogInterface?, _: Int ->
+                    Firebase.firestore
+                        .collection("yatra_requests")
+                        .document(yatraRequest?.requestId!!)
+                        .update("completed", true)
+                        .addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                "Yatra ride completed successfully!".showShortToast(this)
+                                Intent(
+                                    this@DetailsActivity,
+                                    AcceptedRequestActivity::class.java
+                                ).also { intent -> startActivity(intent) }
+                                finish()
+                            } else {
+                                "Error updating status : ${it.exception?.message}".showShortToast(
+                                    this
+                                )
+                            }
+                        }
+                }
+                .setNegativeButton("No") { dialog: DialogInterface, _: Int -> dialog.cancel() }
+                .show()
         }
 
         binding.backBtnId.setOnClickListener {
@@ -90,11 +150,11 @@ class DetailsActivity : AppCompatActivity() {
                         .addOnCompleteListener {
                             if (it.isSuccessful) {
                                 "Yatra ride accepted successfully!".showShortToast(this)
-                                val intent = Intent(
+                                Intent(
                                     this@DetailsActivity,
                                     AcceptedRequestActivity::class.java
-                                )
-                                startActivity(intent)
+                                ).also { intent -> startActivity(intent) }
+                                finish()
                             } else {
                                 "Error updating status : ${it.exception?.message}".showShortToast(
                                     this
@@ -106,19 +166,28 @@ class DetailsActivity : AppCompatActivity() {
                 .show()
         }
 
-        Firebase.auth.currentUser?.uid?.let {
+        Firebase.auth.currentUser?.uid?.let { uid ->
             Firebase.firestore.collection("users")
-                .document(it)
+                .document(uid)
                 .get()
                 .continueWithTask { task ->
                     if (task.isSuccessful) {
                         val type = task.result["type"] as Long
                         if (type.toInt() == User.TYPE_STUDENT) {
-                            binding.nameholder.visibility = View.GONE
+                            isStudent = true
                             binding.backBtnId.visibility = View.GONE
                             binding.acceptBtnId.visibility = View.GONE
-                            null
+                            if (yatraRequest?.acceptorId?.isNotBlank() == true) {
+                                Firebase.firestore.collection("users")
+                                    .document(yatraRequest.acceptorId)
+                                    .get()
+                            } else {
+                                binding.nameholder.visibility = View.GONE
+                                null
+                            }
                         } else {
+                            isStudent = false
+                            binding.btnMarkComplete.visibility = View.GONE
                             yatraRequest?.initiatorId?.let { initiatorId ->
                                 Firebase.firestore.collection("users")
                                     .document(initiatorId)
@@ -139,7 +208,7 @@ class DetailsActivity : AppCompatActivity() {
                             DialogUserProfileBinding.inflate(layoutInflater)
                         dialogBinding.tvUserName.text = plainUserName
                         dialogBinding.tvPhone.text = user.phoneNumber
-                        dialogBinding.tvAddress.text = user.address.split(",").get(0)
+                        dialogBinding.tvAddress.text = user.address.split(",")[0]
 
                         val clickableSpan: ClickableSpan = object : ClickableSpan() {
                             override fun onClick(textView: View) {
@@ -170,10 +239,13 @@ class DetailsActivity : AppCompatActivity() {
                         userName.setSpan(UnderlineSpan(), 0, plainUserName.length, 0)
 
                         binding.nameholder.text =
-                            SpannableStringBuilder("Requester name : ").append(userName).append("↗")
+                            SpannableStringBuilder("Yatra ${if (isStudent == true) "Acceptor" else "Requestor"} Name\n").append(
+                                userName
+                            ).append("↗")
                         binding.nameholder.movementMethod = LinkMovementMethod.getInstance()
                     } else {
-                        binding.nameholder.text = "Requester name : Unknown"
+                        binding.nameholder.text =
+                            "Yatra ${if (isStudent == true) "Acceptor" else "Requestor"} Name : Unknown"
                         if (task.exception?.message?.lowercase()
                                 ?.contains("continuation") != true
                         ) {
@@ -184,6 +256,19 @@ class DetailsActivity : AppCompatActivity() {
 
                     }
                 }
+        }
+    }
+
+    private fun startBlinkEffect() {
+        ObjectAnimator.ofInt(
+            binding.btnSeeLiveLocation,
+            "backgroundColor", Color.WHITE, Color.RED, Color.WHITE
+        ).apply {
+            duration = 1500
+            setEvaluator(ArgbEvaluator())
+            repeatMode = ValueAnimator.REVERSE
+            repeatCount = Animation.INFINITE
+            start()
         }
     }
 }

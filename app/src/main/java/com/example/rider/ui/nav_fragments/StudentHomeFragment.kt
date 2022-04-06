@@ -86,7 +86,9 @@ class StudentHomeFragment : Fragment() {
                         binding?.etDepatureDate?.setText(date)
                     },
                     this[Calendar.YEAR], this[Calendar.MONTH], this[Calendar.DAY_OF_MONTH]
-                ).show()
+                ).also {
+                    it.datePicker.minDate = System.currentTimeMillis()
+                }.show()
             }
         }
 
@@ -99,7 +101,9 @@ class StudentHomeFragment : Fragment() {
                         binding?.etArrivalDate?.setText(date)
                     },
                     this[Calendar.YEAR], this[Calendar.MONTH], this[Calendar.DAY_OF_MONTH]
-                ).show()
+                ).also {
+                    it.datePicker.minDate = System.currentTimeMillis()
+                }.show()
             }
         }
 
@@ -135,15 +139,11 @@ class StudentHomeFragment : Fragment() {
             SelectLocationFragment.newInstance(false).show(childFragmentManager, "location")
         }
 
+        binding?.yesBtnId?.setOnClickListener {
+            requireActivity().finish()
+        }
+
         binding?.studentSubmitBtnId?.setOnClickListener { _ ->
-            val departureLocation = arrayOf(
-                departureLocation, departureLatitude, departureLongitude
-            ).joinToString()
-
-            val arrivalLocation = arrayOf(
-                arrivalLocation, arrivalLatitude, arrivalLongitude
-            ).joinToString()
-
             val departureDate = binding?.etDepatureDate?.text.toString()
             val arrivalDate = binding?.etArrivalDate?.text.toString()
             val departureTime = binding?.etDepatureTime?.text.toString()
@@ -200,9 +200,13 @@ class StudentHomeFragment : Fragment() {
                     requestId = getRandomUID(),
                     initiatorId = Firebase.auth.currentUser?.uid,
                     arrivalLocation = arrivalLocation,
+                    arrivalLatitude = arrivalLatitude,
+                    arrivalLongitude = arrivalLongitude,
                     arrivalDate = arrivalDate,
                     arrivalTime = arrivalTime,
                     departureLocation = departureLocation,
+                    departureLatitude = departureLatitude,
+                    departureLongitude = departureLongitude,
                     departureDate = departureDate,
                     departureTime = departureTime,
                     peopleCount = peopleCount,

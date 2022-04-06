@@ -41,13 +41,21 @@ class YatraRequestViewHolder(
 
     fun bind(yatraRequest: YatraRequest) {
         binding?.tvDeparture?.text =
-            "Departure : ${yatraRequest.departureLocation?.split(",")?.get(0)}"
+            "Departure : ${yatraRequest.departureLocation}"
         binding?.tvArrival?.text =
-            "Arrival : ${yatraRequest.arrivalLocation?.split(",")?.get(0)}"
-        binding?.tvName?.text =
-            if (yatraRequest.name?.isBlank() == true) "Name : Not available" else "Name : ${yatraRequest.name}"
+            "Arrival : ${yatraRequest.arrivalLocation}"
+//        binding?.tvName?.text =
+//            if (yatraRequest.name?.isBlank() == true) "Name : Not available" else "Name : ${yatraRequest.name}"
         binding?.tvStatus?.apply {
-            text = if (yatraRequest.acceptorId?.isBlank() == true) "Not accepted" else "Accepted"
+            text = if (yatraRequest.acceptorId?.isBlank() == true) {
+                "Not accepted"
+            } else {
+                if (yatraRequest.completed == true) {
+                    "Completed"
+                } else {
+                    "Accepted"
+                }
+            }
             setBackgroundColor(if (yatraRequest.acceptorId?.isBlank() == true) Color.RED else Color.GREEN)
         }
 

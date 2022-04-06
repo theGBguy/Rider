@@ -40,6 +40,8 @@ class RegisterActivity : AppCompatActivity() {
 
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.title = "Create account"
 
         binding?.registerCancelBtnId?.setOnClickListener { finish() }
         binding?.registerRegisterBtnId?.setOnClickListener { performAuth() }

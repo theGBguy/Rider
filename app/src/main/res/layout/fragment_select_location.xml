@@ -14,17 +14,6 @@
         app:mapbox_cameraTargetLng="85.300140"
         app:mapbox_cameraZoom="12.0" />
 
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_selected_location"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="Selected location"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@id/btn_select_location"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_select_location"
         android:layout_width="wrap_content"

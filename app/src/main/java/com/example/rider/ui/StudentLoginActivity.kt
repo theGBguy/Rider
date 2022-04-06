@@ -28,6 +28,8 @@ class StudentLoginActivity : AppCompatActivity() {
 
         binding = ActivityStudentLoginBinding.inflate(layoutInflater)
         setContentView(binding!!.root)
+        actionBar?.setDisplayHomeAsUpEnabled(true)
+        actionBar?.title = "Log in"
 
         binding?.loginRegisterTextViewId?.setOnClickListener {
             Intent(this@StudentLoginActivity, RegisterActivity::class.java).also {

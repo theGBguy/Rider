@@ -86,13 +86,15 @@
         <entry key="app/src/main/res/layout/activity_student_request_fragment.xml" value="0.11203703703703703" />
         <entry key="app/src/main/res/layout/activity_student_side_nav_bar.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_submit_success.xml" value="0.22" />
-        <entry key="app/src/main/res/layout/activity_user_options.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_user_options.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_volunteer_home_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_volunteer_login.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/layout/activity_volunteer_request_fragment.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_volunteer_side_nav_bar.xml" value="0.11203703703703703" />
         <entry key="app/src/main/res/layout/dialog_user_profile.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_current_location.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/layout/fragment_donate.xml" value="0.19479166666666667" />
+        <entry key="app/src/main/res/layout/fragment_live_location.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/layout/fragment_logout.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/layout/fragment_select_location.xml" value="0.2" />
@@ -105,7 +107,7 @@
         <entry key="app/src/main/res/layout/studentfrom_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/test.xml" value="0.25" />
         <entry key="app/src/main/res/layout/volunteer_login.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/yatra_request_row.xml" value="0.67" />
+        <entry key="app/src/main/res/layout/yatra_request_row.xml" value="0.5618153364632238" />
         <entry key="app/src/main/res/menu/menu_drawer.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/menu/menu_options.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/menu/menu_student_drawer.xml" value="0.19479166666666667" />

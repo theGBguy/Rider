@@ -1,11 +1,6 @@
 package com.example.rider.ui.nav_fragments
 
 import android.annotation.SuppressLint
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
@@ -13,21 +8,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.annotation.DrawableRes
-import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.os.bundleOf
 import androidx.fragment.app.DialogFragment
 import com.example.rider.R
 import com.example.rider.databinding.FragmentSelectLocationBinding
+import com.example.rider.utils.bitmapFromDrawableRes
 import com.example.rider.utils.showShortToast
 import com.mapbox.android.core.location.*
 import com.mapbox.android.core.permissions.PermissionsListener
 import com.mapbox.android.core.permissions.PermissionsManager
 import com.mapbox.geojson.Point
 import com.mapbox.maps.CameraOptions
+import com.mapbox.maps.MapboxMap
 import com.mapbox.maps.Style
 import com.mapbox.maps.plugin.animation.flyTo
 import com.mapbox.maps.plugin.annotation.annotations
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotation
+import com.mapbox.maps.plugin.annotation.generated.PointAnnotationManager
 import com.mapbox.maps.plugin.annotation.generated.PointAnnotationOptions
 import com.mapbox.maps.plugin.annotation.generated.createPointAnnotationManager
 import com.mapbox.maps.plugin.gestures.OnMapClickListener
@@ -44,7 +41,10 @@ class SelectLocationFragment() : DialogFragment(),
     private var binding: FragmentSelectLocationBinding? = null
     private lateinit var permissionsManager: PermissionsManager
     private lateinit var locationEngine: LocationEngine
+    private lateinit var mapboxMap: MapboxMap
     private lateinit var currentPoint: Point
+    private lateinit var currentPointAnnotation: PointAnnotation
+    private lateinit var pointAnnotationManager: PointAnnotationManager
 
     private lateinit var reverseGeocoding: ReverseGeocodingSearchEngine
     private lateinit var searchRequestTask: SearchRequestTask
@@ -103,10 +103,11 @@ class SelectLocationFragment() : DialogFragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding?.mapSelectLocation?.getMapboxMap()?.loadStyleUri(
-            Style.MAPBOX_STREETS
-        ) {
-            binding?.mapSelectLocation?.getMapboxMap()?.addOnMapClickListener(this)
+        mapboxMap = binding?.mapSelectLocation?.getMapboxMap()!!
+        mapboxMap.loadStyleUri(Style.MAPBOX_STREETS) {
+            mapboxMap.addOnMapClickListener(this)
+            pointAnnotationManager =
+                binding?.mapSelectLocation?.annotations?.createPointAnnotationManager()!!
         }
 
         reverseGeocoding = MapboxSearchSdk.getReverseGeocodingSearchEngine()
@@ -203,54 +204,30 @@ class SelectLocationFragment() : DialogFragment(),
                 .zoom(15.0)
                 .build(), null
         )
-        binding?.tvSelectedLocation?.text =
-            "Selected Location\nLatitude ${point.latitude()}, Longitude ${point.longitude()}"
-//        addMarker(point.latitude(), point.longitude())
         currentPoint = point
+        removeMarker()
+        addMarker()
         return true
     }
 
     private fun removeMarker() {
-        val annotationApi = binding?.mapSelectLocation?.annotations
-        annotationApi?.cleanup()
-    }
-
-    private fun addMarker(lat: Double, long: Double) {
-        bitmapFromDrawableRes(
-            requireContext(),
-            R.drawable.icon_red_marker
-        )?.let {
-            val annotationApi = binding?.mapSelectLocation?.annotations
-            val pointAnnotationManager =
-                annotationApi?.createPointAnnotationManager(binding?.mapSelectLocation!!)
-            val pointAnnotationOptions = PointAnnotationOptions()
-                .withPoint(Point.fromLngLat(lat, long))
-                .withIconImage(it)
-                .withIconSize(8.0)
-            pointAnnotationManager?.create(pointAnnotationOptions)
+        if (this::pointAnnotationManager.isInitialized && this::currentPointAnnotation.isInitialized) {
+            pointAnnotationManager.delete(currentPointAnnotation)
         }
     }
 
-    private fun bitmapFromDrawableRes(context: Context, @DrawableRes resourceId: Int) =
-        convertDrawableToBitmap(AppCompatResources.getDrawable(context, resourceId))
-
-    private fun convertDrawableToBitmap(sourceDrawable: Drawable?): Bitmap? {
-        if (sourceDrawable == null) {
-            return null
-        }
-        return if (sourceDrawable is BitmapDrawable) {
-            sourceDrawable.bitmap
-        } else {
-            val constantState = sourceDrawable.constantState ?: return null
-            val drawable = constantState.newDrawable().mutate()
-            val bitmap: Bitmap = Bitmap.createBitmap(
-                drawable.intrinsicWidth, drawable.intrinsicHeight,
-                Bitmap.Config.ARGB_8888
-            )
-            val canvas = Canvas(bitmap)
-            drawable.setBounds(0, 0, canvas.width, canvas.height)
-            drawable.draw(canvas)
-            bitmap
+    private fun addMarker() {
+        if (this::pointAnnotationManager.isInitialized) {
+            bitmapFromDrawableRes(
+                requireContext(),
+                R.drawable.icon_red_marker
+            )?.let { marker ->
+                currentPointAnnotation = pointAnnotationManager.create(
+                    PointAnnotationOptions()
+                        .withPoint(currentPoint)
+                        .withIconImage(marker)
+                )
+            }
         }
     }
 
