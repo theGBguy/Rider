@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
     tools:context=".ui.DetailsActivity">
 
     <LinearLayout
@@ -37,9 +38,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:text="See live location"
-            app:icon="@drawable/icon_success"
-            app:iconGravity="textEnd"
-            app:iconTint="?colorPrimary" />
+            android:textAppearance="@style/TextAppearance.Material3.BodyLarge" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_mark_complete"

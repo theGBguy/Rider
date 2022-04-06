@@ -13,11 +13,17 @@
         android:layout_gravity="center"
         android:src="@drawable/yatra" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="You have accepted these requests."
         android:textAppearance="@style/TextAppearance.Material3.HeadlineMedium" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_yatra_requests"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp" />
 </LinearLayout>

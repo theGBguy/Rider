@@ -43,13 +43,13 @@ class ProfileFragment : Fragment() {
                 .addSnapshotListener { documentSnapshot, e ->
                     binding?.profileImage?.load(documentSnapshot?.getString("profileImageLocation")) {
                         crossfade(true)
-                        placeholder(R.drawable.placeholder)
-                        fallback(R.drawable.icon_username)
+                        placeholder(R.drawable.yatra)
+                        fallback(R.drawable.icon_user)
                         transformations(CircleCropTransformation())
                     }
                     binding?.legalImage?.load(documentSnapshot?.getString("idImageLocation")) {
                         crossfade(true)
-                        placeholder(R.drawable.placeholder)
+                        placeholder(R.drawable.yatra)
                         fallback(R.drawable.icon_profile)
                     }
                     binding?.profileAddressId?.setText(documentSnapshot?.getString("address"))

@@ -14,6 +14,8 @@ import coil.load
 import com.example.rider.R
 import com.example.rider.databinding.ActivityRegisterBinding
 import com.example.rider.model.User
+import com.example.rider.ui.nav_fragments.SelectLocationFragment
+import com.example.rider.utils.setOnConsistentClickListener
 import com.example.rider.utils.showShortToast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.ktx.auth
@@ -35,13 +37,32 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var currentLegalPhotoUri: Uri
     private var isProfile: Boolean? = null
 
+    private lateinit var departureLocation: String
+    private var departureLatitude: Double = 0.0
+    private var departureLongitude: Double = 0.0
+
+    private lateinit var arrivalLocation: String
+    private var arrivalLatitude: Double = 0.0
+    private var arrivalLongitude: Double = 0.0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding?.root)
-        actionBar?.setDisplayHomeAsUpEnabled(true)
-        actionBar?.title = "Create account"
+
+        supportFragmentManager.setFragmentResultListener(
+            "departure", this
+        ) { _, result ->
+            departureLocation = result.getString("departure_location")!!
+            departureLatitude = result.getDouble("departure_lat")
+            departureLongitude = result.getDouble("departure_long")
+            binding?.registerAddressId?.setText(departureLocation)
+        }
+
+        binding?.registerAddressId?.setOnConsistentClickListener {
+            SelectLocationFragment.newInstance(true).show(supportFragmentManager, "location")
+        }
 
         binding?.registerCancelBtnId?.setOnClickListener { finish() }
         binding?.registerRegisterBtnId?.setOnClickListener { performAuth() }

@@ -27,7 +27,7 @@ import com.example.rider.databinding.ActivityDetailsBinding
 import com.example.rider.databinding.DialogUserProfileBinding
 import com.example.rider.model.User
 import com.example.rider.model.YatraRequest
-import com.example.rider.ui.nav_fragments.LiveLocationFragment
+import com.example.rider.ui.nav_fragments.CurrentLocationFragment
 import com.example.rider.utils.showShortToast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.ktx.auth
@@ -91,15 +91,15 @@ class DetailsActivity : AppCompatActivity() {
 
         binding.btnSeeLiveLocation.setOnClickListener {
             isStudent?.let { isStud ->
-                LiveLocationFragment.newInstance(
+                CurrentLocationFragment.newInstance(
                     isStud,
+                    (if (isStud) yatraRequest?.acceptorId else yatraRequest?.initiatorId)!!,
                     yatraRequest?.arrivalLatitude!!,
                     yatraRequest?.arrivalLongitude!!,
                     yatraRequest?.departureLatitude!!,
                     yatraRequest?.departureLongitude!!,
                 ).show(supportFragmentManager, "live_location")
             }
-//            LiveLocationFragment().show(supportFragmentManager, "live_location")
         }
 
         binding.btnMarkComplete.setOnClickListener {
@@ -220,8 +220,8 @@ class DetailsActivity : AppCompatActivity() {
                                     .show()
                                 dialogBinding.ivUserProfilePic.load(user.profileImageLocation) {
                                     crossfade(true)
-                                    placeholder(R.drawable.placeholder)
-                                    fallback(R.drawable.icon_username)
+                                    placeholder(R.drawable.yatra)
+                                    fallback(R.drawable.icon_user)
                                     transformations(CircleCropTransformation())
                                 }
                             }

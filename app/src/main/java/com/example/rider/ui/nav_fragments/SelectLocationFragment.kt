@@ -33,7 +33,7 @@ import com.mapbox.maps.plugin.gestures.removeOnMapClickListener
 import com.mapbox.search.*
 import com.mapbox.search.result.SearchResult
 
-class SelectLocationFragment() : DialogFragment(),
+class SelectLocationFragment private constructor() : DialogFragment(),
     LocationEngineCallback<LocationEngineResult>,
     PermissionsListener,
     OnMapClickListener {

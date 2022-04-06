@@ -40,7 +40,7 @@
             android:layout_height="200dp"
             android:layout_margin="4dp"
             android:padding="4dp"
-            android:src="@drawable/placeholder"
+            android:src="@drawable/yatra"
             app:contentPadding="8dp"
             tools:src="@drawable/icon_profile" />
 
@@ -59,7 +59,7 @@
             android:layout_height="60dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/edittext_selector"
-            android:drawableStart="@drawable/icon_username"
+            android:drawableStart="@drawable/icon_user"
             android:drawablePadding="10dp"
             android:ems="10"
             android:hint="First Name"
@@ -72,7 +72,7 @@
             android:layout_height="60dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/edittext_selector"
-            android:drawableStart="@drawable/icon_username"
+            android:drawableStart="@drawable/icon_user"
             android:drawablePadding="10dp"
             android:ems="10"
             android:hint="Last Name"
