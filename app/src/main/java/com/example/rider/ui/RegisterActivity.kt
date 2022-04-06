@@ -37,13 +37,9 @@ class RegisterActivity : AppCompatActivity() {
     private lateinit var currentLegalPhotoUri: Uri
     private var isProfile: Boolean? = null
 
-    private lateinit var departureLocation: String
-    private var departureLatitude: Double = 0.0
-    private var departureLongitude: Double = 0.0
-
-    private lateinit var arrivalLocation: String
-    private var arrivalLatitude: Double = 0.0
-    private var arrivalLongitude: Double = 0.0
+    private lateinit var location: String
+    private var latitude: Double = 0.0
+    private var longitude: Double = 0.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,10 +50,10 @@ class RegisterActivity : AppCompatActivity() {
         supportFragmentManager.setFragmentResultListener(
             "departure", this
         ) { _, result ->
-            departureLocation = result.getString("departure_location")!!
-            departureLatitude = result.getDouble("departure_lat")
-            departureLongitude = result.getDouble("departure_long")
-            binding?.registerAddressId?.setText(departureLocation)
+            location = result.getString("departure_location")!!
+            latitude = result.getDouble("departure_lat")
+            longitude = result.getDouble("departure_long")
+            binding?.registerAddressId?.setText(location)
         }
 
         binding?.registerAddressId?.setOnConsistentClickListener {
@@ -143,6 +139,8 @@ class RegisterActivity : AppCompatActivity() {
             password = password,
             phoneNumber = phoneNumber,
             address = address,
+            latitude = latitude,
+            longitude = longitude,
             type = userType
         )
 
