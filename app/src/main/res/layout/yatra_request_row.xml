@@ -20,30 +20,19 @@
         app:shapeAppearanceOverlay="@style/CircularComponentStyle" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tv_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:text="Name : Hari Bahadur"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@id/iv_yatra"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_departure"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Departure Location : Kathmandu"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:text="Kathmandu(Departure)"
+        app:drawableStartCompat="@drawable/icon_location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/iv_yatra"
-        app:layout_constraintTop_toBottomOf="@id/tv_name" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tv_arrival"
@@ -52,7 +41,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
-        android:text="Arrival Location : Tanahun"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:text="Tanahun(Arrival)"
+        app:drawableStartCompat="@drawable/icon_location"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/iv_yatra"

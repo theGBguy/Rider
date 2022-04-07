@@ -72,6 +72,18 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_departure"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingStart="12dp"
+                android:text="Departure"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_yatra_info" />
+
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/departureholder"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
@@ -81,7 +93,7 @@
                 android:text="Kathmandu"
                 app:drawableStartCompat="@drawable/icon_location"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_yatra_info" />
+                app:layout_constraintTop_toBottomOf="@id/tv_departure" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/deptimeholder"
@@ -93,7 +105,7 @@
                 android:text="8:00 am"
                 app:drawableStartCompat="@drawable/icon_time"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/arrivalholder" />
+                app:layout_constraintTop_toBottomOf="@id/barrier" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/depdateholder"
@@ -105,7 +117,7 @@
                 android:text="2022/11/11"
                 app:drawableStartCompat="@drawable/icon_date"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/arrivaltimeholder" />
+                app:layout_constraintTop_toBottomOf="@id/deptimeholder" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/iv_arrow"
@@ -118,6 +130,18 @@
                 app:srcCompat="@drawable/icon_request" />
 
             <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/tv_arrival"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:paddingStart="12dp"
+                android:text="Arrival"
+                android:textAppearance="@style/TextAppearance.Material3.BodyLarge"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_yatra_info" />
+
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/arrivalholder"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
@@ -127,7 +151,7 @@
                 android:text="Sindhuligadhi"
                 app:drawableStartCompat="@drawable/icon_location"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_yatra_info" />
+                app:layout_constraintTop_toBottomOf="@id/tv_arrival" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/arrivaltimeholder"
@@ -139,7 +163,7 @@
                 android:text="12:00 pm"
                 app:drawableStartCompat="@drawable/icon_time"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/departureholder" />
+                app:layout_constraintTop_toBottomOf="@id/barrier" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/arrivaldateholder"
@@ -151,7 +175,14 @@
                 android:text="2022/11/11"
                 app:drawableStartCompat="@drawable/icon_date"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/deptimeholder" />
+                app:layout_constraintTop_toBottomOf="@id/arrivaltimeholder" />
+
+            <androidx.constraintlayout.widget.Barrier
+                android:id="@+id/barrier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:barrierDirection="bottom"
+                app:constraint_referenced_ids="arrivalholder, departureholder" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <LinearLayout

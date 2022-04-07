@@ -1,11 +1,11 @@
 package com.example.rider.ui
 
 import android.animation.ArgbEvaluator
+import android.animation.FloatEvaluator
 import android.animation.ObjectAnimator
 import android.animation.ValueAnimator
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.text.SpannableString
@@ -208,7 +208,7 @@ class DetailsActivity : AppCompatActivity() {
                             DialogUserProfileBinding.inflate(layoutInflater)
                         dialogBinding.tvUserName.text = plainUserName
                         dialogBinding.tvPhone.text = user.phoneNumber
-                        dialogBinding.tvAddress.text = user.address.split(",")[0]
+                        dialogBinding.tvAddress.text = user.address
 
                         val clickableSpan: ClickableSpan = object : ClickableSpan() {
                             override fun onClick(textView: View) {
@@ -262,10 +262,25 @@ class DetailsActivity : AppCompatActivity() {
     private fun startBlinkEffect() {
         ObjectAnimator.ofInt(
             binding.btnSeeLiveLocation,
-            "backgroundColor", Color.WHITE, Color.RED, Color.WHITE
+            "backgroundColor",
+            resources.getColor(R.color.md_theme_light_primaryContainer),
+            resources.getColor(R.color.md_theme_light_secondaryContainer),
+            resources.getColor(R.color.md_theme_light_tertiaryContainer)
         ).apply {
-            duration = 1500
+            duration = 700
             setEvaluator(ArgbEvaluator())
+            repeatMode = ValueAnimator.REVERSE
+            repeatCount = Animation.INFINITE
+            start()
+        }
+
+        ObjectAnimator.ofFloat(
+            binding.btnSeeLiveLocation,
+            "alpha",
+            .5f, 1f
+        ).apply {
+            duration = 700
+            setEvaluator(FloatEvaluator())
             repeatMode = ValueAnimator.REVERSE
             repeatCount = Animation.INFINITE
             start()

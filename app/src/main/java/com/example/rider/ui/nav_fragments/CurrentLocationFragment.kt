@@ -50,7 +50,7 @@ import com.mapbox.navigation.ui.maps.route.line.model.RouteLine
 import com.mapbox.navigation.ui.maps.route.line.model.RouteLineColorResources
 import com.mapbox.navigation.ui.maps.route.line.model.RouteLineResources
 
-class CurrentLocationFragment() : DialogFragment() {
+class CurrentLocationFragment private constructor() : DialogFragment() {
 
     private val navigationLocationProvider by lazy {
         NavigationLocationProvider()

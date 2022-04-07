@@ -41,9 +41,9 @@ class YatraRequestViewHolder(
 
     fun bind(yatraRequest: YatraRequest) {
         binding?.tvDeparture?.text =
-            "Departure : ${yatraRequest.departureLocation}"
+            "${yatraRequest.departureLocation}(Departure)"
         binding?.tvArrival?.text =
-            "Arrival : ${yatraRequest.arrivalLocation}"
+            "${yatraRequest.arrivalLocation}(Arrival)"
 //        binding?.tvName?.text =
 //            if (yatraRequest.name?.isBlank() == true) "Name : Not available" else "Name : ${yatraRequest.name}"
         binding?.tvStatus?.apply {
