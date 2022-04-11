@@ -133,7 +133,11 @@ class SelectLocationFragment private constructor() : DialogFragment(),
             locationEngine.getLastLocation(this)
         } else {
             permissionsManager = PermissionsManager(this)
-            permissionsManager.requestLocationPermissions((requireParentFragment() as? StudentHomeFragment)?.requireActivity())
+            if (requireArguments()["KEY_PARENT"] == true) {
+                permissionsManager.requestLocationPermissions((requireParentFragment() as? StudentHomeFragment)?.requireActivity())
+            } else {
+                permissionsManager.requestLocationPermissions(requireActivity())
+            }
         }
     }
 
@@ -235,10 +239,11 @@ class SelectLocationFragment private constructor() : DialogFragment(),
         const val DEFAULT_INTERVAL_IN_MILLISECONDS = 1000L
         const val DEFAULT_MAX_WAIT_TIME = DEFAULT_INTERVAL_IN_MILLISECONDS * 5
 
-        fun newInstance(isDeparture: Boolean): SelectLocationFragment {
+        fun newInstance(isDeparture: Boolean, isFragment: Boolean): SelectLocationFragment {
             return SelectLocationFragment().apply {
                 arguments = Bundle().apply {
                     putBoolean("KEY_TYPE", isDeparture)
+                    putBoolean("KEY_PARENT", isFragment)
                 }
             }
         }

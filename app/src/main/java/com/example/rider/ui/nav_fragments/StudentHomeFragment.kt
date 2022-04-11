@@ -132,11 +132,11 @@ class StudentHomeFragment : Fragment() {
         }
 
         binding?.etDepartureLocation?.setOnConsistentClickListener {
-            SelectLocationFragment.newInstance(true).show(childFragmentManager, "location")
+            SelectLocationFragment.newInstance(true, true).show(childFragmentManager, "location")
         }
 
         binding?.etArrivalLocation?.setOnConsistentClickListener {
-            SelectLocationFragment.newInstance(false).show(childFragmentManager, "location")
+            SelectLocationFragment.newInstance(false, true).show(childFragmentManager, "location")
         }
 
         binding?.yesBtnId?.setOnClickListener {

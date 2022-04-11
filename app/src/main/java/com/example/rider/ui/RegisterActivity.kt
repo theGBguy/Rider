@@ -57,7 +57,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding?.registerAddressId?.setOnConsistentClickListener {
-            SelectLocationFragment.newInstance(true).show(supportFragmentManager, "location")
+            SelectLocationFragment.newInstance(true, false).show(supportFragmentManager, "location")
         }
 
         binding?.registerCancelBtnId?.setOnClickListener { finish() }
