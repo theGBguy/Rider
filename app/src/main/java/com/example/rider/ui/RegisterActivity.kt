@@ -7,15 +7,16 @@ import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
 import android.text.TextUtils
+import android.util.Log
 import android.util.Patterns
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import androidx.core.widget.doOnTextChanged
 import coil.load
 import com.example.rider.R
 import com.example.rider.databinding.ActivityRegisterBinding
 import com.example.rider.model.User
-import com.example.rider.ui.nav_fragments.SelectLocationFragment
-import com.example.rider.utils.setOnConsistentClickListener
 import com.example.rider.utils.showShortToast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.ktx.auth
@@ -23,6 +24,9 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.google.firebase.storage.ktx.storageMetadata
+import com.mapbox.search.*
+import com.mapbox.search.result.SearchResult
+import com.mapbox.search.result.SearchSuggestion
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
@@ -41,23 +45,70 @@ class RegisterActivity : AppCompatActivity() {
     private var latitude: Double = 0.0
     private var longitude: Double = 0.0
 
+    private lateinit var searchEngine: SearchEngine
+    private lateinit var searchRequestTask: SearchRequestTask
+
+    private val searchCallback = object : SearchSelectionCallback {
+
+        override fun onSuggestions(
+            suggestions: List<SearchSuggestion>,
+            responseInfo: ResponseInfo
+        ) {
+            if (suggestions.isEmpty()) {
+                "No suggestions found".showShortToast(this@RegisterActivity)
+            } else {
+                val adapter = ArrayAdapter(
+                    this@RegisterActivity,
+                    android.R.layout.select_dialog_item,
+                    suggestions.map { it.name }
+                )
+
+                binding?.registerAddressId?.setAdapter(adapter)
+                binding?.registerAddressId?.setOnItemClickListener { _, _, pos, _ ->
+                    searchRequestTask = searchEngine.select(suggestions[pos], this)
+                }
+            }
+        }
+
+        override fun onResult(
+            suggestion: SearchSuggestion,
+            result: SearchResult,
+            responseInfo: ResponseInfo
+        ) {
+            location = result.name
+            latitude = result.coordinate?.latitude()!!
+            longitude = result.coordinate?.longitude()!!
+            "$location $latitude $longitude".showShortToast(this@RegisterActivity)
+        }
+
+        override fun onCategoryResult(
+            suggestion: SearchSuggestion,
+            results: List<SearchResult>,
+            responseInfo: ResponseInfo
+        ) {
+            Log.i("SearchApiExample", "Category search results: $results")
+        }
+
+        override fun onError(e: Exception) {
+            Log.i("SearchApiExample", "Search error", e)
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityRegisterBinding.inflate(layoutInflater)
         setContentView(binding?.root)
 
-        supportFragmentManager.setFragmentResultListener(
-            "departure", this
-        ) { _, result ->
-            location = result.getString("departure_location")!!
-            latitude = result.getDouble("departure_lat")
-            longitude = result.getDouble("departure_long")
-            binding?.registerAddressId?.setText(location)
-        }
+        searchEngine = MapboxSearchSdk.getSearchEngine()
 
-        binding?.registerAddressId?.setOnConsistentClickListener {
-            SelectLocationFragment.newInstance(true, false).show(supportFragmentManager, "location")
+        binding?.registerAddressId?.threshold = 3
+        binding?.registerAddressId?.doOnTextChanged { text, _, _, _ ->
+            searchRequestTask = searchEngine.search(
+                text?.trim().toString(),
+                SearchOptions(limit = 3),
+                searchCallback
+            )
         }
 
         binding?.registerCancelBtnId?.setOnClickListener { finish() }
@@ -321,9 +372,18 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        searchRequestTask.cancel()
+        super.onDestroy()
+    }
+
     companion object {
         const val TAG = "RegisterActivity"
         private const val IMAGE_PICK_CODE = 1000
         private const val IMAGE_CAPTURE_CODE = 1001
     }
+}
+
+fun SearchSuggestion.toReadableString(): String {
+    return "${this.address?.place}, ${this.address?.district}, ${this.address?.country}"
 }
