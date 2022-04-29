@@ -8,7 +8,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.ArrayAdapter
 import androidx.core.os.bundleOf
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.DialogFragment
 import com.example.rider.R
 import com.example.rider.databinding.FragmentSelectLocationBinding
@@ -32,6 +34,7 @@ import com.mapbox.maps.plugin.gestures.addOnMapClickListener
 import com.mapbox.maps.plugin.gestures.removeOnMapClickListener
 import com.mapbox.search.*
 import com.mapbox.search.result.SearchResult
+import com.mapbox.search.result.SearchSuggestion
 
 class SelectLocationFragment private constructor() : DialogFragment(),
     LocationEngineCallback<LocationEngineResult>,
@@ -46,10 +49,12 @@ class SelectLocationFragment private constructor() : DialogFragment(),
     private lateinit var currentPointAnnotation: PointAnnotation
     private lateinit var pointAnnotationManager: PointAnnotationManager
 
+    private lateinit var searchEngine: SearchEngine
     private lateinit var reverseGeocoding: ReverseGeocodingSearchEngine
     private lateinit var searchRequestTask: SearchRequestTask
 
-    private val searchCallback = object : SearchCallback {
+    // callback for reverse geocoding
+    private val reverseSearchCallback = object : SearchCallback {
         override fun onResults(
             results: List<SearchResult>,
             responseInfo: ResponseInfo
@@ -58,7 +63,7 @@ class SelectLocationFragment private constructor() : DialogFragment(),
                 Log.d("SelectionLocation", "No reverse geocoding results")
             } else {
                 Log.d("SelectionLocation", "Reverse geocoding results: $results")
-                if (requireArguments()["KEY_TYPE"] == true) {
+                if (requireArguments()[KEY_TYPE] == true) {
                     parentFragmentManager.setFragmentResult(
                         "departure",
                         bundleOf(
@@ -71,7 +76,7 @@ class SelectLocationFragment private constructor() : DialogFragment(),
                     parentFragmentManager.setFragmentResult(
                         "arrival",
                         bundleOf(
-                            "arrival_location" to (getReadableSearchResult(results[0])),
+                            "arrival_location" to getReadableSearchResult(results[0]),
                             "arrival_lat" to currentPoint.latitude(),
                             "arrival_long" to currentPoint.longitude()
                         )
@@ -83,6 +88,53 @@ class SelectLocationFragment private constructor() : DialogFragment(),
 
         override fun onError(e: Exception) {
             Log.i("SelectionLocation", "Reverse geocoding error", e)
+        }
+    }
+
+    // callback for forward geocoding
+    private val forwardSearchCallback = object : SearchSelectionCallback {
+        override fun onSuggestions(
+            suggestions: List<SearchSuggestion>,
+            responseInfo: ResponseInfo
+        ) {
+            if (suggestions.isEmpty()) {
+                "No suggestions found".showShortToast(requireContext())
+            } else {
+                val adapter = ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.select_dialog_item,
+                    suggestions.map { it.name }
+                )
+
+                binding?.actvSelectLocation?.setAdapter(adapter)
+                binding?.actvSelectLocation?.setOnItemClickListener { _, _, pos, _ ->
+                    searchRequestTask = searchEngine.select(suggestions[pos], this)
+                }
+            }
+        }
+
+        override fun onResult(
+            suggestion: SearchSuggestion,
+            result: SearchResult,
+            responseInfo: ResponseInfo
+        ) {
+//            location = result.name
+//            latitude = result.coordinate?.latitude()!!
+//            longitude = result.coordinate?.longitude()!!
+//            "$location $latitude $longitude".showShortToast(this@RegisterActivity)
+            onMapClick(Point.fromLngLat(result.coordinate?.longitude()!!, result.coordinate?.latitude()!!))
+        }
+
+        override fun onCategoryResult(
+            suggestion: SearchSuggestion,
+            results: List<SearchResult>,
+            responseInfo: ResponseInfo
+        ) {
+            Log.i("SearchApiExample", "Category search results: $results")
+        }
+
+        override fun onError(e: Exception) {
+            Log.i("SearchApiExample", "Search error", e)
         }
     }
 
@@ -110,6 +162,23 @@ class SelectLocationFragment private constructor() : DialogFragment(),
                 binding?.mapSelectLocation?.annotations?.createPointAnnotationManager()!!
         }
 
+        if(requireArguments()[KEY_TYPE] == true) {
+            // changing visibility of autocomplete textview based on whether this fragment is
+            // loaded select departure or arrival location; making it visible only in the case of
+            // selection of departure location
+            binding?.actvSelectLocation?.visibility = View.VISIBLE
+
+            searchEngine = MapboxSearchSdk.getSearchEngine()
+            binding?.actvSelectLocation?.threshold = 3
+            binding?.actvSelectLocation?.doOnTextChanged { text, _, _, _ ->
+                searchRequestTask = searchEngine.search(
+                    text?.trim().toString(),
+                    SearchOptions(limit = 3),
+                    forwardSearchCallback
+                )
+            }
+        }
+
         reverseGeocoding = MapboxSearchSdk.getReverseGeocodingSearchEngine()
         binding?.btnSelectLocation?.setOnClickListener {
             if (this::currentPoint.isInitialized) {
@@ -117,7 +186,7 @@ class SelectLocationFragment private constructor() : DialogFragment(),
                     center = currentPoint,
                     limit = 1
                 )
-                searchRequestTask = reverseGeocoding.search(options, searchCallback)
+                searchRequestTask = reverseGeocoding.search(options, reverseSearchCallback)
             } else {
                 "Please select location first".showShortToast(requireContext())
             }
@@ -234,11 +303,12 @@ class SelectLocationFragment private constructor() : DialogFragment(),
     companion object {
         const val DEFAULT_INTERVAL_IN_MILLISECONDS = 1000L
         const val DEFAULT_MAX_WAIT_TIME = DEFAULT_INTERVAL_IN_MILLISECONDS * 5
+        const val KEY_TYPE = "KEY_TYPE"
 
         fun newInstance(isDeparture: Boolean): SelectLocationFragment {
             return SelectLocationFragment().apply {
                 arguments = Bundle().apply {
-                    putBoolean("KEY_TYPE", isDeparture)
+                    putBoolean(KEY_TYPE, isDeparture)
                 }
             }
         }
