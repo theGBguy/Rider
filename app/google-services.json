@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "470168526578",
-    "project_id": "rider-e6e8f",
-    "storage_bucket": "rider-e6e8f.appspot.com"
+    "project_number": "1047982054680",
+    "project_id": "yatra-6e422",
+    "storage_bucket": "yatra-6e422.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:470168526578:android:b89ed6e591c29215b33a6b",
+        "mobilesdk_app_id": "1:1047982054680:android:13edf0438a79eac8e4126d",
         "android_client_info": {
-          "package_name": "com.example.rider"
+          "package_name": "com.yatra.yatraapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "470168526578-q5gpoqldr5a8o60mpnfmqcecencuvl0d.apps.googleusercontent.com",
+          "client_id": "1047982054680-l1kko4l8c7fiomugbfvhl63vtjgl08ke.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCSCVGVioWhiqQIaX7rfaasJ9qX90Bkw0w"
+          "current_key": "AIzaSyAE-WQynohtaVXIxINxTRVYogKqtkJCoOI"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "470168526578-q5gpoqldr5a8o60mpnfmqcecencuvl0d.apps.googleusercontent.com",
+              "client_id": "1047982054680-l1kko4l8c7fiomugbfvhl63vtjgl08ke.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
